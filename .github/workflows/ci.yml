@@ -29,13 +29,15 @@ jobs:
             6.0.x
             7.0.x
       - name: Install tools
-        run: |
-          dotnet tool install OpenAI.Mock
+        run: dotnet tool install OpenAI.Mock
 		  
       - name: Build Release
-        run: dotnet build -c Release /p:ContinuousIntegrationBuild=true
+        run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true
+		run: dotnet build tests -c Release /p:ContinuousIntegrationBuild=true
+
       - name: Build Debug
-        run: dotnet build -c Debug
+        run: dotnet build src -c Debug
+		run: dotnet build tests -c Debug
 
       - name: Run test suite
         run: dotnet test --no-build tests/OpenAI.Tests/OpenAI.Tests.csproj -c Release

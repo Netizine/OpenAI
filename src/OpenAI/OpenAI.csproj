@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>OpenAI is a sync/async client  supporting .NET Framework 4.6.1+, .NET Standard 2.0+ or .NET Core 2.0+. It is a portable class library for the OpenAI API.  (Unofficial Library)</Description>
+    <Description>OpenAI is a sync/async client  supporting .NET Framework 4.6.2+, .NET Standard 2.0+ or .NET Core 2.0+. It is a portable class library for the OpenAI API.  (Unofficial Library)</Description>
     <Version>1.0.1</Version>
     <LangVersion>8</LangVersion>
     <Authors>Netizine</Authors>
-    <TargetFrameworks>net6.0;net7.0;netcoreapp3.1;netstandard2.0;net461</TargetFrameworks>
+    <TargetFrameworks>net6.0;net7.0;netcoreapp3.1;netstandard2.0;net462</TargetFrameworks>
     <PackageTags>OpenAI, AI, .NET</PackageTags>
     <PackageIcon>OpenAI.png</PackageIcon>
     <PackageProjectUrl>https://github.com/Netizine/OpenAI</PackageProjectUrl>
@@ -78,9 +78,9 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Net.Http" />

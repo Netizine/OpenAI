@@ -7,7 +7,7 @@ currently being supported with security updates.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| .NET Framework 4.6.1+   | ✅: |
+| .NET Framework 4.6.2+   | ✅: |
 | .NET Standard 2.0+   | ☑️ :                |
 | .NET Core 2.0+   | ✔️: |
 

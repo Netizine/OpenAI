@@ -38,116 +38,18 @@ namespace OpenAI.Infrastructure.FormEncoding
 
             if (optionsType == typeof(EditImageCreateOptions))
             {
-                var multipartContent = new System.Net.Http.MultipartFormDataContent();
-                var editImageCreateOptions = (EditImageCreateOptions)options;
-                multipartContent.Add(new ByteArrayContent(editImageCreateOptions.ImageSource), "image", editImageCreateOptions.Image);
-
-                if (!string.IsNullOrEmpty(editImageCreateOptions.Mask))
-                {
-                    multipartContent.Add(new ByteArrayContent(editImageCreateOptions.MaskSource), "mask", editImageCreateOptions.Mask);
-                }
-
-                multipartContent.Add(new StringContent(editImageCreateOptions.Prompt), "prompt");
-
-                if (editImageCreateOptions.N != null && editImageCreateOptions.N > 0)
-                {
-                    multipartContent.Add(new StringContent(editImageCreateOptions.N.ToString()), "n");
-                }
-
-                if (!string.IsNullOrEmpty(editImageCreateOptions.Size))
-                {
-                    multipartContent.Add(new StringContent(editImageCreateOptions.Size), "size");
-                }
-
-                if (!string.IsNullOrEmpty(editImageCreateOptions.ResponseFormat))
-                {
-                    multipartContent.Add(new StringContent(editImageCreateOptions.ResponseFormat), "response_format");
-                }
-
-                if (!string.IsNullOrEmpty(editImageCreateOptions.User))
-                {
-                    multipartContent.Add(new StringContent(editImageCreateOptions.User), "user");
-                }
-
-                return multipartContent;
+                return EditImage(options);
             }
 
             if (optionsType == typeof(ImageVariationCreateOption))
             {
-                var multipartContent = new System.Net.Http.MultipartFormDataContent();
-                var imageVariationCreateOption = (ImageVariationCreateOption)options;
-                multipartContent.Add(new ByteArrayContent(imageVariationCreateOption.ImageSource), "image", imageVariationCreateOption.Image);
-
-                if (imageVariationCreateOption.N != null && imageVariationCreateOption.N > 0)
-                {
-                    multipartContent.Add(new StringContent(imageVariationCreateOption.N.ToString()), "n");
-                }
-
-                if (!string.IsNullOrEmpty(imageVariationCreateOption.Size))
-                {
-                    multipartContent.Add(new StringContent(imageVariationCreateOption.Size), "size");
-                }
-
-                if (!string.IsNullOrEmpty(imageVariationCreateOption.ResponseFormat))
-                {
-                    multipartContent.Add(new StringContent(imageVariationCreateOption.ResponseFormat), "response_format");
-                }
-
-                if (!string.IsNullOrEmpty(imageVariationCreateOption.User))
-                {
-                    multipartContent.Add(new StringContent(imageVariationCreateOption.User), "user");
-                }
-
-                return multipartContent;
+                return CreateImageVariant(options);
             }
 
             if (optionsType == typeof(FileCreateOptions))
             {
-                var multipartContent = new System.Net.Http.MultipartFormDataContent();
-                var fileCreateOptions = (FileCreateOptions)options;
-                multipartContent.Add(new ByteArrayContent(fileCreateOptions.FileSource), "file", fileCreateOptions.File);
-
-                if (!string.IsNullOrEmpty(fileCreateOptions.Purpose))
-                {
-                    multipartContent.Add(new StringContent(fileCreateOptions.Purpose), "purpose");
-                }
-
-                return multipartContent;
+                return CreateFile(options);
             }
-
-            // if (optionsType == typeof(OpenAI.FineTuneCreateOptions))
-            // {
-            //     var multipartContent = new System.Net.Http.MultipartFormDataContent();
-            //     var fineTuneCreateOptions = (OpenAI.FineTuneCreateOptions)options;
-            //     multipartContent.Add(new ByteArrayContent(fineTuneCreateOptions.TrainingFileSource), "training_file", fineTuneCreateOptions.TrainingFile);
-            //
-            //     if (!string.IsNullOrEmpty(fineTuneCreateOptions.ValidationFile))
-            //     {
-            //         multipartContent.Add(new ByteArrayContent(fineTuneCreateOptions.ValidationFileSource), "validation_file", fineTuneCreateOptions.ValidationFile);
-            //     }
-            //
-            //     if (!string.IsNullOrEmpty(fineTuneCreateOptions.Model))
-            //     {
-            //         multipartContent.Add(new StringContent(fineTuneCreateOptions.Model), "model");
-            //     }
-            //
-            //     if (fineTuneCreateOptions.NEpochs != null)
-            //     {
-            //         multipartContent.Add(new StringContent(fineTuneCreateOptions.NEpochs.ToString()), "n_epochs");
-            //     }
-            //
-            //     if (fineTuneCreateOptions.BatchSize != null)
-            //     {
-            //         multipartContent.Add(new StringContent(fineTuneCreateOptions.BatchSize.ToString()), "batch_size");
-            //     }
-            //
-            //     if (fineTuneCreateOptions.LearningRateMultiplier != null)
-            //     {
-            //         multipartContent.Add(new StringContent(fineTuneCreateOptions.LearningRateMultiplier.ToString()), "learning_rate_multiplier");
-            //     }
-            //
-            //     return multipartContent;
-            // }
 
             // Fall back if we don't have a special case for this type.
             var flatParams = FlattenParamsValue(options, null);
@@ -454,6 +356,85 @@ namespace OpenAI.Infrastructure.FormEncoding
 
             int i = key.IndexOf("[", StringComparison.Ordinal);
             return i == -1 ? $"{keyPrefix}[{key}]" : $"{keyPrefix}[{key.Substring(0, i)}]{key.Substring(i)}";
+        }
+
+        private static System.Net.Http.MultipartFormDataContent EditImage(BaseOptions options)
+        {
+            var multipartContent = new System.Net.Http.MultipartFormDataContent();
+            var editImageCreateOptions = (EditImageCreateOptions)options;
+            multipartContent.Add(new ByteArrayContent(editImageCreateOptions.ImageSource), "image", editImageCreateOptions.Image);
+
+            if (!string.IsNullOrEmpty(editImageCreateOptions.Mask))
+            {
+                multipartContent.Add(new ByteArrayContent(editImageCreateOptions.MaskSource), "mask", editImageCreateOptions.Mask);
+            }
+
+            multipartContent.Add(new StringContent(editImageCreateOptions.Prompt), "prompt");
+
+            if (editImageCreateOptions.N != null && editImageCreateOptions.N > 0)
+            {
+                multipartContent.Add(new StringContent(editImageCreateOptions.N.ToString()), "n");
+            }
+
+            if (!string.IsNullOrEmpty(editImageCreateOptions.Size))
+            {
+                multipartContent.Add(new StringContent(editImageCreateOptions.Size), "size");
+            }
+
+            if (!string.IsNullOrEmpty(editImageCreateOptions.ResponseFormat))
+            {
+                multipartContent.Add(new StringContent(editImageCreateOptions.ResponseFormat), "response_format");
+            }
+
+            if (!string.IsNullOrEmpty(editImageCreateOptions.User))
+            {
+                multipartContent.Add(new StringContent(editImageCreateOptions.User), "user");
+            }
+
+            return multipartContent;
+        }
+
+        private static System.Net.Http.MultipartFormDataContent CreateImageVariant(BaseOptions options)
+        {
+            var multipartContent = new System.Net.Http.MultipartFormDataContent();
+            var imageVariationCreateOption = (ImageVariationCreateOption)options;
+            multipartContent.Add(new ByteArrayContent(imageVariationCreateOption.ImageSource), "image", imageVariationCreateOption.Image);
+
+            if (imageVariationCreateOption.N != null && imageVariationCreateOption.N > 0)
+            {
+                multipartContent.Add(new StringContent(imageVariationCreateOption.N.ToString()), "n");
+            }
+
+            if (!string.IsNullOrEmpty(imageVariationCreateOption.Size))
+            {
+                multipartContent.Add(new StringContent(imageVariationCreateOption.Size), "size");
+            }
+
+            if (!string.IsNullOrEmpty(imageVariationCreateOption.ResponseFormat))
+            {
+                multipartContent.Add(new StringContent(imageVariationCreateOption.ResponseFormat), "response_format");
+            }
+
+            if (!string.IsNullOrEmpty(imageVariationCreateOption.User))
+            {
+                multipartContent.Add(new StringContent(imageVariationCreateOption.User), "user");
+            }
+
+            return multipartContent;
+        }
+
+        private static System.Net.Http.MultipartFormDataContent CreateFile(BaseOptions options)
+        {
+            var multipartContent = new System.Net.Http.MultipartFormDataContent();
+            var fileCreateOptions = (FileCreateOptions)options;
+            multipartContent.Add(new ByteArrayContent(fileCreateOptions.FileSource), "file", fileCreateOptions.File);
+
+            if (!string.IsNullOrEmpty(fileCreateOptions.Purpose))
+            {
+                multipartContent.Add(new StringContent(fileCreateOptions.Purpose), "purpose");
+            }
+
+            return multipartContent;
         }
     }
 }

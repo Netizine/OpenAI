@@ -1,16 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>OpenAI is a sync/async .NET 4.6.1+ client, and a portable class library for the OpenAI API.  (Unofficial Library)</Description>
+    <Description>OpenAI is a sync/async client  supporting .NET Framework 4.6.1+, .NET Standard 2.0+ or .NET Core 2.0+. It is a portable class library for the OpenAI API.  (Unofficial Library)</Description>
     <Version>1.0.1</Version>
     <LangVersion>8</LangVersion>
-    <Authors>James Melvin</Authors>
+    <Authors>Netizine</Authors>
     <TargetFrameworks>net6.0;net7.0;netcoreapp3.1;netstandard2.0;net461</TargetFrameworks>
     <PackageTags>OpenAI, AI, .NET</PackageTags>
     <PackageIcon>OpenAI.png</PackageIcon>
     <PackageProjectUrl>https://github.com/Netizine/OpenAI</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageVersion>1.0.1</PackageVersion>
+    <PackageId>Netizine.OpenAI</PackageId>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <ToolCommandName>openai-mock</ToolCommandName>
     <SignAssembly>True</SignAssembly>

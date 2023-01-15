@@ -1,10 +1,6 @@
 # OpenAI
 
-[![NuGet](https://img.shields.io/nuget/v/OpenAI.svg)](https://www.nuget.org/packages/OpenAI/)
-[![Build Status](https://github.com/Netizine/OpenAI/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/Netizine/OpenAI/actions?query=branch%3Amaster)
-[![Coverage Status](https://coveralls.io/repos/github/netizine/OpenAI/badge.svg?branch=master)](https://coveralls.io/github/Netizine/OpenAI?branch=master)
-
-The unofficial [OpenAI][openai] .NET library, supporting .NET Standard 2.0+, .NET Core 2.0+, and .NET Framework 4.6.1+.
+# The unofficial [OpenAI][openai] .NET library, supporting .NET Standard 2.0+, .NET Core 2.0+, and .NET Framework 4.6.1+.
 
 ## Installation
 

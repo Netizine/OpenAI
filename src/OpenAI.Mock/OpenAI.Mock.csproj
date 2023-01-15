@@ -14,7 +14,7 @@
     <RootNamespace>OpenAI.Mock</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>OpenAI Mock Server</Title>
-    <Authors>James Melvin</Authors>
+    <Authors>Netizine</Authors>
     <Company>Netizine</Company>
     <Description>A mock server to test the OpenAI </Description>
     <PackageId>OpenAI.Mock</PackageId>

@@ -1,0 +1,58 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33103.201
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1A20A100-9E70-4C00-8EBB-A87EBDA77D60}"
+	ProjectSection(SolutionItems) = preProject
+		Advanced-client-usage.md = Advanced-client-usage.md
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B581031C-E3A5-4BFC-A0B2-9E7DFDBE9E80}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A95EC739-93E5-4482-BADD-EDCF88AEFBD8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAI", "src\OpenAI\OpenAI.csproj", "{7BF7AEBC-ED56-4AB9-8F19-FB75FA6A1CC0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAI.Mock", "src\OpenAI.Mock\OpenAI.Mock.csproj", "{AE2C08F6-F97B-4A81-9D77-EED1B14DB193}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAI.Tests", "tests\OpenAI.Tests\OpenAI.Tests.csproj", "{9CA94188-784F-4A9C-8CCF-A9C31DE4AA5F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "tests\TestApp\TestApp.csproj", "{56EDCC08-D822-417E-9613-EEF0DB72E82C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7BF7AEBC-ED56-4AB9-8F19-FB75FA6A1CC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BF7AEBC-ED56-4AB9-8F19-FB75FA6A1CC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BF7AEBC-ED56-4AB9-8F19-FB75FA6A1CC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BF7AEBC-ED56-4AB9-8F19-FB75FA6A1CC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE2C08F6-F97B-4A81-9D77-EED1B14DB193}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE2C08F6-F97B-4A81-9D77-EED1B14DB193}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE2C08F6-F97B-4A81-9D77-EED1B14DB193}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE2C08F6-F97B-4A81-9D77-EED1B14DB193}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CA94188-784F-4A9C-8CCF-A9C31DE4AA5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CA94188-784F-4A9C-8CCF-A9C31DE4AA5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CA94188-784F-4A9C-8CCF-A9C31DE4AA5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CA94188-784F-4A9C-8CCF-A9C31DE4AA5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56EDCC08-D822-417E-9613-EEF0DB72E82C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56EDCC08-D822-417E-9613-EEF0DB72E82C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56EDCC08-D822-417E-9613-EEF0DB72E82C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56EDCC08-D822-417E-9613-EEF0DB72E82C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7BF7AEBC-ED56-4AB9-8F19-FB75FA6A1CC0} = {B581031C-E3A5-4BFC-A0B2-9E7DFDBE9E80}
+		{AE2C08F6-F97B-4A81-9D77-EED1B14DB193} = {B581031C-E3A5-4BFC-A0B2-9E7DFDBE9E80}
+		{9CA94188-784F-4A9C-8CCF-A9C31DE4AA5F} = {A95EC739-93E5-4482-BADD-EDCF88AEFBD8}
+		{56EDCC08-D822-417E-9613-EEF0DB72E82C} = {A95EC739-93E5-4482-BADD-EDCF88AEFBD8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {671759A7-E6E5-402C-B011-7C969C138D47}
+	EndGlobalSection
+EndGlobal

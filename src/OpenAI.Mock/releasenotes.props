@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup>
+    <PackageReleaseNotes Condition=" '$(VersionPrefix)' == '1.0.1' ">
+* Initial project
+    </PackageReleaseNotes>
+  </PropertyGroup>
+</Project>

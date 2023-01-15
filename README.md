@@ -2,7 +2,7 @@
 
 ![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/Netizine/OpenAI/master)
 
-# The unofficial [OpenAI][openai] .NET library, supporting .NET Standard 2.0+, .NET Core 2.0+, and .NET Framework 4.6.1+.
+## The unofficial [OpenAI][openai] .NET library, supporting .NET Standard 2.0+, .NET Core 2.0+, and .NET Framework 4.6.1+.
 
 ## Installation
 
@@ -255,6 +255,6 @@ pull request][pulls].
 [package-manager-console]: https://docs.microsoft.com/en-us/nuget/tools/package-manager-console
 [pulls]: https://github.com/Netizine/OpenAI/pulls
 [openai]: https://openai.com
-[openai-mock]: https://github.com/Netizine/OpenAI/OpenAI_mock.md
-[openai-mock-usage]: https://github.com/Netizine/OpenAI/OpenAI_mock.md#usage
+[openai-mock]: https://github.com/Netizine/OpenAI/blob/master/OpenAI_mock.md
+[openai-mock-usage]: https://github.com/Netizine/OpenAI/blob/master/OpenAI_mock.md#usage
 [youtube-playlist]: https://www.youtube.com/openai

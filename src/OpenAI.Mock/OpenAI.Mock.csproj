@@ -17,7 +17,7 @@
     <Authors>James Melvin</Authors>
     <Company>Netizine</Company>
     <Description>A mock server to test the OpenAI </Description>
-    <PackageId>openai-mock</PackageId>
+    <PackageId>OpenAI.Mock</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,8 +31,6 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.4.0" />
-
-    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>

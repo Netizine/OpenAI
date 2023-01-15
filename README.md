@@ -165,7 +165,6 @@ OpenAIConfiguration.MaxNetworkRetries = 0; // Zero retries
 ### How to use parameters and properties
 
 OpenAI is a typed library and it supports all public properties or parameters.
-
 In cases where OpenAI adds some new features which introduce new properties or parameters that are not immediately available in the SDK, the library may not support these properties or parameters yet but there is still an approach that allows you to use them.
 
 Parameters
@@ -211,10 +210,10 @@ New features and bug fixes are released on the latest major version of the OpenA
 The test suite depends on [openai-mock][openai-mock], so make sure to fetch
 and run it from a background terminal
 ([openai-mock's README][openai-mock-usage] also contains instructions for
-installing via Homebrew and other methods):
+installing via Nuget):
 
 ```sh
-go get -u https://github.com/Netizine/OpenAI/tree/main/src/OpenAI.Mock
+dotnet tool install OpenAI.Mock
 openai-mock
 ```
 
@@ -227,7 +226,7 @@ dotnet test
 Run some tests, filtering by name:
 
 ```sh
-dotnet test --filter FullyQualifiedName~EngineServiceTest
+dotnet test --filter FullyQualifiedName~ModelServiceTest
 ```
 
 Run tests for a single target framework:
@@ -258,6 +257,6 @@ pull request][pulls].
 [package-manager-console]: https://docs.microsoft.com/en-us/nuget/tools/package-manager-console
 [pulls]: https://github.com/Netizine/OpenAI/pulls
 [openai]: https://openai.com
-[openai-mock]: https://github.com/Netizine/OpenAI-mock
-[openai-mock-usage]: https://github.com/Netizine/OpenAI-mock#usage
+[openai-mock]: https://github.com/Netizine/OpenAI/OpenAI_mock.md
+[openai-mock-usage]: https://github.com/Netizine/OpenAI/OpenAI_mock.md#usage
 [youtube-playlist]: https://www.youtube.com/openai

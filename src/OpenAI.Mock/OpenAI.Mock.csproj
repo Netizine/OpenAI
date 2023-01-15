@@ -35,7 +35,7 @@
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="FastEndpoints" Version="5.5.0" />
+    <PackageReference Include="FastEndpoints" Version="5.6.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" Publish="false" />
     <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="4.0.2" />
     <PackageReference Include="DotNetConfig" Version="1.0.6" />

@@ -6,10 +6,11 @@
     <LangVersion>8</LangVersion>
     <Authors>James Melvin</Authors>
     <TargetFrameworks>net6.0;net7.0;netcoreapp3.1;netstandard2.0;net461</TargetFrameworks>
-    <PackageTags>openai</PackageTags>
-    <PackageIcon>icon.png</PackageIcon>
+    <PackageTags>OpenAI, AI, .NET</PackageTags>
+    <PackageIcon>OpenAI.png</PackageIcon>
     <PackageProjectUrl>https://github.com/Netizine/OpenAI</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageVersion>1.0.1</PackageVersion>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <ToolCommandName>openai-mock</ToolCommandName>
     <SignAssembly>True</SignAssembly>
@@ -36,6 +37,11 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\_stylecop\StyleCopRules.ruleset</CodeAnalysisRuleSet>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>A unofficial OpenAI .NET library</Title>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/Netizine/OpenAI</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
@@ -81,6 +87,14 @@
 
   <ItemGroup>
     <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
+    <None Include="..\..\OpenAI.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="icon.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
 

@@ -1,5 +1,7 @@
 # OpenAI
 
+![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/Netizine/OpenAI/master)
+
 # The unofficial [OpenAI][openai] .NET library, supporting .NET Standard 2.0+, .NET Core 2.0+, and .NET Framework 4.6.1+.
 
 ## Installation

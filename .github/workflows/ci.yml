@@ -1,0 +1,215 @@
+name: CI
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - master
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+*
+  pull_request:
+    branches:
+      - master**
+
+jobs:
+  build:
+    name: Build and test
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: |
+            2.1.x
+            3.1.x
+            6.0.x
+            7.0.x
+      - name: Install tools
+        run: |
+          dotnet tool install OpenAI.Mock
+		  
+      - name: Build Release
+        run: dotnet build -c Release /p:ContinuousIntegrationBuild=true
+      - name: Build Debug
+        run: dotnet build -c Debug
+
+      - name: Run test suite
+        run: dotnet test --no-build tests/OpenAI.Tests/OpenAI.Tests.csproj -c Release
+
+      - name: Run test suite (Debug)
+        run: dotnet test --no-build tests/OpenAI.Tests/OpenAI.Tests.csproj -c Debug
+
+      - name: Collect coverage
+        run: dotnet test --no-build -c Debug -f netcoreapp3.1 tests/OpenAI.Tests/OpenAI.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:ExcludeByAttribute=CompilerGenerated
+
+      - name: Get branch name (merge)
+        if: github.event_name != 'pull_request'
+        run: echo "commitBranch=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
+
+      - name: Get branch name (pull request)
+        if: github.event_name == 'pull_request'
+        run: echo "commitBranch=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
+
+      - name: Send code coverage report to coveralls.io
+        if: env.COVERALLS_REPO_TOKEN
+        run: |
+          export ARGS="--opencover \
+            -i tests/OpenAI.Tests/coverage.netcoreapp3.1.opencover.xml \
+            --repoToken $COVERALLS_REPO_TOKEN \
+            --useRelativePaths \
+            --commitId $commitId \
+            --commitBranch $commitBranch \
+            --commitAuthor $commitAuthor \
+            --jobId $jobId"
+          if [ ! -z "${pullRequestId}" ];
+          then
+            export ARGS="$ARGS \
+              --pullRequest $pullRequestId"
+          fi
+          dotnet tool run csmacnz.Coveralls $ARGS
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          commitId: ${{ github.sha }}
+          commitAuthor: ${{ github.actor }}
+          jobId: ${{ github.run_id }}
+          pullRequestId: ${{ github.event.pull_request.number }}
+
+      - name: Pack
+        run: dotnet pack src -c Release --no-build --output nuget
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v2
+        with:
+          name: nuget
+          path: nuget/
+
+  publish:
+    name: Publish
+    if: (((github.event_name == 'push') || (github.event_name == 'workflow_dispatch')) && startsWith(github.ref, 'refs/tags/v') && endsWith(github.actor, '-openai'))
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download all workflow run artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: nuget
+        path: nuget
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 7.0.x
+    - name: Publish NuGet packages to NuGet
+      run: dotnet nuget push nuget/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source "nuget.org"name: CI
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - master
+      - beta
+      - sdk-release/**
+      - feature/**
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+*
+  pull_request:
+    branches:
+      - master
+      - beta
+      - sdk-release/**
+      - feature/**
+
+jobs:
+  build:
+    name: Build and test
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: |
+            2.1.x
+            3.1.x
+            6.0.x
+            7.0.x
+      - name: Install tools
+        run: |
+          dotnet tool restore
+      - name: Build Release
+        run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true
+
+      - name: Build Debug
+        run: dotnet build src -c Debug
+
+      - name: Run test suite
+        run: dotnet test --no-build tests/OpenAI.Tests/OpenAI.Tests.csproj -c Release
+
+      - name: Run test suite (Debug)
+        run: dotnet test --no-build tests/OpenAI.Tests/OpenAI.Tests.csproj -c Debug
+
+      - name: Collect coverage
+        run: dotnet test --no-build -c Debug -f netcoreapp3.1 tests/OpenAI.Tests/OpenAI.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:ExcludeByAttribute=CompilerGenerated
+
+      - name: Get branch name (merge)
+        if: github.event_name != 'pull_request'
+        run: echo "commitBranch=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
+
+      - name: Get branch name (pull request)
+        if: github.event_name == 'pull_request'
+        run: echo "commitBranch=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
+
+      - name: Send code coverage report to coveralls.io
+        if: env.COVERALLS_REPO_TOKEN
+        run: |
+          export ARGS="--opencover \
+            -i tests/OpenAI.Tests/coverage.netcoreapp3.1.opencover.xml \
+            --repoToken $COVERALLS_REPO_TOKEN \
+            --useRelativePaths \
+            --commitId $commitId \
+            --commitBranch $commitBranch \
+            --commitAuthor $commitAuthor \
+            --jobId $jobId"
+          if [ ! -z "${pullRequestId}" ];
+          then
+            export ARGS="$ARGS \
+              --pullRequest $pullRequestId"
+          fi
+          dotnet tool run csmacnz.Coveralls $ARGS
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          commitId: ${{ github.sha }}
+          commitAuthor: ${{ github.actor }}
+          jobId: ${{ github.run_id }}
+          pullRequestId: ${{ github.event.pull_request.number }}
+
+      - name: Pack
+        run: dotnet pack src -c Release --no-build --output nuget
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v2
+        with:
+          name: nuget
+          path: nuget/
+
+  publish:
+    name: Publish
+    if: (((github.event_name == 'push') || (github.event_name == 'workflow_dispatch')) && startsWith(github.ref, 'refs/tags/v') && endsWith(github.actor, '-openai'))
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download all workflow run artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: nuget
+        path: nuget
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 7.0.x
+    - name: Publish NuGet packages to NuGet
+      run: dotnet nuget push nuget/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source "nuget.org"

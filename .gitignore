@@ -13,3 +13,4 @@ project.lock.json
 .DS_Store
 .idea/
 /tests/TestApp/TestApp.csproj
+/tests/TestApp/TestApp.csproj

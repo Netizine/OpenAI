@@ -27,7 +27,7 @@ jobs:
             6.0.x
       - name: Install tools
 	  - script: >-
-		  dotnet tool install dotnet-reportgenerator-globaltool 
+		  dotnet tool install OpenAI.Mock
 		  --global
 		  
       - name: Build Release

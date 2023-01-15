@@ -45,24 +45,17 @@ public class CreateImageEditEndpoint : EndpointWithoutRequest<CreateImageRespons
                 var fileSection = section.AsFileSection();
                 if (fileSection is not null)
                 {
-                    switch (fileSection.Name)
+                    if (fileSection.Name == "image")
                     {
-                        case "image":
-                            {
-                                req.Image = Path.Combine(tempDirectory.FullName, fileSection.FileName);
-                                await using var fs = System.IO.File.Create(req.Image);
-                                await fileSection.Section.Body.CopyToAsync(fs, 1024 * 64, ct);
-
-                                break;
-                            }
-                        case "mask":
-                            {
-                                req.Mask = Path.Combine(tempDirectory.FullName, fileSection.FileName);
-                                await using var fs = System.IO.File.Create(req.Mask);
-                                await fileSection.Section.Body.CopyToAsync(fs, 1024 * 64, ct);
-
-                                break;
-                            }
+                        req.Image = Path.Combine(tempDirectory.FullName, fileSection.FileName);
+                        await using var fs = System.IO.File.Create(req.Image);
+                        await fileSection.Section.Body.CopyToAsync(fs, 1024 * 64, ct);
+                    }
+                    else if (fileSection.Name == "mask")
+                    {
+                        req.Mask = Path.Combine(tempDirectory.FullName, fileSection.FileName);
+                        await using var fs = System.IO.File.Create(req.Mask);
+                        await fileSection.Section.Body.CopyToAsync(fs, 1024 * 64, ct);
                     }
                 }
             }

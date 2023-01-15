@@ -1,6 +1,7 @@
 namespace OpenAI
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
@@ -103,14 +104,14 @@ namespace OpenAI
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>An <see cref="AnyOf{T1, T2}"/> object that holds the value.</returns>
-        public static implicit operator AnyOf<T1, T2>(T1 value) => value == null ? null : new AnyOf<T1, T2>(value);
+        public static implicit operator AnyOf<T1, T2>(T1 value) => EqualityComparer<T1>.Default.Equals(value, default(T1)) ? null : new AnyOf<T1, T2>(value);
 
         /// <summary>
         /// Converts a value of type <c>T2</c> to an <see cref="AnyOf{T1, T2}"/> object.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>An <see cref="AnyOf{T1, T2}"/> object that holds the value.</returns>
-        public static implicit operator AnyOf<T1, T2>(T2 value) => value == null ? null : new AnyOf<T1, T2>(value);
+        public static implicit operator AnyOf<T1, T2>(T2 value) => EqualityComparer<T2>.Default.Equals(value, default(T2)) ? null : new AnyOf<T1, T2>(value);
 
         /// <summary>
         /// Converts an <see cref="AnyOf{T1, T2}"/> object to a value of type <c>T1</c>.

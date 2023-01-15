@@ -104,7 +104,7 @@ namespace OpenAI
 
         private static IHttpClient BuildDefaultHttpClient()
         {
-            return new SystemNetHttpClient();
+            return new SystemNetHttpClient(OpenAIConfiguration.MaxNetworkRetries);
         }
 
         private static T ProcessResponse<T>(OpenAIResponse response)

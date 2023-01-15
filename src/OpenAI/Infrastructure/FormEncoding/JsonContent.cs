@@ -36,8 +36,6 @@ namespace OpenAI.Infrastructure.FormEncoding
                 NullValueHandling = NullValueHandling.Ignore,
             };
             return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(nameValueCollection, jsonSerializerSettings));
-
-            // return Encoding.UTF8.GetBytes(FormEncoder.CreateQueryString(nameValueCollection));
         }
     }
 }

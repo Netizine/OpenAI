@@ -53,10 +53,43 @@
         /// Gets the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
+        /// <returns>FineTune.</returns>
+        public virtual FineTune Get(string id)
+        {
+            return this.Get(id, null, null);
+        }
+
+        /// <summary>
+        /// Gets the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="options">The fine tune get options.</param>
+        /// <returns>FineTune.</returns>
+        public virtual FineTune Get(string id, FineTuneGetOptions options)
+        {
+            return this.Get(id, options, null);
+        }
+
+        /// <summary>
+        /// Gets the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="options">The request options.</param>
+        /// <returns>FineTune.</returns>
+        public virtual FineTune Get(string id, RequestOptions options)
+        {
+            return this.Get(id, null, options);
+        }
+
+
+        /// <summary>
+        /// Gets the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
         /// <param name="options">The options.</param>
         /// <param name="requestOptions">The request options.</param>
-        /// <returns>The specified entity.</returns>
-        public virtual FineTune Get(string id, FineTuneGetOptions options = null, RequestOptions requestOptions = null)
+        /// <returns>FineTune.</returns>
+        public virtual FineTune Get(string id, FineTuneGetOptions options, RequestOptions requestOptions)
         {
             return this.GetEntity(id, options, requestOptions);
         }

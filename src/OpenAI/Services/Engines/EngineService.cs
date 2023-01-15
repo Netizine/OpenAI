@@ -48,10 +48,31 @@
         /// Gets the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
+        /// <returns>The specified entity.</returns>
+        public virtual Engine Get(string id)
+        {
+            return this.Get(id, null);
+        }
+
+        /// <summary>
+        /// Gets the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="options">The options.</param>
+        /// <returns>The specified entity.</returns>
+        public virtual Engine Get(string id, EngineGetOptions options)
+        {
+            return this.Get(id, options, null);
+        }
+
+        /// <summary>
+        /// Gets the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
         /// <param name="options">The options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <returns>The specified entity.</returns>
-        public virtual Engine Get(string id, EngineGetOptions options = null, RequestOptions requestOptions = null)
+        public virtual Engine Get(string id, EngineGetOptions options = null, RequestOptions requestOptions)
         {
             return this.GetEntity(id, options, requestOptions);
         }

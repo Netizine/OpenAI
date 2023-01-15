@@ -18,9 +18,6 @@
         [JsonProperty("training_file")]
         public string TrainingFile { get; set; }
 
-        // [JsonIgnore]
-        // public byte[] TrainingFileSource { get; set; }
-
         /// <summary>
         /// The ID of an uploaded file that contains validation data.
         /// If you provide this file, the data is used to generate validation metrics periodically during fine-tuning.
@@ -32,9 +29,6 @@
         /// </summary>
         [JsonProperty("validation_file")]
         public string ValidationFile { get; set; }
-
-        // [JsonIgnore]
-        // public byte[] ValidationFileSource { get; set; }
 
         /// <summary>
         /// The name of the base model to fine-tune. You can select one of \"ada\", \"babbage\", \"curie\", \"davinci\", or a fine-tuned model created after 2022-04-21.

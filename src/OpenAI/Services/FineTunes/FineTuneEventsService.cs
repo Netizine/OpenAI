@@ -43,10 +43,44 @@
         /// Gets the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="options">The options.</param>
+        /// <returns>FineTuneEvents.</returns>
+        public FineTuneEvents Get(string id)
+        {
+            return this.Get(id, null, null);
+        }
+
+        /// <summary>
+        /// Gets the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="options">The fine tune events get options.</param>
+        /// <returns>FineTuneEvents.</returns>
+        public FineTuneEvents Get(string id, FineTuneEventsGetOptions options)
+        {
+            return this.Get(id, options, null);
+        }
+
+        /// <summary>
+        /// Gets the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="options">The request options.</param>
+        /// <returns>FineTuneEvents.</returns>
+        public FineTuneEvents Get(string id, RequestOptions options)
+        {
+            return this.Get(id, null, options);
+        }
+
+
+
+        /// <summary>
+        /// Gets the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="options">The fine tune events get options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <returns>FineTuneEvents.</returns>
-        public FineTuneEvents Get(string id, FineTuneEventsGetOptions options = null, RequestOptions requestOptions = null)
+        public FineTuneEvents Get(string id, FineTuneEventsGetOptions options, RequestOptions requestOptions)
         {
             return this.Request(HttpMethod.Get, $"/v1/fine-tunes/{id}/events", options, requestOptions);
         }

@@ -59,6 +59,21 @@ namespace OpenAI
         /// <summary>
         /// Initializes a new instance of the <see cref="SystemNetHttpClient"/> class.
         /// </summary>
+        /// <param name="maxNetworkRetries">
+        /// The maximum number of times the client will retry requests that fail due to an
+        /// intermittent problem.
+        /// </param>
+        public SystemNetHttpClient(int maxNetworkRetries = DefaultMaxNumberRetries)
+            : this(null, maxNetworkRetries)
+        {
+            this.httpClient = LazyDefaultHttpClient.Value;
+            this.MaxNetworkRetries = maxNetworkRetries;
+            this.userAgentString = BuildOpenAIClientUserAgentString();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SystemNetHttpClient"/> class.
+        /// </summary>
         /// <param name="httpClient">
         /// The <see cref="System.Net.Http.HttpClient"/> client to use. If <c>null</c>, an HTTP
         /// client will be created with default parameters.
@@ -153,11 +168,20 @@ namespace OpenAI
 
         /// <summary>Sends a request to OpenAI's API as an asynchronous operation.</summary>
         /// <param name="request">The parameters of the request to send.</param>
+        /// <returns>The task object representing the asynchronous operation.</returns>
+        public Task<OpenAIResponse> MakeRequestAsync(
+            OpenAIRequest request)
+        {
+            return this.MakeRequestAsync(request, CancellationToken.None);
+        }
+
+        /// <summary>Sends a request to OpenAI's API as an asynchronous operation.</summary>
+        /// <param name="request">The parameters of the request to send.</param>
         /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
         /// <returns>The task object representing the asynchronous operation.</returns>
         public async Task<OpenAIResponse> MakeRequestAsync(
             OpenAIRequest request,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             var (response, retries) = await this.SendHttpRequest(request, cancellationToken).ConfigureAwait(false);
 
@@ -255,13 +279,12 @@ namespace OpenAI
             {
                 var value = headers.GetValues("Should-Retry").First();
 
-                switch (value)
+                return value switch
                 {
-                    case "true":
-                        return true;
-                    case "false":
-                        return false;
-                }
+                    "true" => true,
+                    "false" => false,
+                    _ => false,
+                };
             }
 
             // Retry on conflict errors.

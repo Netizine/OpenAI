@@ -41,17 +41,12 @@ public class UploadFileEndpoint : EndpointWithoutRequest<UploadFileResponse>
                 var fileSection = section.AsFileSection();
                 if (fileSection is not null)
                 {
-                    switch (fileSection.Name)
+                    if (fileSection.Name == "file")
                     {
-                        case "file":
-                            {
-                                fileName = fileSection.FileName;
-                                req.File = Path.Combine(tempDirectory.FullName, fileSection.FileName);
-                                await using var fs = System.IO.File.Create(req.File);
-                                await fileSection.Section.Body.CopyToAsync(fs, 1024 * 64, ct);
-
-                                break;
-                            }
+                        fileName = fileSection.FileName;
+                        req.File = Path.Combine(tempDirectory.FullName, fileSection.FileName);
+                        await using var fs = System.IO.File.Create(req.File);
+                        await fileSection.Section.Body.CopyToAsync(fs, 1024 * 64, ct);
                     }
                 }
             }

@@ -48,6 +48,98 @@
         public override string BasePath => "/v1/models";
 
         /// <summary>
+        /// Gets the specified model based on the identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Model.</returns>
+        public virtual Model Get(string id)
+        {
+            return this.Get(id, null, null);
+        }
+
+        /// <summary>
+        /// Gets the specified model based on the identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="modelGetOptions">The model get options.</param>
+        /// <returns>Model.</returns>
+        public virtual Model Get(string id, ModelGetOptions modelGetOptions)
+        {
+            return this.Get(id, modelGetOptions, null);
+        }
+
+        /// <summary>
+        /// Gets the specified model based on the identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Model.</returns>
+        public virtual Model Get(string id, RequestOptions requestOptions)
+        {
+            return this.Get(id, null, requestOptions);
+        }
+
+        /// <summary>
+        /// Gets the specified model based on the identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="modelGetOptions">The model get options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Model.</returns>
+        public virtual Model Get(string id, ModelGetOptions modelGetOptions, RequestOptions requestOptions)
+        {
+            return this.GetEntity(id, modelGetOptions, requestOptions);
+        }
+
+        public virtual Task<Model> GetAsync(string id)
+        {
+            return this.GetAsync(id, null, null, default);
+        }
+
+        public virtual Task<Model> GetAsync(string id, CancellationToken cancellationToken)
+        {
+            return this.GetAsync(id, null, null, cancellationToken);
+        }
+
+        public virtual Task<Model> GetAsync(string id, ModelGetOptions modelGetOptions)
+        {
+            return this.GetAsync(id, modelGetOptions, null, default);
+        }
+
+        public virtual Task<Model> GetAsync(string id, ModelGetOptions modelGetOptions, CancellationToken cancellationToken)
+        {
+            return this.GetAsync(id, modelGetOptions, null, cancellationToken);
+        }
+
+        public virtual Task<Model> GetAsync(string id, RequestOptions requestOptions)
+        {
+            return this.GetAsync(id, null, requestOptions, default);
+        }
+
+        public virtual Task<Model> GetAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.GetAsync(id, null, requestOptions, cancellationToken);
+        }
+
+        public virtual Task<Model> GetAsync(string id, ModelGetOptions modelGetOptions, RequestOptions requestOptions)
+        {
+            return this.GetAsync(id, modelGetOptions, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Gets the specified model based on the identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="modelGetOptions">The model get options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;Model&gt;.</returns>
+        public virtual Task<Model> GetAsync(string id, ModelGetOptions modelGetOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.GetEntityAsync(id, modelGetOptions, requestOptions, cancellationToken);
+        }
+
+        /// <summary>
         /// Deletes the specified model based on the identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
@@ -70,31 +162,6 @@
         public Task<Model> DeleteAsync(string id, ModelDeleteOptions options = null, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
         {
             return this.DeleteEntityAsync(id, options, requestOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the specified model based on the identifier.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <param name="options">The options.</param>
-        /// <param name="requestOptions">The request options.</param>
-        /// <returns>The specified entity.</returns>
-        public virtual Model Get(string id, ModelGetOptions options = null, RequestOptions requestOptions = null)
-        {
-            return this.GetEntity(id, options, requestOptions);
-        }
-
-        /// <summary>
-        /// Gets the specified model based on the identifier asynchronously.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <param name="options">The options.</param>
-        /// <param name="requestOptions">The request options.</param>
-        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Task&lt;Model&gt;.</returns>
-        public virtual Task<Model> GetAsync(string id, ModelGetOptions options = null, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
-        {
-            return this.GetEntityAsync(id, options, requestOptions, cancellationToken);
         }
 
         /// <summary>

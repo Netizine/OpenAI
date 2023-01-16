@@ -85,12 +85,62 @@ namespace OpenAI.Tests
 
             public override string BasePath => "/v1/test_entities";
 
-            public virtual TestEntity Get(string id, BaseOptions options = null, RequestOptions requestOptions = null)
+            public virtual TestEntity Get(string id)
+            {
+                return this.Get(id, null, null);
+            }
+
+            public virtual TestEntity Get(string id, BaseOptions options)
+            {
+                return this.Get(id, options, null);
+            }
+
+            public virtual TestEntity Get(string id, RequestOptions requestOptions)
+            {
+                return this.Get(id, null, requestOptions);
+            }
+
+            public virtual TestEntity Get(string id, BaseOptions options, RequestOptions requestOptions)
             {
                 return this.GetEntity(id, options, requestOptions);
             }
 
-            public virtual Task<TestEntity> GetAsync(string id, BaseOptions options = null, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+            public virtual Task<TestEntity> GetAsync(string id)
+            {
+                return this.GetAsync(id, null, null, default);
+            }
+
+            public virtual Task<TestEntity> GetAsync(string id, CancellationToken cancellationToken)
+            {
+                return this.GetAsync(id, null, null, cancellationToken);
+            }
+
+            public virtual Task<TestEntity> GetAsync(string id, BaseOptions options)
+            {
+                return this.GetAsync(id, options, null, default);
+            }
+
+            public virtual Task<TestEntity> GetAsync(string id, BaseOptions options, CancellationToken cancellationToken)
+            {
+                return this.GetAsync(id, options, null, cancellationToken);
+            }
+
+            public virtual Task<TestEntity> GetAsync(string id, RequestOptions requestOptions)
+            {
+                return this.GetAsync(id, null, requestOptions, default);
+            }
+
+            public virtual Task<TestEntity> GetAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
+            {
+                return this.GetAsync(id, null, requestOptions, cancellationToken);
+            }
+
+            public virtual Task<TestEntity> GetAsync(string id, BaseOptions options, RequestOptions requestOptions)
+            {
+                return this.GetAsync(id, null, requestOptions, default);
+            }
+
+            public virtual Task<TestEntity> GetAsync(string id, BaseOptions options, RequestOptions requestOptions, CancellationToken cancellationToken)
             {
                 return this.GetEntityAsync(id, options, requestOptions, cancellationToken);
             }

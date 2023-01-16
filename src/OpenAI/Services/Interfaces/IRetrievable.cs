@@ -16,19 +16,54 @@ namespace OpenAI
         /// Gets the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
+        /// <returns>The specified entity.</returns>
+        TEntity Get(string id);
+
+        /// <summary>
+        /// Gets the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="retrieveOptions">The retrieve options.</param>
+        /// <returns>The specified entity.</returns>
+        TEntity Get(string id, TOptions retrieveOptions);
+
+        /// <summary>
+        /// Gets the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>The specified entity.</returns>
+        TEntity Get(string id, RequestOptions requestOptions);
+
+        /// <summary>
+        /// Gets the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
         /// <param name="retrieveOptions">The retrieve options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <returns>The specified entity.</returns>
-        TEntity Get(string id, TOptions retrieveOptions = null, RequestOptions requestOptions = null);
+        TEntity Get(string id, TOptions retrieveOptions, RequestOptions requestOptions);
+
+        Task<TEntity> GetAsync(string id);
+
+        Task<TEntity> GetAsync(string id, CancellationToken cancellationToken);
+
+        Task<TEntity> GetAsync(string id, TOptions retrieveOptions);
+
+        Task<TEntity> GetAsync(string id, TOptions retrieveOptions, CancellationToken cancellationToken);
+
+        Task<TEntity> GetAsync(string id, RequestOptions requestOptions);
+
+        Task<TEntity> GetAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Gets the specified identifier asynchronous.
+        /// Gets the specified identifier asynchronously.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="retrieveOptions">The retrieve options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The specified entity task.</returns>
-        Task<TEntity> GetAsync(string id, TOptions retrieveOptions = null, RequestOptions requestOptions = null, CancellationToken cancellationToken = default);
+        Task<TEntity> GetAsync(string id, TOptions retrieveOptions, RequestOptions requestOptions, CancellationToken cancellationToken);
     }
 }

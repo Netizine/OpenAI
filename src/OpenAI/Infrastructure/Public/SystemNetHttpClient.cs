@@ -80,6 +80,13 @@ namespace OpenAI
             this.userAgentString = BuildOpenAIClientUserAgentString();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SystemNetHttpClient"/> class.
+        /// </summary>
+        /// <param name="httpClient">
+        /// The <see cref="System.Net.Http.HttpClient"/> client to use. If <c>null</c>, an HTTP
+        /// client will be created with default parameters.
+        /// </param>
         public SystemNetHttpClient(System.Net.Http.HttpClient httpClient)
         {
             this.httpClient = httpClient ?? LazyDefaultHttpClient.Value;

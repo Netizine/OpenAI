@@ -40,7 +40,7 @@
         public override string BasePath => null;
 
         /// <summary>
-        /// Gets the specified identifier.
+        /// Gets the fine-tune events by the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>FineTuneEvents.</returns>
@@ -50,50 +50,129 @@
         }
 
         /// <summary>
-        /// Gets the specified identifier.
+        /// Gets the fine-tune events by the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="options">The fine tune events get options.</param>
+        /// <param name="fineTuneEventsGetOptions">The fine tune events get options.</param>
         /// <returns>FineTuneEvents.</returns>
-        public FineTuneEvents Get(string id, FineTuneEventsGetOptions options)
+        public FineTuneEvents Get(string id, FineTuneEventsGetOptions fineTuneEventsGetOptions)
         {
-            return this.Get(id, options, null);
+            return this.Get(id, fineTuneEventsGetOptions, null);
         }
 
         /// <summary>
-        /// Gets the specified identifier.
+        /// Gets the fine-tune events by the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="options">The request options.</param>
-        /// <returns>FineTuneEvents.</returns>
-        public FineTuneEvents Get(string id, RequestOptions options)
-        {
-            return this.Get(id, null, options);
-        }
-
-        /// <summary>
-        /// Gets the specified identifier.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <param name="options">The fine tune events get options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <returns>FineTuneEvents.</returns>
-        public FineTuneEvents Get(string id, FineTuneEventsGetOptions options, RequestOptions requestOptions)
+        public FineTuneEvents Get(string id, RequestOptions requestOptions)
         {
-            return this.Request(HttpMethod.Get, $"/v1/fine-tunes/{id}/events", options, requestOptions);
+            return this.Get(id, null, requestOptions);
         }
 
         /// <summary>
-        /// Gets the specified identifier asynchronously.
+        /// Gets the fine-tune events by the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="options">The options.</param>
+        /// <param name="fineTuneEventsGetOptions">The fine tune events get options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>FineTuneEvents.</returns>
+        public FineTuneEvents Get(string id, FineTuneEventsGetOptions fineTuneEventsGetOptions, RequestOptions requestOptions)
+        {
+            return this.Request(HttpMethod.Get, $"/v1/fine-tunes/{id}/events", fineTuneEventsGetOptions, requestOptions);
+        }
+
+        /// <summary>
+        /// Gets the fine-tune events by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Task&lt;FineTuneEvents&gt;.</returns>
+        public Task<FineTuneEvents> GetAsync(string id)
+        {
+            return this.GetAsync(id, null, null, default);
+        }
+
+        /// <summary>
+        /// Gets the fine-tune events by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;FineTuneEvents&gt;.</returns>
+        public Task<FineTuneEvents> GetAsync(string id, CancellationToken cancellationToken)
+        {
+            return this.GetAsync(id, null, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the fine-tune events by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="fineTuneEventsGetOptions">The fine-tune events get options.</param>
+        /// <returns>Task&lt;FineTuneEvents&gt;.</returns>
+        public Task<FineTuneEvents> GetAsync(string id, FineTuneEventsGetOptions fineTuneEventsGetOptions)
+        {
+            return this.GetAsync(id, fineTuneEventsGetOptions, null, default);
+        }
+
+        /// <summary>
+        /// Gets the fine-tune events by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="fineTuneEventsGetOptions">The fine-tune events get options.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;FineTuneEvents&gt;.</returns>
+        public Task<FineTuneEvents> GetAsync(string id, FineTuneEventsGetOptions fineTuneEventsGetOptions, CancellationToken cancellationToken)
+        {
+            return this.GetAsync(id, fineTuneEventsGetOptions, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the fine-tune events by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;FineTuneEvents&gt;.</returns>
+        public Task<FineTuneEvents> GetAsync(string id, RequestOptions requestOptions)
+        {
+            return this.GetAsync(id, null, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Gets the fine-tune events by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;FineTuneEvents&gt;.</returns>
-        public Task<FineTuneEvents> GetAsync(string id, FineTuneEventsGetOptions options = null, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+        public Task<FineTuneEvents> GetAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.RequestAsync(HttpMethod.Get, $"/v1/fine-tunes/{id}/events", options, requestOptions, cancellationToken);
+            return this.GetAsync(id, null, requestOptions, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the fine-tune events by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="fineTuneEventsGetOptions">The fine-tune events get options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;FineTuneEvents&gt;.</returns>
+        public Task<FineTuneEvents> GetAsync(string id, FineTuneEventsGetOptions fineTuneEventsGetOptions, RequestOptions requestOptions)
+        {
+            return this.GetAsync(id, fineTuneEventsGetOptions, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Gets the fine-tune events by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="fineTuneEventsGetOptions">The fine-tune events get options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;FineTuneEvents&gt;.</returns>
+        public Task<FineTuneEvents> GetAsync(string id, FineTuneEventsGetOptions fineTuneEventsGetOptions, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+        {
+            return this.RequestAsync(HttpMethod.Get, $"/v1/fine-tunes/{id}/events", fineTuneEventsGetOptions, requestOptions, cancellationToken);
         }
     }
 }

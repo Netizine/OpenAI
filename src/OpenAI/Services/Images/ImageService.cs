@@ -153,7 +153,7 @@
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;Image&gt;.</returns>
-        public virtual Task<Image> EditAsync(EditImageCreateOptions editImageCreateOptions, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Task<Image> EditAsync(EditImageCreateOptions editImageCreateOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
             return this.RequestAsync(HttpMethod.Post, "/v1/images/edits", editImageCreateOptions, requestOptions, cancellationToken);
         }

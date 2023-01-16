@@ -13,7 +13,7 @@ namespace OpenAI.Tests
         public OpenAIRequestTest()
         {
             this.openAIClient = new OpenAIClient(
-                "sk-test",
+                "sk-test", null,
                 apiBase: "https://client.example.com");
         }
 

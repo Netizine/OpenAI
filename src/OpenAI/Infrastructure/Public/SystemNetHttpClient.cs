@@ -21,7 +21,7 @@ namespace OpenAI
     public class SystemNetHttpClient : IHttpClient
     {
         /// <summary>Default maximum number of retries made by the client.</summary>
-        public const int DefaultMaxNumberRetries = 2;
+        public static readonly int DefaultMaxNumberRetries = 2;
 
         private const string OpenAINetTargetFramework =
 #if NET7_0

@@ -22,6 +22,13 @@ namespace OpenAI
         /// <value>The Organization ID used by the client.</value>
         string OrganizationId { get; }
 
+        Task<T> RequestAsync<T>(
+            HttpMethod method,
+            string path,
+            BaseOptions options,
+            RequestOptions requestOptions)
+            where T : IOpenAIEntity;
+
         /// <summary>Sends a request to OpenAI's API as an asynchronous operation.</summary>
         /// <typeparam name="T">Type of the OpenAI entity returned by the API.</typeparam>
         /// <param name="method">The HTTP method.</param>

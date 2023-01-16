@@ -8,6 +8,7 @@ namespace OpenAI
     /// <summary>
     /// The OpenAI list.
     /// </summary>
+    /// <typeparam name="T">The type parameter.</typeparam>
     [JsonObject]
     public class OpenAIList<T> : OpenAIEntity<OpenAIList<T>>, IHasObject, IEnumerable<T>
     {

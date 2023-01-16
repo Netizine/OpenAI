@@ -14,6 +14,96 @@ namespace OpenAI
     /// </summary>
     public class OpenAIClient : IOpenAIClient
     {
+        public OpenAIClient(string apiKey)
+        {
+            if (apiKey is { Length: 0 })
+            {
+                throw new ArgumentException("API key cannot be the empty string.", nameof(apiKey));
+            }
+
+            if (apiKey != null && StringUtils.ContainsWhitespace(apiKey))
+            {
+                throw new ArgumentException("API key cannot contain whitespace.", nameof(apiKey));
+            }
+
+            this.ApiKey = apiKey;
+            this.OrganizationId = null;
+            this.HttpClient = BuildDefaultHttpClient();
+            this.ApiBase = DefaultApiBase;
+        }
+
+        public OpenAIClient(string apiKey, IHttpClient httpClient)
+        {
+            if (apiKey is { Length: 0 })
+            {
+                throw new ArgumentException("API key cannot be the empty string.", nameof(apiKey));
+            }
+
+            if (apiKey != null && StringUtils.ContainsWhitespace(apiKey))
+            {
+                throw new ArgumentException("API key cannot contain whitespace.", nameof(apiKey));
+            }
+
+            this.ApiKey = apiKey;
+            this.OrganizationId = null;
+            this.HttpClient = httpClient ?? BuildDefaultHttpClient();
+            this.ApiBase = DefaultApiBase;
+        }
+
+        public OpenAIClient(string apiKey, IHttpClient httpClient, string apiBase)
+        {
+            if (apiKey is { Length: 0 })
+            {
+                throw new ArgumentException("API key cannot be the empty string.", nameof(apiKey));
+            }
+
+            if (apiKey != null && StringUtils.ContainsWhitespace(apiKey))
+            {
+                throw new ArgumentException("API key cannot contain whitespace.", nameof(apiKey));
+            }
+
+            this.ApiKey = apiKey;
+            this.OrganizationId = null;
+            this.HttpClient = httpClient ?? BuildDefaultHttpClient();
+            this.ApiBase = apiBase ?? DefaultApiBase;
+        }
+
+        public OpenAIClient(string apiKey, string organizationId)
+        {
+            if (apiKey is { Length: 0 })
+            {
+                throw new ArgumentException("API key cannot be the empty string.", nameof(apiKey));
+            }
+
+            if (apiKey != null && StringUtils.ContainsWhitespace(apiKey))
+            {
+                throw new ArgumentException("API key cannot contain whitespace.", nameof(apiKey));
+            }
+
+            this.ApiKey = apiKey;
+            this.OrganizationId = organizationId;
+            this.HttpClient = BuildDefaultHttpClient();
+            this.ApiBase = DefaultApiBase;
+        }
+
+        public OpenAIClient(string apiKey, string organizationId, IHttpClient httpClient)
+        {
+            if (apiKey is { Length: 0 })
+            {
+                throw new ArgumentException("API key cannot be the empty string.", nameof(apiKey));
+            }
+
+            if (apiKey != null && StringUtils.ContainsWhitespace(apiKey))
+            {
+                throw new ArgumentException("API key cannot contain whitespace.", nameof(apiKey));
+            }
+
+            this.ApiKey = apiKey;
+            this.OrganizationId = organizationId;
+            this.HttpClient = httpClient ?? BuildDefaultHttpClient();
+            this.ApiBase = DefaultApiBase;
+        }
+
         /// <summary>Initializes a new instance of the <see cref="OpenAIClient"/> class.</summary>
         /// <param name="apiKey">The API key used by the client to make requests.</param>
         /// <param name="organizationId">The organization ID used by the client.</param>
@@ -28,11 +118,7 @@ namespace OpenAI
         /// <exception cref="ArgumentException">
         /// if <c>apiKey</c> is empty or contains whitespace.
         /// </exception>
-        public OpenAIClient(
-            string apiKey = null,
-            string organizationId = null,
-            IHttpClient httpClient = null,
-            string apiBase = null)
+        public OpenAIClient(string apiKey, string organizationId, IHttpClient httpClient, string apiBase)
         {
             if (apiKey is { Length: 0 })
             {

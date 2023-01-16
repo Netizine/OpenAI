@@ -45,49 +45,65 @@
         public override string BasePath => "/v1/engines";
 
         /// <summary>
-        /// Gets the specified identifier.
+        /// Gets the specified engine by identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns>The specified entity.</returns>
+        /// <returns>Engine.</returns>
         public virtual Engine Get(string id)
         {
-            return this.Get(id, null);
+            return this.Get(id, null, null);
         }
 
         /// <summary>
-        /// Gets the specified identifier.
+        /// Gets the specified engine by identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="options">The options.</param>
-        /// <returns>The specified entity.</returns>
-        public virtual Engine Get(string id, EngineGetOptions options)
+        /// <param name="engineGetOptions">The engine get options.</param>
+        /// <returns>Engine.</returns>
+        public virtual Engine Get(string id, EngineGetOptions engineGetOptions)
         {
-            return this.Get(id, options, null);
+            return this.Get(id, engineGetOptions, null);
         }
 
         /// <summary>
-        /// Gets the specified identifier.
+        /// Gets the specified engine by identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="options">The options.</param>
         /// <param name="requestOptions">The request options.</param>
-        /// <returns>The specified entity.</returns>
-        public virtual Engine Get(string id, EngineGetOptions options = null, RequestOptions requestOptions)
+        /// <returns>Engine.</returns>
+        public virtual Engine Get(string id, RequestOptions requestOptions)
         {
-            return this.GetEntity(id, options, requestOptions);
+            return this.Get(id, null, requestOptions);
         }
 
         /// <summary>
-        /// Gets the specified identifier asynchronously.
+        /// Gets the specified engine by identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="options">The options.</param>
+        /// <param name="engineGetOptions">The engine get options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Engine.</returns>
+        public virtual Engine Get(string id, EngineGetOptions engineGetOptions, RequestOptions requestOptions)
+        {
+            return this.GetEntity(id, engineGetOptions, requestOptions);
+        }
+
+        public virtual Task<Engine> GetAsync(string id)
+        {
+            return this.GetEntityAsync(id, null, null, default);
+        }
+
+        /// <summary>
+        /// Gets the specified engine by identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="engineGetOptions">The engine get options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;Engine&gt;.</returns>
-        public virtual Task<Engine> GetAsync(string id, EngineGetOptions options = null, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Task<Engine> GetAsync(string id, EngineGetOptions engineGetOptions = null, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
         {
-            return this.GetEntityAsync(id, options, requestOptions, cancellationToken);
+            return this.GetEntityAsync(id, engineGetOptions, requestOptions, cancellationToken);
         }
 
         /// <summary>

@@ -71,8 +71,6 @@
             return this.Get(id, null, options);
         }
 
-
-
         /// <summary>
         /// Gets the specified identifier.
         /// </summary>

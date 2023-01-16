@@ -36,24 +36,66 @@
         /// <summary>
         /// Creates a entity with the specified options.
         /// </summary>
-        /// <param name="options">The options.</param>
-        /// <param name="requestOptions">The request options.</param>
+        /// <param name="embeddingCreateOptions">The embedding create options.</param>
         /// <returns>The created entity.</returns>
-        public virtual Embedding Create(EmbeddingCreateOptions options, RequestOptions requestOptions = null)
+        public Embedding Create(EmbeddingCreateOptions embeddingCreateOptions)
         {
-            return this.CreateEntity(options, requestOptions);
+            return this.Create(embeddingCreateOptions, null);
         }
 
         /// <summary>
-        /// Creates a entity with the specified options asynchronously.
+        /// Creates a entity with the specified options.
         /// </summary>
-        /// <param name="options">The options.</param>
+        /// <param name="embeddingCreateOptions">The embedding create options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>The created entity.</returns>
+        public virtual Embedding Create(EmbeddingCreateOptions embeddingCreateOptions, RequestOptions requestOptions)
+        {
+            return this.CreateEntity(embeddingCreateOptions, requestOptions);
+        }
+
+        /// <summary>
+        /// Creates a embedding result with the specified options asynchronously.
+        /// </summary>
+        /// <param name="embeddingCreateOptions">The embedding create options.</param>
+        /// <returns>Task&lt;Embedding&gt;.</returns>
+        public Task<Embedding> CreateAsync(EmbeddingCreateOptions embeddingCreateOptions)
+        {
+            return this.CreateAsync(embeddingCreateOptions, null, default);
+        }
+
+        /// <summary>
+        /// Creates a embedding result with the specified options asynchronously.
+        /// </summary>
+        /// <param name="embeddingCreateOptions">The embedding create options.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;Embedding&gt;.</returns>
+        public Task<Embedding> CreateAsync(EmbeddingCreateOptions embeddingCreateOptions, CancellationToken cancellationToken)
+        {
+            return this.CreateAsync(embeddingCreateOptions, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates a embedding result with the specified options asynchronously.
+        /// </summary>
+        /// <param name="embeddingCreateOptions">The embedding create options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;Embedding&gt;.</returns>
+        public Task<Embedding> CreateAsync(EmbeddingCreateOptions embeddingCreateOptions, RequestOptions requestOptions)
+        {
+            return this.CreateAsync(embeddingCreateOptions, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Creates a embedding result with the specified options asynchronously.
+        /// </summary>
+        /// <param name="embeddingCreateOptions">The embedding create options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;Embedding&gt;.</returns>
-        public virtual Task<Embedding> CreateAsync(EmbeddingCreateOptions options, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Task<Embedding> CreateAsync(EmbeddingCreateOptions embeddingCreateOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.CreateEntityAsync(options, requestOptions, cancellationToken);
+            return this.CreateEntityAsync(embeddingCreateOptions, requestOptions, cancellationToken);
         }
     }
 }

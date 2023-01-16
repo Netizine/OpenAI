@@ -36,24 +36,66 @@
         /// <summary>
         /// Creates a entity with the specified options.
         /// </summary>
-        /// <param name="options">The options.</param>
+        /// <param name="editCreateOptions">The edit create options.</param>
+        /// <returns>The created entity.</returns>
+        public Edit Create(EditCreateOptions editCreateOptions)
+        {
+            return this.Create(editCreateOptions, null);
+        }
+
+        /// <summary>
+        /// Creates a entity with the specified options.
+        /// </summary>
+        /// <param name="editCreateOptions">The edit create options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <returns>The created entity.</returns>
-        public virtual Edit Create(EditCreateOptions options, RequestOptions requestOptions = null)
+        public virtual Edit Create(EditCreateOptions editCreateOptions, RequestOptions requestOptions)
         {
-            return this.CreateEntity(options, requestOptions);
+            return this.CreateEntity(editCreateOptions, requestOptions);
         }
 
         /// <summary>
         /// Creates a entity with the specified options asynchronously.
         /// </summary>
-        /// <param name="options">The options.</param>
+        /// <param name="editCreateOptions">The edit create options.</param>
+        /// <returns>Task&lt;Edit&gt;.</returns>
+        public Task<Edit> CreateAsync(EditCreateOptions editCreateOptions)
+        {
+            return this.CreateAsync(editCreateOptions, null, default);
+        }
+
+        /// <summary>
+        /// Creates a entity with the specified options asynchronously.
+        /// </summary>
+        /// <param name="editCreateOptions">The edit create options.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;Edit&gt;.</returns>
+        public Task<Edit> CreateAsync(EditCreateOptions editCreateOptions, CancellationToken cancellationToken)
+        {
+            return this.CreateAsync(editCreateOptions, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates a entity with the specified options asynchronously.
+        /// </summary>
+        /// <param name="editCreateOptions">The edit create options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;Edit&gt;.</returns>
+        public Task<Edit> CreateAsync(EditCreateOptions editCreateOptions, RequestOptions requestOptions)
+        {
+            return this.CreateAsync(editCreateOptions, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Creates a entity with the specified options asynchronously.
+        /// </summary>
+        /// <param name="editCreateOptions">The edit create options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;Edit&gt;.</returns>
-        public virtual Task<Edit> CreateAsync(EditCreateOptions options, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Task<Edit> CreateAsync(EditCreateOptions editCreateOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.CreateEntityAsync(options, requestOptions, cancellationToken);
+            return this.CreateEntityAsync(editCreateOptions, requestOptions, cancellationToken);
         }
     }
 }

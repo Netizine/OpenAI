@@ -12,6 +12,12 @@ namespace OpenAI
         where TEntity : IOpenAIEntity, IHasId
         where TOptions : BaseOptions, new()
     {
+        TEntity Delete(string id);
+
+        TEntity Delete(string id, TOptions options);
+
+        TEntity Delete(string id, RequestOptions requestOptions);
+
         /// <summary>
         /// Deletes the specified identifier.
         /// </summary>
@@ -19,7 +25,21 @@ namespace OpenAI
         /// <param name="options">The options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <returns>The deleted entity.</returns>
-        TEntity Delete(string id, TOptions options = null, RequestOptions requestOptions = null);
+        TEntity Delete(string id, TOptions options, RequestOptions requestOptions);
+
+        Task<TEntity> DeleteAsync(string id);
+
+        Task<TEntity> DeleteAsync(string id, CancellationToken cancellationToken);
+
+        Task<TEntity> DeleteAsync(string id, TOptions options);
+
+        Task<TEntity> DeleteAsync(string id, TOptions options, CancellationToken cancellationToken);
+
+        Task<TEntity> DeleteAsync(string id, RequestOptions requestOptions);
+
+        Task<TEntity> DeleteAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken);
+
+        Task<TEntity> DeleteAsync(string id, TOptions options, RequestOptions requestOptions);
 
         /// <summary>
         /// Deletes the specified identifier asynchronously.

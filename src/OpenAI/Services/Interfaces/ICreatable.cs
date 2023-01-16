@@ -16,9 +16,39 @@ namespace OpenAI
         /// Creates a entity with the specified options.
         /// </summary>
         /// <param name="createOptions">The create options.</param>
+        /// <returns>The created entity.</returns>
+        TEntity Create(TOptions createOptions);
+
+        /// <summary>
+        /// Creates a entity with the specified options.
+        /// </summary>
+        /// <param name="createOptions">The create options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <returns>The created entity.</returns>
-        TEntity Create(TOptions createOptions, RequestOptions requestOptions = null);
+        TEntity Create(TOptions createOptions, RequestOptions requestOptions);
+
+        /// <summary>
+        /// Creates a entity with the specified options asynchronously.
+        /// </summary>
+        /// <param name="createOptions">The create options.</param>
+        /// <returns>The created entity task.</returns>
+        Task<TEntity> CreateAsync(TOptions createOptions);
+
+        /// <summary>
+        /// Creates a entity with the specified options asynchronously.
+        /// </summary>
+        /// <param name="createOptions">The create options.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The created entity task.</returns>
+        Task<TEntity> CreateAsync(TOptions createOptions, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Creates a entity with the specified options asynchronously.
+        /// </summary>
+        /// <param name="createOptions">The create options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>The created entity task.</returns>
+        Task<TEntity> CreateAsync(TOptions createOptions, RequestOptions requestOptions);
 
         /// <summary>
         /// Creates a entity with the specified options asynchronously.
@@ -27,6 +57,6 @@ namespace OpenAI
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created entity task.</returns>
-        Task<TEntity> CreateAsync(TOptions createOptions, RequestOptions requestOptions = null, CancellationToken cancellationToken = default);
+        Task<TEntity> CreateAsync(TOptions createOptions, RequestOptions requestOptions, CancellationToken cancellationToken);
     }
 }

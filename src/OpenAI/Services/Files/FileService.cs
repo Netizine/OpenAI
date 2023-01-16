@@ -287,49 +287,202 @@
         /// <summary>
         /// Creates a entity with the specified options.
         /// </summary>
-        /// <param name="options">The options.</param>
+        /// <param name="createOptions">The create options.</param>
+        /// <returns>The created entity.</returns>
+        public File Create(FileCreateOptions createOptions)
+        {
+            return this.Create(createOptions, null);
+        }
+
+        /// <summary>
+        /// Creates a entity with the specified options.
+        /// </summary>
+        /// <param name="createOptions">The create options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <returns>The created entity.</returns>
-        public virtual File Create(FileCreateOptions options, RequestOptions requestOptions = null)
+        public virtual File Create(FileCreateOptions createOptions, RequestOptions requestOptions)
         {
-            return this.CreateEntity(options, requestOptions);
+            return this.CreateEntity(createOptions, requestOptions);
         }
 
         /// <summary>
         /// Creates a entity with the specified options asynchronously.
         /// </summary>
-        /// <param name="options">The options.</param>
+        /// <param name="fileCreateOptions">The file create options.</param>
+        /// <returns>Task&lt;File&gt;.</returns>
+        public Task<File> CreateAsync(FileCreateOptions fileCreateOptions)
+        {
+            return this.CreateAsync(fileCreateOptions, null, default);
+        }
+
+        /// <summary>
+        /// Creates a entity with the specified options asynchronously.
+        /// </summary>
+        /// <param name="fileCreateOptions">The file create options.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;File&gt;.</returns>
+        public Task<File> CreateAsync(FileCreateOptions fileCreateOptions, CancellationToken cancellationToken)
+        {
+            return this.CreateAsync(fileCreateOptions, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates a entity with the specified options asynchronously.
+        /// </summary>
+        /// <param name="fileCreateOptions">The file create options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;File&gt;.</returns>
+        public Task<File> CreateAsync(FileCreateOptions fileCreateOptions, RequestOptions requestOptions)
+        {
+            return this.CreateAsync(fileCreateOptions, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Creates a entity with the specified options asynchronously.
+        /// </summary>
+        /// <param name="fileCreateOptions">The file create options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;File&gt;.</returns>
-        public virtual Task<File> CreateAsync(FileCreateOptions options, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Task<File> CreateAsync(FileCreateOptions fileCreateOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.CreateEntityAsync(options, requestOptions, cancellationToken);
+            return this.CreateEntityAsync(fileCreateOptions, requestOptions, cancellationToken);
         }
 
         /// <summary>
-        /// Deletes the specified identifier.
+        /// Deletes the file by the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="options">The options.</param>
+        /// <returns>File.</returns>
+        public File Delete(string id)
+        {
+            return this.DeleteEntity(id, null, null);
+        }
+
+        /// <summary>
+        /// Deletes the file by the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="fileDeleteOptions">The file delete options.</param>
+        /// <returns>File.</returns>
+        public File Delete(string id, FileDeleteOptions fileDeleteOptions)
+        {
+            return this.DeleteEntity(id, fileDeleteOptions, null);
+        }
+
+        /// <summary>
+        /// Deletes the file by the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
         /// <param name="requestOptions">The request options.</param>
-        /// <returns>The deleted entity.</returns>
-        public virtual File Delete(string id, FileDeleteOptions options = null, RequestOptions requestOptions = null)
+        /// <returns>File.</returns>
+        public File Delete(string id, RequestOptions requestOptions)
         {
-            return this.DeleteEntity(id, options, requestOptions);
+            return this.DeleteEntity(id, null, requestOptions);
         }
 
         /// <summary>
-        /// Deletes the specified identifier asynchronously.
+        /// Deletes the file by the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="options">The options.</param>
+        /// <param name="fileDeleteOptions">The file delete options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>File.</returns>
+        public virtual File Delete(string id, FileDeleteOptions fileDeleteOptions, RequestOptions requestOptions)
+        {
+            return this.DeleteEntity(id, fileDeleteOptions, requestOptions);
+        }
+
+        /// <summary>
+        /// Deletes the file by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Task&lt;File&gt;.</returns>
+        public Task<File> DeleteAsync(string id)
+        {
+            return this.DeleteAsync(id, null, null, default);
+        }
+
+        /// <summary>
+        /// Deletes the file by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Task&lt;File&gt;.</returns>
+        public Task<File> DeleteAsync(string id, CancellationToken cancellationToken)
+        {
+            return this.DeleteAsync(id, null, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes the file by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="fileDeleteOptions">The file delete options.</param>
+        /// <returns>Task&lt;File&gt;.</returns>
+        public Task<File> DeleteAsync(string id, FileDeleteOptions fileDeleteOptions)
+        {
+            return this.DeleteAsync(id, fileDeleteOptions, null, default);
+        }
+
+        /// <summary>
+        /// Deletes the file by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="fileDeleteOptions">The file delete options.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Task&lt;File&gt;.</returns>
+        public Task<File> DeleteAsync(string id, FileDeleteOptions fileDeleteOptions, CancellationToken cancellationToken)
+        {
+            return this.DeleteAsync(id, fileDeleteOptions, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes the file by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;File&gt;.</returns>
+        public Task<File> DeleteAsync(string id, RequestOptions requestOptions)
+        {
+            return this.DeleteAsync(id, null, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Deletes the file by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The deleted entity task.</returns>
-        public virtual Task<File> DeleteAsync(string id, FileDeleteOptions options = null, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+        /// <returns>Task&lt;File&gt;.</returns>
+        public Task<File> DeleteAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.DeleteEntityAsync(id, options, requestOptions, cancellationToken);
+            return this.DeleteAsync(id, null, requestOptions, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes the file by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="fileDeleteOptions">The file delete options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;File&gt;.</returns>
+        public Task<File> DeleteAsync(string id, FileDeleteOptions fileDeleteOptions, RequestOptions requestOptions)
+        {
+            return this.DeleteAsync(id, fileDeleteOptions, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Deletes the file by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="fileDeleteOptions">The file delete options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Task&lt;File&gt;.</returns>
+        public virtual Task<File> DeleteAsync(string id, FileDeleteOptions fileDeleteOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.DeleteEntityAsync(id, fileDeleteOptions, requestOptions, cancellationToken);
         }
     }
 }

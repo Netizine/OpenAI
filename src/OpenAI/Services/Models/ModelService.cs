@@ -143,25 +143,136 @@
         /// Deletes the specified model based on the identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="options">The options.</param>
+        /// <returns>The deleted entity.</returns>
+        public Model Delete(string id)
+        {
+            return this.Delete(id, null, null);
+        }
+
+        /// <summary>
+        /// Deletes the specified model based on the identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="modelDeleteOptions">The model delete options.</param>
+        /// <returns>The deleted entity.</returns>
+        public Model Delete(string id, ModelDeleteOptions modelDeleteOptions)
+        {
+            return this.Delete(id, modelDeleteOptions, null);
+        }
+
+        /// <summary>
+        /// Deletes the specified model based on the identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <returns>The deleted entity.</returns>
-        public Model Delete(string id, ModelDeleteOptions options = null, RequestOptions requestOptions = null)
+        public Model Delete(string id, RequestOptions requestOptions)
         {
-            return this.DeleteEntity(id, options, requestOptions);
+            return this.Delete(id, null, requestOptions);
+        }
+
+        /// <summary>
+        /// Deletes the specified model based on the identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="modelDeleteOptions">The model delete options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>The deleted entity.</returns>
+        public Model Delete(string id, ModelDeleteOptions modelDeleteOptions, RequestOptions requestOptions)
+        {
+            return this.DeleteEntity(id, modelDeleteOptions, requestOptions);
         }
 
         /// <summary>
         /// Deletes the specified model based on the identifier asynchronously.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="options">The options.</param>
+        /// <returns>Task&lt;Model&gt;.</returns>
+        public Task<Model> DeleteAsync(string id)
+        {
+            return this.DeleteAsync(id, null, null, default);
+        }
+
+        /// <summary>
+        /// Deletes the specified model based on the identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Task&lt;Model&gt;.</returns>
+        public Task<Model> DeleteAsync(string id, CancellationToken cancellationToken)
+        {
+            return this.DeleteAsync(id, null, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes the specified model based on the identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="modelDeleteOptions">The model delete options.</param>
+        /// <returns>Task&lt;Model&gt;.</returns>
+        public Task<Model> DeleteAsync(string id, ModelDeleteOptions modelDeleteOptions)
+        {
+            return this.DeleteAsync(id, modelDeleteOptions, null, default);
+        }
+
+        /// <summary>
+        /// Deletes the specified model based on the identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="modelDeleteOptions">The model delete options.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Task&lt;Model&gt;.</returns>
+        public Task<Model> DeleteAsync(string id, ModelDeleteOptions modelDeleteOptions, CancellationToken cancellationToken)
+        {
+            return this.DeleteAsync(id, modelDeleteOptions, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes the specified model based on the identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;Model&gt;.</returns>
+        public Task<Model> DeleteAsync(string id, RequestOptions requestOptions)
+        {
+            return this.DeleteAsync(id, null, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Deletes the specified model based on the identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The deleted entity task.</returns>
-        public Task<Model> DeleteAsync(string id, ModelDeleteOptions options = null, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+        /// <returns>Task&lt;Model&gt;.</returns>
+        public Task<Model> DeleteAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.DeleteEntityAsync(id, options, requestOptions, cancellationToken);
+            return this.DeleteAsync(id, null, requestOptions, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes the specified model based on the identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="modelDeleteOptions">The model delete options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;Model&gt;.</returns>
+        public Task<Model> DeleteAsync(string id, ModelDeleteOptions modelDeleteOptions, RequestOptions requestOptions)
+        {
+            return this.DeleteAsync(id, modelDeleteOptions, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Deletes the specified model based on the identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="modelDeleteOptions">The model delete options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Task&lt;Model&gt;.</returns>
+        public Task<Model> DeleteAsync(string id, ModelDeleteOptions modelDeleteOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.DeleteEntityAsync(id, modelDeleteOptions, requestOptions, cancellationToken);
         }
 
         public virtual OpenAIList<Model> List()

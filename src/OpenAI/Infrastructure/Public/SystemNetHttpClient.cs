@@ -60,7 +60,6 @@ namespace OpenAI
         /// Initializes a new instance of the <see cref="SystemNetHttpClient"/> class.
         /// </summary>
         public SystemNetHttpClient()
-            : this(DefaultMaxNumberRetries)
         {
             this.httpClient = LazyDefaultHttpClient.Value;
             this.MaxNetworkRetries = DefaultMaxNumberRetries;
@@ -75,10 +74,16 @@ namespace OpenAI
         /// intermittent problem.
         /// </param>
         public SystemNetHttpClient(int maxNetworkRetries)
-            : this(null, maxNetworkRetries)
         {
             this.httpClient = LazyDefaultHttpClient.Value;
             this.MaxNetworkRetries = maxNetworkRetries;
+            this.userAgentString = BuildOpenAIClientUserAgentString();
+        }
+
+        public SystemNetHttpClient(System.Net.Http.HttpClient httpClient)
+        {
+            this.httpClient = httpClient ?? LazyDefaultHttpClient.Value;
+            this.MaxNetworkRetries = DefaultMaxNumberRetries;
             this.userAgentString = BuildOpenAIClientUserAgentString();
         }
 
@@ -94,8 +99,8 @@ namespace OpenAI
         /// intermittent problem.
         /// </param>
         public SystemNetHttpClient(
-            System.Net.Http.HttpClient httpClient = null,
-            int maxNetworkRetries = DefaultMaxNumberRetries)
+            System.Net.Http.HttpClient httpClient,
+            int maxNetworkRetries)
         {
             this.httpClient = httpClient ?? LazyDefaultHttpClient.Value;
             this.MaxNetworkRetries = maxNetworkRetries;

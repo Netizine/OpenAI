@@ -170,7 +170,7 @@
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;FineTuneEvents&gt;.</returns>
-        public Task<FineTuneEvents> GetAsync(string id, FineTuneEventsGetOptions fineTuneEventsGetOptions, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+        public Task<FineTuneEvents> GetAsync(string id, FineTuneEventsGetOptions fineTuneEventsGetOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
             return this.RequestAsync(HttpMethod.Get, $"/v1/fine-tunes/{id}/events", fineTuneEventsGetOptions, requestOptions, cancellationToken);
         }

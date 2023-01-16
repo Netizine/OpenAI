@@ -15,10 +15,44 @@ namespace OpenAI
         /// <summary>
         /// Lists the specified entities based on the provided list options.
         /// </summary>
+        /// <returns>A list of the specified entities.</returns>
+        OpenAIList<TEntity> List();
+
+        /// <summary>
+        /// Lists the specified entities based on the provided list options.
+        /// </summary>
+        /// <param name="listOptions">The list options.</param>
+        /// <returns>A list of the specified entities.</returns>
+        OpenAIList<TEntity> List(TOptions listOptions);
+
+        /// <summary>
+        /// Lists the specified entities based on the provided list options.
+        /// </summary>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>A list of the specified entities.</returns>
+        OpenAIList<TEntity> List(RequestOptions requestOptions);
+
+        /// <summary>
+        /// Lists the specified entities based on the provided list options.
+        /// </summary>
         /// <param name="listOptions">The list options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <returns>A list of the specified entities.</returns>
-        OpenAIList<TEntity> List(TOptions listOptions = null, RequestOptions requestOptions = null);
+        OpenAIList<TEntity> List(TOptions listOptions, RequestOptions requestOptions);
+
+        Task<OpenAIList<TEntity>> ListAsync();
+
+        Task<OpenAIList<TEntity>> ListAsync(CancellationToken cancellationToken);
+
+        Task<OpenAIList<TEntity>> ListAsync(TOptions listOptions);
+
+        Task<OpenAIList<TEntity>> ListAsync(TOptions listOptions, CancellationToken cancellationToken);
+
+        Task<OpenAIList<TEntity>> ListAsync(RequestOptions requestOptions);
+
+        Task<OpenAIList<TEntity>> ListAsync(RequestOptions requestOptions, CancellationToken cancellationToken);
+
+        Task<OpenAIList<TEntity>> ListAsync(TOptions listOptions, RequestOptions requestOptions);
 
         /// <summary>
         /// Lists the specified entities based on the provided list options asynchronously.

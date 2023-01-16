@@ -145,14 +145,64 @@ namespace OpenAI.Tests
                 return this.GetEntityAsync(id, options, requestOptions, cancellationToken);
             }
 
-            public virtual OpenAIList<TestEntity> List(ListOptions options = null, RequestOptions requestOptions = null)
+            public virtual OpenAIList<TestEntity> List()
+            {
+                return this.List(null, null);
+            }
+
+            public virtual OpenAIList<TestEntity> List(ListOptions options)
+            {
+                return this.List(options, null);
+            }
+
+            public virtual OpenAIList<TestEntity> List(RequestOptions requestOptions)
+            {
+                return this.List(null, requestOptions);
+            }
+
+            public virtual OpenAIList<TestEntity> List(ListOptions options, RequestOptions requestOptions)
             {
                 return this.ListEntities(options, requestOptions);
             }
 
-            public virtual Task<OpenAIList<TestEntity>> ListAsync(ListOptions options = null, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+            public Task<OpenAIList<TestEntity>> ListAsync()
             {
-                return this.ListEntitiesAsync(options, requestOptions, cancellationToken);
+                return this.ListAsync(null, null, default);
+            }
+
+            public Task<OpenAIList<TestEntity>> ListAsync(CancellationToken cancellationToken)
+            {
+                return this.ListAsync(null, null, cancellationToken);
+            }
+
+            public Task<OpenAIList<TestEntity>> ListAsync(ListOptions listOptions)
+            {
+                return this.ListAsync(listOptions, null, default);
+            }
+
+            public Task<OpenAIList<TestEntity>> ListAsync(ListOptions listOptions, CancellationToken cancellationToken)
+            {
+                return this.ListAsync(listOptions, null, cancellationToken);
+            }
+
+            public Task<OpenAIList<TestEntity>> ListAsync(RequestOptions requestOptions)
+            {
+                return this.ListAsync(null, requestOptions, default);
+            }
+
+            public Task<OpenAIList<TestEntity>> ListAsync(RequestOptions requestOptions, CancellationToken cancellationToken)
+            {
+                return this.ListAsync(null, requestOptions, cancellationToken);
+            }
+
+            public Task<OpenAIList<TestEntity>> ListAsync(ListOptions listOptions, RequestOptions requestOptions)
+            {
+                return this.ListAsync(listOptions, requestOptions, default);
+            }
+
+            public virtual Task<OpenAIList<TestEntity>> ListAsync(ListOptions listOptions = null, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+            {
+                return this.ListEntitiesAsync(listOptions, requestOptions, cancellationToken);
             }
         }
     }

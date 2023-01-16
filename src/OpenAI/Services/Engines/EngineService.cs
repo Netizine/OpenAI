@@ -274,6 +274,17 @@
         /// </summary>
         /// <param name="engineListOptions">The engine list options.</param>
         /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;OpenAIList&lt;Engine&gt;&gt;.</returns>
+        public Task<OpenAIList<Engine>> ListAsync(EngineListOptions engineListOptions, RequestOptions requestOptions)
+        {
+            return this.ListAsync(engineListOptions, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Lists the specified engines by the provided options asynchronously.
+        /// </summary>
+        /// <param name="engineListOptions">The engine list options.</param>
+        /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;OpenAIList&lt;Engine&gt;&gt;.</returns>
         public virtual Task<OpenAIList<Engine>> ListAsync(EngineListOptions engineListOptions, RequestOptions requestOptions, CancellationToken cancellationToken)

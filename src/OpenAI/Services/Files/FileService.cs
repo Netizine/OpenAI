@@ -279,7 +279,7 @@
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;OpenAIList&lt;File&gt;&gt;.</returns>
-        public virtual Task<OpenAIList<File>> ListAsync(FileListOptions fileListOptions, RequestOptions requestOptions, CancellationToken cancellationToken = default)
+        public virtual Task<OpenAIList<File>> ListAsync(FileListOptions fileListOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
             return this.ListEntitiesAsync(fileListOptions, requestOptions, cancellationToken);
         }

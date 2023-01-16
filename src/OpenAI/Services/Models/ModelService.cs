@@ -164,27 +164,114 @@
             return this.DeleteEntityAsync(id, options, requestOptions, cancellationToken);
         }
 
+        public virtual OpenAIList<Model> List()
+        {
+            return this.List(null, null);
+        }
+
+        public virtual OpenAIList<Model> List(ModelListOptions modelListOptions)
+        {
+            return this.List(modelListOptions, null);
+        }
+
+        public virtual OpenAIList<Model> List(RequestOptions requestOptions)
+        {
+            return this.List(null, requestOptions);
+        }
+
         /// <summary>
         /// Lists the specified models based on the passed options.
         /// </summary>
-        /// <param name="options">The options.</param>
+        /// <param name="modelListOptions">The model list options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <returns>OpenAIList&lt;Model&gt;.</returns>
-        public virtual OpenAIList<Model> List(ModelListOptions options = null, RequestOptions requestOptions = null)
+        public virtual OpenAIList<Model> List(ModelListOptions modelListOptions, RequestOptions requestOptions)
         {
-            return this.ListEntities(options, requestOptions);
+            return this.ListEntities(modelListOptions, requestOptions);
         }
 
         /// <summary>
         /// Lists the specified models based on the passed options asynchronously.
         /// </summary>
-        /// <param name="options">The options.</param>
+        /// <returns>Task&lt;OpenAIList&lt;Model&gt;&gt;.</returns>
+        public Task<OpenAIList<Model>> ListAsync()
+        {
+            return this.ListAsync(null, null, default);
+        }
+
+        /// <summary>
+        /// Lists the specified models based on the passed options asynchronously.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;OpenAIList&lt;Model&gt;&gt;.</returns>
+        public Task<OpenAIList<Model>> ListAsync(CancellationToken cancellationToken)
+        {
+            return this.ListAsync(null, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the specified models based on the passed options asynchronously.
+        /// </summary>
+        /// <param name="modelListOptions">The model list options.</param>
+        /// <returns>Task&lt;OpenAIList&lt;Model&gt;&gt;.</returns>
+        public Task<OpenAIList<Model>> ListAsync(ModelListOptions modelListOptions)
+        {
+            return this.ListAsync(modelListOptions, null, default);
+        }
+
+        /// <summary>
+        /// Lists the specified models based on the passed options asynchronously.
+        /// </summary>
+        /// <param name="modelListOptions">The model list options.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;OpenAIList&lt;Model&gt;&gt;.</returns>
+        public Task<OpenAIList<Model>> ListAsync(ModelListOptions modelListOptions, CancellationToken cancellationToken)
+        {
+            return this.ListAsync(modelListOptions, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the specified models based on the passed options asynchronously.
+        /// </summary>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;OpenAIList&lt;Model&gt;&gt;.</returns>
+        public Task<OpenAIList<Model>> ListAsync(RequestOptions requestOptions)
+        {
+            return this.ListAsync(null, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Lists the specified models based on the passed options asynchronously.
+        /// </summary>
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;OpenAIList&lt;Model&gt;&gt;.</returns>
-        public virtual Task<OpenAIList<Model>> ListAsync(ModelListOptions options = null, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+        public Task<OpenAIList<Model>> ListAsync(RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.ListEntitiesAsync(options, requestOptions, cancellationToken);
+            return this.ListAsync(null, requestOptions, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the specified models based on the passed options asynchronously.
+        /// </summary>
+        /// <param name="modelListOptions">The model list options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;OpenAIList&lt;Model&gt;&gt;.</returns>
+        public Task<OpenAIList<Model>> ListAsync(ModelListOptions modelListOptions, RequestOptions requestOptions)
+        {
+            return this.ListAsync(modelListOptions, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Lists the specified models based on the passed options asynchronously.
+        /// </summary>
+        /// <param name="modelListOptions">The model list options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;OpenAIList&lt;Model&gt;&gt;.</returns>
+        public virtual Task<OpenAIList<Model>> ListAsync(ModelListOptions modelListOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.ListEntitiesAsync(modelListOptions, requestOptions, cancellationToken);
         }
     }
 }

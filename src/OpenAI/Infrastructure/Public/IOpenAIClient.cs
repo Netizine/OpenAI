@@ -43,7 +43,7 @@ namespace OpenAI
             string path,
             BaseOptions options,
             RequestOptions requestOptions,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
             where T : IOpenAIEntity;
     }
 }

@@ -56,16 +56,33 @@ namespace OpenAI
             return this.Request(HttpMethod.Post, "/v1/moderations", options, requestOptions);
         }
 
+        /// <summary>
+        /// Gets the specified moderation results asynchronously.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <returns>Task&lt;Moderation&gt;.</returns>
         public Task<Moderation> GetAsync(ModerationGetOptions options)
         {
             return this.GetAsync(options, null, default);
         }
 
+        /// <summary>
+        /// Gets the specified moderation results asynchronously.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;Moderation&gt;.</returns>
         public Task<Moderation> GetAsync(ModerationGetOptions options, CancellationToken cancellationToken)
         {
             return this.GetAsync(options, null, cancellationToken);
         }
 
+        /// <summary>
+        /// Gets the specified moderation results asynchronously.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;Moderation&gt;.</returns>
         public Task<Moderation> GetAsync(ModerationGetOptions options, RequestOptions requestOptions)
         {
             return this.GetAsync(options, requestOptions, default);

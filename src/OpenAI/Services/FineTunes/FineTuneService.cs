@@ -304,7 +304,7 @@
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;OpenAIList&lt;FineTune&gt;&gt;.</returns>
-        public virtual Task<OpenAIList<FineTune>> ListAsync(FineTuneListOptions fineTuneListOptions, RequestOptions requestOptions, CancellationToken cancellationToken = default)
+        public virtual Task<OpenAIList<FineTune>> ListAsync(FineTuneListOptions fineTuneListOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
             return this.ListEntitiesAsync(fineTuneListOptions, requestOptions, cancellationToken);
         }

@@ -1,6 +1,5 @@
 # OpenAI
 
-![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/Netizine/OpenAI/master)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/d19cad2e2bb647c89b351e2f380e12c6)](https://www.codacy.com/gh/Netizine/OpenAI/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Netizine/OpenAI&amp;utm_campaign=Badge_Grade)
 ![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/Netizine/OpenAI)
 

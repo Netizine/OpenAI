@@ -310,7 +310,7 @@ namespace OpenAI
             string path,
             BaseOptions options,
             RequestOptions requestOptions,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             return this.RequestAsync<TEntityReturned>(
                 method,
@@ -341,7 +341,32 @@ namespace OpenAI
         }
 
         /// <summary>
-        /// Requests the asynchronously.
+        /// Requests the HTTP call asynchronously.
+        /// </summary>
+        /// <typeparam name="T">T.</typeparam>
+        /// <param name="method">The method.</param>
+        /// <param name="path">The path.</param>
+        /// <param name="options">The options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>The type of <see cref="IOpenAIEntity"/> that this service returns.</returns>
+        protected async Task<T> RequestAsync<T>(
+            HttpMethod method,
+            string path,
+            BaseOptions options,
+            RequestOptions requestOptions)
+            where T : IOpenAIEntity
+        {
+            requestOptions = this.SetupRequestOptions(requestOptions);
+            return await this.Client.RequestAsync<T>(
+                method,
+                path,
+                options,
+                requestOptions,
+                default).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Requests the HTTP call asynchronously.
         /// </summary>
         /// <typeparam name="T">T.</typeparam>
         /// <param name="method">The method.</param>
@@ -355,7 +380,7 @@ namespace OpenAI
             string path,
             BaseOptions options,
             RequestOptions requestOptions,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
             where T : IOpenAIEntity
         {
             requestOptions = this.SetupRequestOptions(requestOptions);

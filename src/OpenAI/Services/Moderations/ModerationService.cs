@@ -40,15 +40,35 @@ namespace OpenAI
         /// <value>The base path.</value>
         public override string BasePath => "/v1/moderations";
 
+        public Moderation Get(ModerationGetOptions options)
+        {
+            return this.Get(options, null);
+        }
+
         /// <summary>
         /// Gets the specified moderation results.
         /// </summary>
         /// <param name="options">The options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <returns>Moderation.</returns>
-        public Moderation Get(ModerationGetOptions options, RequestOptions requestOptions = null)
+        public Moderation Get(ModerationGetOptions options, RequestOptions requestOptions)
         {
             return this.Request(HttpMethod.Post, "/v1/moderations", options, requestOptions);
+        }
+
+        public Task<Moderation> GetAsync(ModerationGetOptions options)
+        {
+            return this.GetAsync(options, null, default);
+        }
+
+        public Task<Moderation> GetAsync(ModerationGetOptions options, CancellationToken cancellationToken)
+        {
+            return this.GetAsync(options, null, cancellationToken);
+        }
+
+        public Task<Moderation> GetAsync(ModerationGetOptions options, RequestOptions requestOptions)
+        {
+            return this.GetAsync(options, requestOptions, default);
         }
 
         /// <summary>
@@ -58,7 +78,7 @@ namespace OpenAI
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;Moderation&gt;.</returns>
-        public Task<Moderation> GetAsync(ModerationGetOptions options, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+        public Task<Moderation> GetAsync(ModerationGetOptions options, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
             return this.RequestAsync(HttpMethod.Post, "/v1/moderations", options, requestOptions, cancellationToken);
         }

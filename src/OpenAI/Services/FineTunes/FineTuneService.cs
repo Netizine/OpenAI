@@ -166,9 +166,21 @@
         /// <param name="id">The identifier.</param>
         /// <param name="fineTuneGetOptions">The fine-tune get options.</param>
         /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;FineTune&gt;.</returns>
+        public virtual Task<FineTune> GetAsync(string id, FineTuneGetOptions fineTuneGetOptions, RequestOptions requestOptions)
+        {
+            return this.GetAsync(id, fineTuneGetOptions, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Gets the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="fineTuneGetOptions">The fine-tune get options.</param>
+        /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;FineTune&gt;.</returns>
-        public virtual Task<FineTune> GetAsync(string id, FineTuneGetOptions fineTuneGetOptions, RequestOptions requestOptions, CancellationToken cancellationToken = default)
+        public virtual Task<FineTune> GetAsync(string id, FineTuneGetOptions fineTuneGetOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
             return this.GetEntityAsync(id, fineTuneGetOptions, requestOptions, cancellationToken);
         }

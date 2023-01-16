@@ -281,6 +281,28 @@ namespace OpenAI
         /// <param name="path">The path.</param>
         /// <param name="options">The options.</param>
         /// <param name="requestOptions">The request options.</param>
+        /// <returns>The type of <see cref="IOpenAIEntity"/> that this service returns.</returns>
+        protected Task<TEntityReturned> RequestAsync(
+            HttpMethod method,
+            string path,
+            BaseOptions options,
+            RequestOptions requestOptions)
+        {
+            return this.RequestAsync<TEntityReturned>(
+                method,
+                path,
+                options,
+                requestOptions,
+                default);
+        }
+
+        /// <summary>
+        /// Requests the specified method asynchronously.
+        /// </summary>
+        /// <param name="method">The HTTP method.</param>
+        /// <param name="path">The path.</param>
+        /// <param name="options">The options.</param>
+        /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The type of <see cref="IOpenAIEntity"/> that this service returns.</returns>
         protected Task<TEntityReturned> RequestAsync(

@@ -8,10 +8,6 @@ namespace OpenAI
     /// <summary>
     /// The OpenAI list.
     /// </summary>
-    /// <typeparam name="T">T.</typeparam>
-    /// <seealso cref="OpenAI.OpenAIEntity" />
-    /// <seealso cref="OpenAI.IHasObject" />
-    /// <seealso cref="System.Collections.Generic.IEnumerable&lt;T&gt;" />
     [JsonObject]
     public class OpenAIList<T> : OpenAIEntity<OpenAIList<T>>, IHasObject, IEnumerable<T>
     {

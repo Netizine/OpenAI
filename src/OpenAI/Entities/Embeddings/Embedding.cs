@@ -6,8 +6,6 @@
     /// <summary>
     /// A vector representation of a given input that can be easily consumed by machine learning models and algorithms.
     /// </summary>
-    /// <seealso cref="OpenAI.OpenAIEntity" />
-    /// <seealso cref="OpenAI.IHasObject" />
     public class Embedding : OpenAIEntity<Embedding>, IHasObject
     {
         /// <summary>

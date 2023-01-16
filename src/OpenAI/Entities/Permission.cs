@@ -7,8 +7,6 @@
     /// <summary>
     /// The OpenAI permission.
     /// </summary>
-    /// <seealso cref="OpenAI.IHasId" />
-    /// <seealso cref="OpenAI.IHasObject" />
     public class Permission : IHasId, IHasObject
     {
         /// <summary>

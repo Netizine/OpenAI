@@ -7,8 +7,6 @@
     /// <summary>
     /// The OpenAI result files.
     /// </summary>
-    /// <seealso cref="OpenAI.IHasId" />
-    /// <seealso cref="OpenAI.IHasObject" />
     public class ResultFiles : IHasId, IHasObject
     {
         /// <summary>

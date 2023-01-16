@@ -6,7 +6,6 @@
     /// <summary>
     /// The embedding data.
     /// </summary>
-    /// <seealso cref="OpenAI.IHasObject" />
     public class EmbeddingData : IHasObject
     {
         /// <summary>

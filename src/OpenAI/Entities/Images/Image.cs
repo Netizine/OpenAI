@@ -8,7 +8,6 @@
     /// <summary>
     /// The OpenAI image.
     /// </summary>
-    /// <seealso cref="OpenAI.OpenAIEntity" />
     public class Image : OpenAIEntity<Image>
     {
         /// <summary>

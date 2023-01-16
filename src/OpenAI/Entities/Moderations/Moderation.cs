@@ -6,8 +6,6 @@
     /// <summary>
     /// Given a input text, outputs if the model classifies it as violating OpenAI's content policy.
     /// </summary>
-    /// <seealso cref="OpenAI.OpenAIEntity" />
-    /// <seealso cref="OpenAI.IHasId" />
     public class Moderation : OpenAIEntity<Moderation>, IHasId
     {
         /// <summary>

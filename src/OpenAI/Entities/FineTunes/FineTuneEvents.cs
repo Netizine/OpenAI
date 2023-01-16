@@ -6,8 +6,6 @@
     /// <summary>
     /// The OpenAI fine tune events.
     /// </summary>
-    /// <seealso cref="OpenAI.OpenAIEntity" />
-    /// <seealso cref="OpenAI.IHasObject" />
     public class FineTuneEvents : OpenAIEntity<FineTuneEvents>, IHasObject
     {
         /// <summary>

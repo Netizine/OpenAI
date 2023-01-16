@@ -7,7 +7,6 @@
     /// <summary>
     /// The events.
     /// </summary>
-    /// <seealso cref="OpenAI.IHasObject" />
     public class Event : IHasObject
     {
         /// <summary>

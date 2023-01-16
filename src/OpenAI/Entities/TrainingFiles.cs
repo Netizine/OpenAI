@@ -7,8 +7,6 @@
     /// <summary>
     /// The OpenAI training files.
     /// </summary>
-    /// <seealso cref="OpenAI.IHasId" />
-    /// <seealso cref="OpenAI.IHasObject" />
     public class TrainingFiles : IHasId, IHasObject
     {
         /// <summary>

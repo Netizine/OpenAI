@@ -5,7 +5,6 @@
     /// <summary>
     /// The OpenAI hyperparams.
     /// </summary>
-    /// <seealso cref="OpenAI.IHasObject" />
     public class Hyperparams : IHasObject
     {
         /// <summary>

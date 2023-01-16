@@ -5,7 +5,6 @@ namespace OpenAI
     /// <summary>
     /// The OpenAI error.
     /// </summary>
-    /// <seealso cref="OpenAI.OpenAIEntity" />
     public class OpenAIError : OpenAIEntity<OpenAIError>
     {
         /*

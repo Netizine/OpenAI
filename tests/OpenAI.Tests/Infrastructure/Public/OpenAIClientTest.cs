@@ -149,6 +149,17 @@ namespace OpenAI.Tests
             public OpenAIResponse Response { get; set; }
 
             public Task<OpenAIResponse> MakeRequestAsync(
+                OpenAIRequest request)
+            {
+                if (this.Response == null)
+                {
+                    throw new OpenAITestException("Response is null");
+                }
+
+                return Task.FromResult<OpenAIResponse>(this.Response);
+            }
+
+            public Task<OpenAIResponse> MakeRequestAsync(
                 OpenAIRequest request,
                 CancellationToken cancellationToken = default)
             {

@@ -36,24 +36,66 @@
         /// <summary>
         /// Creates a entity with the specified options.
         /// </summary>
-        /// <param name="options">The options.</param>
-        /// <param name="requestOptions">The request options.</param>
+        /// <param name="completionCreateOptions">The completion create options.</param>
         /// <returns>The created entity.</returns>
-        public virtual Completion Create(CompletionCreateOptions options, RequestOptions requestOptions = null)
+        public virtual Completion Create(CompletionCreateOptions completionCreateOptions)
         {
-            return this.CreateEntity(options, requestOptions);
+            return this.Create(completionCreateOptions, null);
         }
 
         /// <summary>
-        /// Creates a entity with the specified options asynchronously.
+        /// Creates a entity with the specified options.
         /// </summary>
-        /// <param name="options">The options.</param>
+        /// <param name="completionCreateOptions">The completion create options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>The created entity.</returns>
+        public virtual Completion Create(CompletionCreateOptions completionCreateOptions, RequestOptions requestOptions)
+        {
+            return this.CreateEntity(completionCreateOptions, requestOptions);
+        }
+
+        /// <summary>
+        /// Creates a completion entity with the specified options asynchronously.
+        /// </summary>
+        /// <param name="completionCreateOptions">The completion create options.</param>
+        /// <returns>Task&lt;Completion&gt;.</returns>
+        public virtual Task<Completion> CreateAsync(CompletionCreateOptions completionCreateOptions)
+        {
+            return this.CreateAsync(completionCreateOptions, null, default);
+        }
+
+        /// <summary>
+        /// Creates a completion entity with the specified options asynchronously.
+        /// </summary>
+        /// <param name="completionCreateOptions">The completion create options.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;Completion&gt;.</returns>
+        public virtual Task<Completion> CreateAsync(CompletionCreateOptions completionCreateOptions, CancellationToken cancellationToken)
+        {
+            return this.CreateAsync(completionCreateOptions, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates a completion entity with the specified options asynchronously.
+        /// </summary>
+        /// <param name="completionCreateOptions">The completion create options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;Completion&gt;.</returns>
+        public virtual Task<Completion> CreateAsync(CompletionCreateOptions completionCreateOptions, RequestOptions requestOptions)
+        {
+            return this.CreateAsync(completionCreateOptions, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Creates a completion entity with the specified options asynchronously.
+        /// </summary>
+        /// <param name="completionCreateOptions">The completion create options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;Completion&gt;.</returns>
-        public virtual Task<Completion> CreateAsync(CompletionCreateOptions options, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Task<Completion> CreateAsync(CompletionCreateOptions completionCreateOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.CreateEntityAsync(options, requestOptions, cancellationToken);
+            return this.CreateEntityAsync(completionCreateOptions, requestOptions, cancellationToken);
         }
     }
 }

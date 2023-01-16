@@ -75,6 +75,24 @@ namespace OpenAI
         /// <param name="path">The path of the request.</param>
         /// <param name="options">The parameters of the request.</param>
         /// <param name="requestOptions">The special modifiers of the request.</param>
+        /// <returns>The task object representing the asynchronous operation.</returns>
+        /// <exception cref="OpenAIException">Thrown if the request fails.</exception>
+        public Task<T> RequestAsync<T>(
+            HttpMethod method,
+            string path,
+            BaseOptions options,
+            RequestOptions requestOptions)
+            where T : IOpenAIEntity
+        {
+            return this.RequestAsync<T>(method, path, options, requestOptions, default);
+        }
+
+        /// <summary>Sends a request to OpenAI's API as an asynchronous operation.</summary>
+        /// <typeparam name="T">Type of the OpenAI entity returned by the API.</typeparam>
+        /// <param name="method">The HTTP method.</param>
+        /// <param name="path">The path of the request.</param>
+        /// <param name="options">The parameters of the request.</param>
+        /// <param name="requestOptions">The special modifiers of the request.</param>
         /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
         /// <returns>The task object representing the asynchronous operation.</returns>
         /// <exception cref="OpenAIException">Thrown if the request fails.</exception>
@@ -83,7 +101,7 @@ namespace OpenAI
             string path,
             BaseOptions options,
             RequestOptions requestOptions,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
             where T : IOpenAIEntity
         {
             var request = new OpenAIRequest(this, method, path, options, requestOptions);

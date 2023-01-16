@@ -251,7 +251,7 @@ namespace OpenAI
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>An <see cref="AnyOf{T1, T2, T3}"/> object that holds the value.</returns>
-        public static implicit operator AnyOf<T1, T2, T3>(T3 value) => value == null ? null : new AnyOf<T1, T2, T3>(value);
+        public static implicit operator AnyOf<T1, T2, T3>(T3 value) => EqualityComparer<T3>.Default.Equals(value, default(T3)) ? null : new AnyOf<T1, T2, T3>(value);
 
         /// <summary>
         /// Converts an <see cref="AnyOf{T1, T2, T3}"/> object to a value of type <c>T1</c>.

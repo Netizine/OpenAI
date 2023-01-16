@@ -40,24 +40,66 @@
         public override string BasePath => null;
 
         /// <summary>
-        /// Gets the specified identifier.
+        /// Gets the file content by the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>FileContent.</returns>
+        public virtual FileContent Get(string id)
+        {
+            return this.Get(id, null);
+        }
+
+        /// <summary>
+        /// Gets the file content by the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <returns>FileContent.</returns>
-        public virtual FileContent Get(string id, RequestOptions requestOptions = null)
+        public virtual FileContent Get(string id, RequestOptions requestOptions)
         {
             return this.Request(HttpMethod.Get, $"/v1/files/{id}/content", null, requestOptions);
         }
 
         /// <summary>
-        /// Gets the specified identifier asynchronously.
+        /// Gets the file content by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Task&lt;FileContent&gt;.</returns>
+        public virtual Task<FileContent> GetAsync(string id)
+        {
+            return this.GetAsync(id, null, default);
+        }
+
+        /// <summary>
+        /// Gets the file content by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;FileContent&gt;.</returns>
+        public virtual Task<FileContent> GetAsync(string id, CancellationToken cancellationToken)
+        {
+            return this.GetAsync(id, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the file content by the specified identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;FileContent&gt;.</returns>
+        public virtual Task<FileContent> GetAsync(string id, RequestOptions requestOptions)
+        {
+            return this.GetAsync(id, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Gets the file content by the specified identifier asynchronously.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;FileContent&gt;.</returns>
-        public virtual Task<FileContent> GetAsync(string id, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Task<FileContent> GetAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
             return this.RequestAsync(HttpMethod.Get, $"/v1/files/{id}/content", null, requestOptions, cancellationToken);
         }

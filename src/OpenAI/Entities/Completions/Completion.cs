@@ -8,7 +8,11 @@
 
     /// <summary>
     /// The completion model will return one or more predicted completions, and can also return the probabilities of alternative tokens at each position.
+    /// Implements the <see cref="Completion" />.
+    /// Implements the <see cref="OpenAI.IHasId" />.
+    /// Implements the <see cref="OpenAI.IHasObject" />.
     /// </summary>
+    /// <seealso cref="Completion" />
     /// <seealso cref="OpenAI.IHasId" />
     /// <seealso cref="OpenAI.IHasObject" />
     public class Completion : OpenAIEntity<Completion>, IHasId, IHasObject

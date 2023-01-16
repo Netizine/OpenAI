@@ -177,19 +177,23 @@ namespace OpenAI
             };
         }
 
-        /// <summary>Sends a request to OpenAI's API as an asynchronous operation.</summary>
+        /// <summary>
+        /// Make a HTTP request as an asynchronous operation.
+        /// </summary>
         /// <param name="request">The parameters of the request to send.</param>
-        /// <returns>The task object representing the asynchronous operation.</returns>
+        /// <returns>A Task&lt;OpenAIResponse&gt; representing the asynchronous operation.</returns>
         public Task<OpenAIResponse> MakeRequestAsync(
             OpenAIRequest request)
         {
-            return this.MakeRequestAsync(request, CancellationToken.None);
+            return this.MakeRequestAsync(request, default);
         }
 
-        /// <summary>Sends a request to OpenAI's API as an asynchronous operation.</summary>
+        /// <summary>
+        /// Make a HTTP request as an asynchronous operation.
+        /// </summary>
         /// <param name="request">The parameters of the request to send.</param>
         /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
-        /// <returns>The task object representing the asynchronous operation.</returns>
+        /// <returns>A Task&lt;OpenAIResponse&gt; representing the asynchronous operation.</returns>
         public async Task<OpenAIResponse> MakeRequestAsync(
             OpenAIRequest request,
             CancellationToken cancellationToken)

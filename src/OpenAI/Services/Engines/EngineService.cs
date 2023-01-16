@@ -88,9 +88,71 @@
             return this.GetEntity(id, engineGetOptions, requestOptions);
         }
 
+        /// <summary>
+        /// Gets the specified engine by identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Task&lt;Engine&gt;.</returns>
         public virtual Task<Engine> GetAsync(string id)
         {
-            return this.GetEntityAsync(id, null, null, default);
+            return this.GetAsync(id, null, null, default);
+        }
+
+        /// <summary>
+        /// Gets the specified engine by identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;Engine&gt;.</returns>
+        public virtual Task<Engine> GetAsync(string id, CancellationToken cancellationToken)
+        {
+            return this.GetAsync(id, null, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the specified engine by identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="engineGetOptions">The engine get options.</param>
+        /// <returns>Task&lt;Engine&gt;.</returns>
+        public virtual Task<Engine> GetAsync(string id, EngineGetOptions engineGetOptions)
+        {
+            return this.GetAsync(id, engineGetOptions, null, default);
+        }
+
+        /// <summary>
+        /// Gets the specified engine by identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="engineGetOptions">The engine get options.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;Engine&gt;.</returns>
+        public virtual Task<Engine> GetAsync(string id, EngineGetOptions engineGetOptions, CancellationToken cancellationToken)
+        {
+            return this.GetAsync(id, engineGetOptions, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the specified engine by identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;Engine&gt;.</returns>
+        public virtual Task<Engine> GetAsync(string id, RequestOptions requestOptions)
+        {
+            return this.GetAsync(id, null, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Gets the specified engine by identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;Engine&gt;.</returns>
+        public virtual Task<Engine> GetAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.GetAsync(id, null, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -101,32 +163,122 @@
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;Engine&gt;.</returns>
-        public virtual Task<Engine> GetAsync(string id, EngineGetOptions engineGetOptions = null, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Task<Engine> GetAsync(string id, EngineGetOptions engineGetOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
             return this.GetEntityAsync(id, engineGetOptions, requestOptions, cancellationToken);
         }
 
         /// <summary>
-        /// Lists the specified options.
+        /// Lists the specified engines by options.
         /// </summary>
-        /// <param name="options">The options.</param>
-        /// <param name="requestOptions">The request options.</param>
         /// <returns>OpenAIList&lt;Engine&gt;.</returns>
-        public virtual OpenAIList<Engine> List(EngineListOptions options = null, RequestOptions requestOptions = null)
+        public virtual OpenAIList<Engine> List()
         {
-            return this.ListEntities(options, requestOptions);
+            return this.List(null, null);
         }
 
         /// <summary>
-        /// Lists the specified options asynchronously.
+        /// Lists the specified engines by options.
         /// </summary>
-        /// <param name="options">The options.</param>
+        /// <param name="engineListOptions">The engine list options.</param>
+        /// <returns>OpenAIList&lt;Engine&gt;.</returns>
+        public virtual OpenAIList<Engine> List(EngineListOptions engineListOptions)
+        {
+            return this.List(engineListOptions, null);
+        }
+
+        /// <summary>
+        /// Lists the specified engines by options.
+        /// </summary>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>OpenAIList&lt;Engine&gt;.</returns>
+        public virtual OpenAIList<Engine> List(RequestOptions requestOptions)
+        {
+            return this.List(null, requestOptions);
+        }
+
+        /// <summary>
+        /// Lists the specified engines by options.
+        /// </summary>
+        /// <param name="engineListOptions">The engine list options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>OpenAIList&lt;Engine&gt;.</returns>
+        public virtual OpenAIList<Engine> List(EngineListOptions engineListOptions, RequestOptions requestOptions)
+        {
+            return this.ListEntities(engineListOptions, requestOptions);
+        }
+
+        /// <summary>
+        /// Lists the specified engines by the provided options asynchronously.
+        /// </summary>
+        /// <returns>Task&lt;OpenAIList&lt;Engine&gt;&gt;.</returns>
+        public virtual Task<OpenAIList<Engine>> ListAsync()
+        {
+            return this.ListAsync(null, null, default);
+        }
+
+        /// <summary>
+        /// Lists the specified engines by the provided options asynchronously.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;OpenAIList&lt;Engine&gt;&gt;.</returns>
+        public virtual Task<OpenAIList<Engine>> ListAsync(CancellationToken cancellationToken)
+        {
+            return this.ListAsync(null, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the specified engines by the provided options asynchronously.
+        /// </summary>
+        /// <param name="engineListOptions">The engine list options.</param>
+        /// <returns>Task&lt;OpenAIList&lt;Engine&gt;&gt;.</returns>
+        public virtual Task<OpenAIList<Engine>> ListAsync(EngineListOptions engineListOptions)
+        {
+            return this.ListAsync(engineListOptions, null, default);
+        }
+
+        /// <summary>
+        /// Lists the specified engines by the provided options asynchronously.
+        /// </summary>
+        /// <param name="engineListOptions">The engine list options.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;OpenAIList&lt;Engine&gt;&gt;.</returns>
+        public virtual Task<OpenAIList<Engine>> ListAsync(EngineListOptions engineListOptions, CancellationToken cancellationToken)
+        {
+            return this.ListAsync(engineListOptions, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the specified engines by the provided options asynchronously.
+        /// </summary>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;OpenAIList&lt;Engine&gt;&gt;.</returns>
+        public virtual Task<OpenAIList<Engine>> ListAsync(RequestOptions requestOptions)
+        {
+            return this.ListAsync(null, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Lists the specified engines by the provided options asynchronously.
+        /// </summary>
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;OpenAIList&lt;Engine&gt;&gt;.</returns>
-        public virtual Task<OpenAIList<Engine>> ListAsync(EngineListOptions options = null, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Task<OpenAIList<Engine>> ListAsync(RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.ListEntitiesAsync(options, requestOptions, cancellationToken);
+            return this.ListAsync(null, requestOptions, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the specified engines by the provided options asynchronously.
+        /// </summary>
+        /// <param name="engineListOptions">The engine list options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;OpenAIList&lt;Engine&gt;&gt;.</returns>
+        public virtual Task<OpenAIList<Engine>> ListAsync(EngineListOptions engineListOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.ListEntitiesAsync(engineListOptions, requestOptions, cancellationToken);
         }
     }
 }

@@ -94,7 +94,7 @@
         }
 
         /// <summary>
-        /// Gets the specified identifier asynchronously.
+        /// Gets the specified engine by identifier asynchronously.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task&lt;FineTune&gt;.</returns>
@@ -104,7 +104,7 @@
         }
 
         /// <summary>
-        /// Gets the specified identifier asynchronously.
+        /// Gets the specified engine by identifier asynchronously.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -115,7 +115,7 @@
         }
 
         /// <summary>
-        /// Gets the specified identifier asynchronously.
+        /// Gets the specified engine by identifier asynchronously.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="fineTuneGetOptions">The fine tune get options.</param>
@@ -126,18 +126,7 @@
         }
 
         /// <summary>
-        /// Gets the specified identifier asynchronously.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <param name="requestOptions">The request options.</param>
-        /// <returns>Task&lt;FineTune&gt;.</returns>
-        public virtual Task<FineTune> GetAsync(string id, RequestOptions requestOptions)
-        {
-            return this.GetAsync(id, null, requestOptions, default);
-        }
-
-        /// <summary>
-        /// Gets the specified identifier asynchronously.
+        /// Gets the specified engine by identifier asynchronously.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="fineTuneGetOptions">The fine tune get options.</param>
@@ -149,7 +138,18 @@
         }
 
         /// <summary>
-        /// Gets the specified identifier asynchronously.
+        /// Gets the specified engine by identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;FineTune&gt;.</returns>
+        public virtual Task<FineTune> GetAsync(string id, RequestOptions requestOptions)
+        {
+            return this.GetAsync(id, null, requestOptions, default);
+        }
+
+        /// <summary>
+        /// Gets the specified engine by identifier asynchronously.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="requestOptions">The request options.</param>
@@ -164,7 +164,7 @@
         /// Gets the specified identifier asynchronously.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="fineTuneGetOptions">The options.</param>
+        /// <param name="fineTuneGetOptions">The fine-tune get options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;FineTune&gt;.</returns>

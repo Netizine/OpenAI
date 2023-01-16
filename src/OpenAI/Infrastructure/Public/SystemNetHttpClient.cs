@@ -59,11 +59,22 @@ namespace OpenAI
         /// <summary>
         /// Initializes a new instance of the <see cref="SystemNetHttpClient"/> class.
         /// </summary>
+        public SystemNetHttpClient()
+            : this(DefaultMaxNumberRetries)
+        {
+            this.httpClient = LazyDefaultHttpClient.Value;
+            this.MaxNetworkRetries = DefaultMaxNumberRetries;
+            this.userAgentString = BuildOpenAIClientUserAgentString();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SystemNetHttpClient"/> class.
+        /// </summary>
         /// <param name="maxNetworkRetries">
         /// The maximum number of times the client will retry requests that fail due to an
         /// intermittent problem.
         /// </param>
-        public SystemNetHttpClient(int maxNetworkRetries = DefaultMaxNumberRetries)
+        public SystemNetHttpClient(int maxNetworkRetries)
             : this(null, maxNetworkRetries)
         {
             this.httpClient = LazyDefaultHttpClient.Value;

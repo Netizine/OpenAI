@@ -18,7 +18,9 @@ namespace OpenAI
         public static readonly IReadOnlyDictionary<string, Type> ObjectsToTypes = new ReadOnlyDictionary<string, Type>(
             new Dictionary<string, Type>
             {
+#pragma warning disable CS0618
                 { "engine", typeof(Engine) },
+#pragma warning restore CS0618
                 { "model", typeof(Model) },
                 { "completion", typeof(Completion) },
                 { "edit", typeof(Edit) },

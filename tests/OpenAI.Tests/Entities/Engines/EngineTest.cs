@@ -1,4 +1,5 @@
-﻿namespace OpenAI.Tests.Entities.Engines
+﻿#pragma warning disable CS0618
+namespace OpenAI.Tests.Entities.Engines
 {
     using Newtonsoft.Json;
     using OpenAI;

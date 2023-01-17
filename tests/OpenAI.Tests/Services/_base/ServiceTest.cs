@@ -55,8 +55,8 @@ namespace OpenAI.Tests
 
             public BaseOptions LastOptions { get; protected set; }
 
-            public Task<T> RequestAsync<T>(HttpMethod method, string path, 
-                BaseOptions options, RequestOptions requestOptions) 
+            public Task<T> RequestAsync<T>(HttpMethod method, string path,
+                BaseOptions options, RequestOptions requestOptions)
                 where T : IOpenAIEntity
             {
                 this.LastOptions = options;

@@ -1,8 +1,6 @@
 # OpenAI
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/d19cad2e2bb647c89b351e2f380e12c6)](https://www.codacy.com/gh/Netizine/OpenAI/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Netizine/OpenAI&amp;utm_campaign=Badge_Grade)
-![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/Netizine/OpenAI)
-
 ## The unofficial [OpenAI][openai] .NET library, supporting .NET Standard 2.0+, .NET Core 2.0+, and .NET Framework 4.6.2+.
 
 ## Installation
@@ -49,7 +47,7 @@ OpenAI authenticates API requests using your account’s secret key, which you c
 Use `OpenAI.OpenAIConfiguration.ApiKey` property to set the secret key.
 
 ``` C#
-OpenAI.OpenAIConfiguration.ApiKey = "sk-yourkey";
+OpenAI.OpenAIConfiguration.ApiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
 ```
 
 ### Retrieve a resource
@@ -193,11 +191,10 @@ Model model = modelService.Get("davinci");
 var featureEnabled = model.RawJObject["feature_enabled"];
 ```
 
-This information is passed along when the library makes calls to the OpenAI
-API.
+This information is passed along when the library makes calls to the OpenAI API.
 
 ```
-dotnet add package OpenAI --version 1.0.1-beta.1
+dotnet add package OpenAI --version 1.0.2
 ```
 
 ## Support
@@ -245,7 +242,7 @@ dotnet format src/OpenAI.sln
 For any requests, bug or comments, please [open an issue][issues] or [submit a
 pull request][pulls].
 
-[advanced-client-usage]: https://github.com/Netizine/OpenAI/Advanced-client-usage.mb
+[advanced-client-usage]: https://github.com/Netizine/OpenAI//blob/master/ADVANCED_CLIENT_USAGE.md
 [api-docs]: https://beta.openai.com/docs/introduction
 [api-keys]: https://beta.openai.com/account/api-keys
 [connect-auth]: https://beta.openai.com/docs/api-reference/authentication

@@ -1,10 +1,12 @@
 ﻿namespace OpenAI
 {
+    using System;
     using Newtonsoft.Json;
 
     /// <summary>
     /// Describes and provide access to the various engines available in the OpenAI API.
     /// </summary>
+    [Obsolete("This class is deprecated. Please use the OpenAI.Model class instead.")]
     public class Engine : OpenAIEntity<Engine>, IHasId, IHasObject
     {
         /// <summary>

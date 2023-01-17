@@ -1,5 +1,6 @@
 ﻿namespace OpenAI
 {
+    using System;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@
     /// <seealso cref="OpenAI.Service{OpenAI.Engine}" />
     /// <seealso cref="OpenAI.IListable{OpenAI.Engine, OpenAI.EngineListOptions}" />
     /// <seealso cref="OpenAI.IRetrievable{OpenAI.Engine, OpenAI.EngineGetOptions}" />
+    [Obsolete("This class is deprecated. Please use the OpenAI.ModelService class instead.")]
     public class EngineService : Service<Engine>,
 #pragma warning restore CS1658 // Warning is overriding an error
 #pragma warning restore CS1584 // XML comment has syntactically incorrect cref attribute

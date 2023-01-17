@@ -1,17 +1,21 @@
 ﻿using OpenAI;
 using System.Diagnostics.Metrics;
+using System.Security.Cryptography;
 using File = OpenAI.File;
+
 
 var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
 
 OpenAI.OpenAIConfiguration.ApiKey = apiKey;
 
 //Test engine
+#pragma warning disable CS0618 // Type or member is obsolete
 var engineService = new EngineService();
 var engine = engineService.Get("babbage");
 Console.WriteLine(engine.Id);
 OpenAIList<Engine> engineList = engineService.List();
 Console.WriteLine(engineList.Count());
+#pragma warning restore CS0618 // Type or member is obsolete
 
 //Test model
 var modelService = new ModelService();
@@ -117,4 +121,13 @@ var fineTune = fineTuneService.Create(new FineTuneCreateOptions
 Console.WriteLine(fineTune.Id);
 var fineTuneList = fineTuneService.List(new FineTuneListOptions());
 Console.WriteLine(fineTuneList.Count());
+
+//double GetRandomNumber(RandomNumberGenerator rng)
+//{
+//    byte[] randomNumber = new byte[8];
+//    rng.GetBytes(randomNumber);
+//    var result = BitConverter.ToDouble(randomNumber, 0);
+//    return result;
+//}
+
 

@@ -1,3 +1,4 @@
+#pragma warning disable CS0618
 namespace OpenAI.Tests
 {
     using Newtonsoft.Json;

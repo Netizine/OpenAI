@@ -7,8 +7,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <PackageReference Include="Netizine.OpenAI" Version="1.0.1" />
+  </ItemGroup>-->
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\OpenAI\OpenAI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

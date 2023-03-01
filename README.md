@@ -65,6 +65,25 @@ Console.WriteLine(model.OwnedBy);
 The `Create` method of the service class can be used to create a new resource:
 
 ``` C#
+ChatCompletionMessage chatMessage = new ChatCompletionMessage {
+    Role = ChatRoles.User,
+    Content = "Can you explain the meaning of life"
+};
+List<ChatCompletionMessage> chatMessageList = new List<ChatCompletionMessage>
+{
+    chatMessage
+};
+ChatGPT3CompletionService chatCompletionService = new ChatGPT3CompletionService();
+ChatGPT3CompletionCreateOptions chatCompletionOptions = new ChatGPT3CompletionCreateOptions {
+    Model = "gpt-3.5-turbo",
+    Messages = chatMessageList,
+    Temperature = 0,
+};
+ChatCompletion chatCompletion = chatCompletionService.Create(chatCompletionOptions);
+Console.WriteLine(chatCompletion.Choices[0].Message);
+```
+
+``` C#
 CompletionService completionService = new CompletionService();
 Completion completion = completionService.Create(new CompletionCreateOptions
 {
@@ -194,7 +213,7 @@ var featureEnabled = model.RawJObject["feature_enabled"];
 This information is passed along when the library makes calls to the OpenAI API.
 
 ```
-dotnet add package OpenAI --version 1.0.2
+dotnet add package OpenAI --version 1.0.4
 ```
 
 ## Support
@@ -209,7 +228,13 @@ and run it from a background terminal
 installing via Nuget):
 
 ```sh
-dotnet tool install OpenAI.Mock
+dotnet tool install --global OpenAI.Mock --version 1.0.4
+openai-mock
+```
+
+Alternatively, if you have already installed it, run 
+```sh
+dotnet tool update --global OpenAI.Mock --version 1.0.4
 openai-mock
 ```
 

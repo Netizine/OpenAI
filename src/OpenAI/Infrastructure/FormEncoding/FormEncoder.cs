@@ -31,7 +31,7 @@ namespace OpenAI.Infrastructure.FormEncoding
             }
 
             var optionsType = options.GetType();
-            if (optionsType == typeof(CompletionCreateOptions) || optionsType == typeof(EditCreateOptions) || optionsType == typeof(ImageCreateOptions) || optionsType == typeof(EmbeddingCreateOptions) || optionsType == typeof(FineTuneCreateOptions) || optionsType == typeof(ModerationGetOptions))
+            if (optionsType == typeof(CompletionCreateOptions) || optionsType == typeof(ChatGPT3CompletionCreateOptions) || optionsType == typeof(EditCreateOptions) || optionsType == typeof(ImageCreateOptions) || optionsType == typeof(EmbeddingCreateOptions) || optionsType == typeof(FineTuneCreateOptions) || optionsType == typeof(ModerationGetOptions))
             {
                 return new JsonContent(options);
             }

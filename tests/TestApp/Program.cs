@@ -1,12 +1,31 @@
 ﻿using OpenAI;
 using System.Diagnostics.Metrics;
 using System.Security.Cryptography;
+using OpenAI.Entities.Chat.Completions;
 using File = OpenAI.File;
 
 
 var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
 
 OpenAI.OpenAIConfiguration.ApiKey = apiKey;
+
+// chat completion
+ChatCompletionMessage chatMessage = new ChatCompletionMessage {
+    Role = ChatRoles.User,
+    Content = "Can you explain the meaning of life"
+};
+List<ChatCompletionMessage> chatMessageList = new List<ChatCompletionMessage>
+{
+    chatMessage
+};
+ChatGPT3CompletionService chatCompletionService = new ChatGPT3CompletionService();
+ChatGPT3CompletionCreateOptions chatCompletionOptions = new ChatGPT3CompletionCreateOptions {
+    Model = "gpt-3.5-turbo",
+    Messages = chatMessageList,
+    Temperature = 0,
+};
+ChatCompletion chatCompletion = chatCompletionService.Create(chatCompletionOptions);
+Console.WriteLine(chatCompletion.Choices[0].Message);
 
 //Test engine
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -112,22 +131,6 @@ Console.WriteLine(fileContent.Content);
 var deleteFile = fileService.Delete(createdFile.Id, new FileDeleteOptions());
 Console.WriteLine(deleteFile.Id);
 
-//Test fine-tunes
-var fineTuneService = new FineTuneService();
-var fineTune = fineTuneService.Create(new FineTuneCreateOptions
-{
-    TrainingFile = createdFile.Id,
-});
-Console.WriteLine(fineTune.Id);
-var fineTuneList = fineTuneService.List(new FineTuneListOptions());
-Console.WriteLine(fineTuneList.Count());
-
-//double GetRandomNumber(RandomNumberGenerator rng)
-//{
-//    byte[] randomNumber = new byte[8];
-//    rng.GetBytes(randomNumber);
-//    var result = BitConverter.ToDouble(randomNumber, 0);
-//    return result;
-//}
+//
 
 

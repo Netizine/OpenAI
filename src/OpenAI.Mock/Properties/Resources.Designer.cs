@@ -344,8 +344,7 @@ namespace OpenAI.Mock.Properties {
         ///      &quot;category_scores&quot;: {
         ///        &quot;hate&quot;: 0.18252533674240112,
         ///        &quot;hate/threatening&quot;: 0.0032941880635917187,
-        ///        &quot;self-harm&quot;: 1.9077321944394043e-09,
-        ///        &quot;sexual [rest of string was truncated]&quot;;.
+        ///        &quot;self-harm&quot;: 1.9077321944394043e-09 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DefaultModerationResponse {
             get {

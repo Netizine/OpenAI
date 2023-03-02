@@ -23,6 +23,7 @@ namespace OpenAI
 #pragma warning restore CS0618
                 { "model", typeof(Model) },
                 { "completion", typeof(Completion) },
+                { "chatCompletion", typeof(ChatCompletion) },
                 { "edit", typeof(Edit) },
                 { "image", typeof(Image) },
                 { "embedding", typeof(Embedding) },

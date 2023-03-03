@@ -1,32 +1,19 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: Build and test
+name: .NET
+
 on:
   workflow_dispatch: # Allow running the workflow manually from the GitHub UI
   push:
-    branches:
-      - 'main'       # Run the workflow when pushing to the main branch
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - '*'          # Run the workflow for all pull requests
-  release:
-    types:
-      - published    # Run the workflow when a new GitHub release is published
+    branches: [ "main" ]
 
-env:
-  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-  DOTNET_NOLOGO: true
-  SrcDirectory: ${{ github.workspace}}/src
-
-defaults:
-  run:
-    shell: pwsh
-  
 jobs:
   build:
 
-    runs-on: windows-2019
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -38,10 +25,10 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - name: Install Openai.Mock
+    - name: Install mock server
       run: dotnet tool install OpenAI.Mock --global
-    - name: Start OpenAI.Mock
-    - run: |
-       openai-mock
-       sleep 30s
-       dotnet test --no-build --verbosity normal
+    - name: Test
+      run: |
+        openai-mock
+        sleep 30s
+        dotnet test --no-build --verbosity normal

@@ -24,7 +24,7 @@ defaults:
 
 jobs:
   create_nuget:
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
     - uses: actions/checkout@v3
       with:
@@ -47,7 +47,7 @@ jobs:
         path: ${{ env.NuGetDirectory }}/*.nupkg
 
   validate_nuget:
-    runs-on: windows-latest
+    runs-on: windows-2019
     needs: [ create_nuget ]
     steps:
       # Install the .NET SDK indicated in the global.json file
@@ -71,7 +71,7 @@ jobs:
         run: meziantou.validate-nuget-package (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg")
 
   run_test:
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET

@@ -28,7 +28,8 @@ jobs:
       run: dotnet build --no-restore
     - name: Install nuget openai.mock
       run: dotnet tool update OpenAI.Mock --global
-    - name: Start openai.mock
-      run: openai-mock  
-    - name: Test
+    - name: Start openai.mock and test
+      run: openai-mock
+          run: sleep 30s
       run: dotnet test --no-build --verbosity normal
+

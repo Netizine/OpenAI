@@ -146,7 +146,7 @@ used if you want to pass the secret API key on each method etc.
 ```c#
 var requestOptions = new RequestOptions
 {
-    ApiKey = "SECRET API KEY",
+    ApiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY"),
     OrganizationId = "ORGANIZATION ID"
 };
 ```
@@ -213,7 +213,7 @@ var featureEnabled = model.RawJObject["feature_enabled"];
 This information is passed along when the library makes calls to the OpenAI API.
 
 ```
-dotnet add package OpenAI --version 1.0.4
+dotnet add package OpenAI
 ```
 
 ## Support
@@ -228,13 +228,13 @@ and run it from a background terminal
 installing via Nuget):
 
 ```sh
-dotnet tool install --global OpenAI.Mock --version 1.0.4
+dotnet tool install --global OpenAI.Mock
 openai-mock
 ```
 
 Alternatively, if you have already installed it, run 
 ```sh
-dotnet tool update --global OpenAI.Mock --version 1.0.4
+dotnet tool update --global OpenAI.Mock
 openai-mock
 ```
 

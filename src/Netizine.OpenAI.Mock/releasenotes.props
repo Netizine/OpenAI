@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <PackageReleaseNotes Condition=" '$(VersionPrefix)' == '1.0.4' ">
+    <PackageReleaseNotes Condition=" '$(VersionPrefix)' == '1.0.7' ">
 * Initial project
     </PackageReleaseNotes>
   </PropertyGroup>

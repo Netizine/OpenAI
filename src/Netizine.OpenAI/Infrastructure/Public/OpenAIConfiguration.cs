@@ -28,20 +28,10 @@ namespace OpenAI
         /// <summary>
         /// Gets or sets the API key.
         /// </summary>
-        /// <remarks>
-        /// You can also set the API key using the <c>OpenAI:ApiKey</c> key in
-        /// <see cref="System.Configuration.ConfigurationManager.AppSettings"/>.
-        /// </remarks>
         public static string ApiKey
         {
             get
             {
-                if (string.IsNullOrEmpty(apiKey) &&
-                    !string.IsNullOrEmpty(ConfigurationManager.AppSettings["OpenAI:ApiKey"]))
-                {
-                    apiKey = ConfigurationManager.AppSettings["OpenAI:ApiKey"];
-                }
-
                 return apiKey;
             }
 
@@ -59,20 +49,10 @@ namespace OpenAI
         /// <summary>
         /// Organization id passed to OpenAI.
         /// </summary>
-        /// <remarks>
-        /// You can also set the Organization ID using the <c>OpenAI:OrganizationId</c> key in
-        /// <see cref="System.Configuration.ConfigurationManager.AppSettings"/>.
-        /// </remarks>
         public static string OrganizationId
         {
             get
             {
-                if (string.IsNullOrEmpty(organizationId) &&
-                    !string.IsNullOrEmpty(ConfigurationManager.AppSettings["OpenAI:OrganizationId"]))
-                {
-                    organizationId = ConfigurationManager.AppSettings["OpenAI:OrganizationId"];
-                }
-
                 return organizationId;
             }
 

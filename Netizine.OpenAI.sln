@@ -4,8 +4,9 @@ VisualStudioVersion = 17.5.33103.201
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1A20A100-9E70-4C00-8EBB-A87EBDA77D60}"
 	ProjectSection(SolutionItems) = preProject
-		OPENAI_MOCK.md = OPENAI_MOCK.md
 		ADVANCED_CLIENT_USAGE.md = ADVANCED_CLIENT_USAGE.md
+		OPENAI_MOCK.md = OPENAI_MOCK.md
+		.github\workflows\publish.yml = .github\workflows\publish.yml
 		README.md = README.md
 		SECURITY.md = SECURITY.md
 	EndProjectSection

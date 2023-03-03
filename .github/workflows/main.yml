@@ -4,6 +4,24 @@
 name: Build and test
 on:
   workflow_dispatch: # Allow running the workflow manually from the GitHub UI
+  push:
+    branches:
+      - 'main'       # Run the workflow when pushing to the main branch
+  pull_request:
+    branches:
+      - '*'          # Run the workflow for all pull requests
+  release:
+    types:
+      - published    # Run the workflow when a new GitHub release is published
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  SrcDirectory: ${{ github.workspace}}/src
+
+defaults:
+  run:
+    shell: pwsh
   
 jobs:
   build:

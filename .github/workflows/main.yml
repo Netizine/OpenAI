@@ -28,7 +28,4 @@ jobs:
     - name: Install mock server
       run: dotnet tool install OpenAI.Mock --global
     - name: Test
-      run: |
-        openai-mock
-        sleep 30s
-        dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal

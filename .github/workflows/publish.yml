@@ -75,6 +75,10 @@ jobs:
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
+    - name: Install nuget openai.mock
+      run: dotnet tool update OpenAI.Mock --global
+    - name: Start openai.mock
+      run: openai-mock     
     - name: Run tests
       run: dotnet test --configuration Release
 

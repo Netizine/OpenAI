@@ -36,7 +36,7 @@
 	<PropertyGroup>
 		<CodeAnalysisRuleSet>..\_stylecop\StyleCopRules.ruleset</CodeAnalysisRuleSet>
 		<ApplicationIcon>favicon.ico</ApplicationIcon>
-		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<!--<GeneratePackageOnBuild>True</GeneratePackageOnBuild>-->
 		<Title>A unofficial OpenAI .NET library</Title>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<RepositoryUrl>https://github.com/Netizine/OpenAI</RepositoryUrl>

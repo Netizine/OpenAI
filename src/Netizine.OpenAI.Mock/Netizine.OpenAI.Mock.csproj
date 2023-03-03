@@ -12,7 +12,7 @@
 		<DebugType>embedded</DebugType>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<RootNamespace>OpenAI.Mock</RootNamespace>
-		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<!--<GeneratePackageOnBuild>True</GeneratePackageOnBuild>-->
 		<Title>OpenAI Mock Server</Title>
 		<Authors>Netizine</Authors>
 		<Company>Netizine</Company>

@@ -14,11 +14,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B581031C-E3A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A95EC739-93E5-4482-BADD-EDCF88AEFBD8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAI", "src\OpenAI\OpenAI.csproj", "{7BF7AEBC-ED56-4AB9-8F19-FB75FA6A1CC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netizine.OpenAI", "src\Netizine.OpenAI\Netizine.OpenAI.csproj", "{7BF7AEBC-ED56-4AB9-8F19-FB75FA6A1CC0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAI.Mock", "src\OpenAI.Mock\OpenAI.Mock.csproj", "{AE2C08F6-F97B-4A81-9D77-EED1B14DB193}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netizine.OpenAI.Mock", "src\Netizine.OpenAI.Mock\Netizine.OpenAI.Mock.csproj", "{AE2C08F6-F97B-4A81-9D77-EED1B14DB193}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAI.Tests", "tests\OpenAI.Tests\OpenAI.Tests.csproj", "{9CA94188-784F-4A9C-8CCF-A9C31DE4AA5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netizine.OpenAI.Tests", "tests\Netizine.OpenAI.Tests\Netizine.OpenAI.Tests.csproj", "{9CA94188-784F-4A9C-8CCF-A9C31DE4AA5F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "tests\TestApp\TestApp.csproj", "{56EDCC08-D822-417E-9613-EEF0DB72E82C}"
 EndProject

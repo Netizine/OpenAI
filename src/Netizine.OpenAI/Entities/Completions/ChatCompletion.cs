@@ -1,7 +1,4 @@
-﻿using OpenAI.Entities;
-using OpenAI.Entities.Chat.Completions;
-
-namespace OpenAI
+﻿namespace OpenAI
 {
     using System;
     using System.Collections.Generic;

@@ -114,7 +114,7 @@ namespace OpenAI.Tests
         /// <returns>The file contents.</returns>
         protected static string GetResourceAsString(string path)
         {
-            var fullpath = "OpenAI.Tests.Resources." + path;
+            var fullpath = "Netizine.OpenAI.Tests.Resources." + path;
             var contents = new StreamReader(
                 typeof(BaseOpenAITest).GetTypeInfo().Assembly.GetManifestResourceStream(fullpath),
                 Encoding.UTF8).ReadToEnd();

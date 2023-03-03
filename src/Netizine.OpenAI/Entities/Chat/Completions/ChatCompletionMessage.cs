@@ -1,4 +1,4 @@
-﻿namespace OpenAI.Entities.Chat.Completions
+﻿namespace OpenAI
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;

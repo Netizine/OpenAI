@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<Description>OpenAI is a sync/async client  supporting .NET Framework 4.6.2+, .NET Standard 2.0+ or .NET Core 2.0+. It is a portable class library for the OpenAI API.  (Unofficial Library)</Description>
-		<Version>1.0.5</Version>
+		<Version>1.0.7</Version>
 		<LangVersion>8</LangVersion>
 		<Authors>Netizine</Authors>
 		<TargetFrameworks>net6.0;net7.0;netcoreapp3.1;netstandard2.0;net462</TargetFrameworks>
@@ -10,7 +10,7 @@
 		<PackageIcon>OpenAI.png</PackageIcon>
 		<PackageProjectUrl>https://github.com/Netizine/OpenAI</PackageProjectUrl>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<PackageVersion>1.0.5</PackageVersion>
+		<PackageVersion>1.0.7</PackageVersion>
 		<PackageId>Netizine.OpenAI</PackageId>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<EnablePackageValidation>true</EnablePackageValidation>
@@ -55,7 +55,7 @@
 		<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+	<!--<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
 		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
 	</ItemGroup>
 
@@ -65,11 +65,11 @@
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
 		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
-	</ItemGroup>
+	</ItemGroup>-->
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
 		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.0" />
-		<PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+		<!--<PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />-->
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">

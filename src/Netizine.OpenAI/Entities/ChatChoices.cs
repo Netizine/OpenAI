@@ -1,7 +1,6 @@
-﻿namespace OpenAI.Entities 
+﻿namespace OpenAI 
 {
     using Newtonsoft.Json;
-    using OpenAI.Entities.Chat.Completions;
 
     public class ChatChoice 
     {

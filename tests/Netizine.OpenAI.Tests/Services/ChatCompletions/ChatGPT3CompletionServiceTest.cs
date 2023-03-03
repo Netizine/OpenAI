@@ -1,6 +1,4 @@
-﻿using OpenAI.Entities.Chat.Completions;
-
-namespace OpenAI.Tests.Services.ChatCompletions {
+﻿namespace OpenAI.Tests.Services.ChatCompletions {
 
     using System;
     using System.Collections.Generic;

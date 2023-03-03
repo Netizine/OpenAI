@@ -21,9 +21,9 @@
 		<ApplicationIcon>favicon.ico</ApplicationIcon>
 		<PackageProjectUrl>https://github.com/Netizine/OpenAI</PackageProjectUrl>
 		<PackageIcon>OpenAI.png</PackageIcon>
-		<PackageVersion>1.0.5</PackageVersion>
+		<PackageVersion>1.0.7</PackageVersion>
 		<PackageReadmeFile>OPENAI_MOCK.md</PackageReadmeFile>
-		<RepositoryUrl>https://github.com/Netizine/OpenAI/tree/master/src/OpenAI.Mock</RepositoryUrl>
+		<RepositoryUrl>https://github.com/Netizine/OpenAI</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>OpenAI, ChatGPT, AI, Mock, .NET</PackageTags>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>

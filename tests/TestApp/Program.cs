@@ -1,13 +1,20 @@
 ﻿using OpenAI;
-using System.Diagnostics.Metrics;
-using System.Security.Cryptography;
-using OpenAI.Entities.Chat.Completions;
-using File = OpenAI.File;
 
 
 var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
 
 OpenAI.OpenAIConfiguration.ApiKey = apiKey;
+
+//Test model
+var modelService = new ModelService();
+var model = modelService.Get("davinci");
+var featureEnabled = model.RawJObject["feature_enabled"];
+Console.WriteLine(model.OwnedBy);
+OpenAIList<Model> models = modelService.List();
+foreach (var m in models) {
+    Console.WriteLine(m.Id + ",");
+}
+Console.WriteLine(models.Data[0].Id);
 
 // chat completion
 ChatCompletionMessage chatMessage = new ChatCompletionMessage {
@@ -35,18 +42,6 @@ Console.WriteLine(engine.Id);
 OpenAIList<Engine> engineList = engineService.List();
 Console.WriteLine(engineList.Count());
 #pragma warning restore CS0618 // Type or member is obsolete
-
-//Test model
-var modelService = new ModelService();
-var model = modelService.Get("davinci");
-var featureEnabled = model.RawJObject["feature_enabled"];
-Console.WriteLine(model.OwnedBy);
-OpenAIList<Model> models = modelService.List();
-foreach (var m in models)
-{
-    Console.WriteLine(m.Id);
-}
-Console.WriteLine(models.Data[0].Id);
 
 //Test completion
 var completionService = new CompletionService();

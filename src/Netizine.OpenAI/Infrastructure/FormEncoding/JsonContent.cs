@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using Newtonsoft.Json.Converters;
-using OpenAI.Entities.Chat.Completions;
 
 namespace OpenAI.Infrastructure.FormEncoding
 {

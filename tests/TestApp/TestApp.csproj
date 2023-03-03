@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <!--<ItemGroup>
-    <PackageReference Include="Netizine.OpenAI" Version="1.0.1" />
+    <PackageReference Include="Netizine.OpenAI" Version="1.0.7" />
   </ItemGroup>-->
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\OpenAI\OpenAI.csproj" />
+    <ProjectReference Include="..\..\src\Netizine.OpenAI\Netizine.OpenAI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

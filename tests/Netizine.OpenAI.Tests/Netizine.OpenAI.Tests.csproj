@@ -52,7 +52,7 @@
     <None Remove="Resources\api_fixtures\engines.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\OpenAI\OpenAI.csproj" />
+    <ProjectReference Include="..\..\src\Netizine.OpenAI\Netizine.OpenAI.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">

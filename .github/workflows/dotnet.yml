@@ -1,13 +1,15 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: Build and Test .NET
-
+name: Build and test
 on:
+  workflow_dispatch: # Allow running the workflow manually from the GitHub UI
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - 'main'       # Run the workflow when pushing to the main branch
+  release:
+    types:
+      - published    # Run the workflow when a new GitHub release is published
 
 jobs:
   build:

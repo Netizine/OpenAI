@@ -14,7 +14,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-2019
 
     steps:
     - uses: actions/checkout@v3
@@ -26,5 +26,9 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+    - name: Install nuget openai.mock
+      run: dotnet tool update OpenAI.Mock --global
+    - name: Start openai.mock
+      run: openai-mock  
     - name: Test
       run: dotnet test --no-build --verbosity normal

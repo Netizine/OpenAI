@@ -13,7 +13,7 @@ namespace OpenAI.Tests.Entities.FineTunes
         [Fact]
         public void Deserialize()
         {
-            string json = this.GetFixture("/v1/fine-tunes/ft-AF1WoRqd3aJAHsqc9NY7iL8F/events");
+            string json = GetFixture("/v1/fine-tunes/ft-AF1WoRqd3aJAHsqc9NY7iL8F/events");
             var fineTuneEvents = JsonConvert.DeserializeObject<FineTuneEvents>(json);
             Assert.NotNull(fineTuneEvents);
             Assert.IsType<FineTuneEvents>(fineTuneEvents);

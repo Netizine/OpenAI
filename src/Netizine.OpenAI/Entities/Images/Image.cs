@@ -4,7 +4,7 @@ namespace OpenAI
     using System;
     using System.Collections.Generic;
     using Newtonsoft.Json;
-    using OpenAI.Infrastructure;
+    using Infrastructure;
 
     /// <summary>
     /// The OpenAI image.

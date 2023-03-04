@@ -28,9 +28,9 @@ namespace OpenAI
         /// <param name="values">The collection of names of the fields to expand.</param>
         public void AddRangeExpand(IEnumerable<string> values)
         {
-            this.Expand ??= new List<string>();
+            Expand ??= new List<string>();
 
-            this.Expand.AddRange(values);
+            Expand.AddRange(values);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace OpenAI
         /// <param name="value">The parameter's value.</param>
         public void AddExtraParam(string key, object value)
         {
-            this.ExtraParams.Add(key, value);
+            ExtraParams.Add(key, value);
         }
     }
 }

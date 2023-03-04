@@ -1,7 +1,7 @@
 namespace OpenAI.Tests
 {
     using Newtonsoft.Json;
-    using OpenAI.Tests.Infrastructure.TestData;
+    using Infrastructure.TestData;
     using Xunit;
 
     public class EnumDeserializationTest : BaseOpenAITest
@@ -31,7 +31,7 @@ namespace OpenAI.Tests
         {
             var json = "{\"enum\": \"unknown_value\"}";
 
-            var exception = Assert.Throws<Newtonsoft.Json.JsonSerializationException>(() =>
+            var exception = Assert.Throws<JsonSerializationException>(() =>
                 JsonConvert.DeserializeObject<TestOptions>(json));
 
             Assert.Contains("Error converting value \"unknown_value\"", exception.Message);

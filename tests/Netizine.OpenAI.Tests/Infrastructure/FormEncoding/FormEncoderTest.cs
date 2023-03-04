@@ -9,7 +9,7 @@ namespace OpenAI.Tests
     using System.Threading.Tasks;
     using OpenAI;
     using OpenAI.Infrastructure.FormEncoding;
-    using OpenAI.Tests.Infrastructure.TestData;
+    using Infrastructure.TestData;
     using Xunit;
 
     public class FormEncoderTest : BaseOpenAITest

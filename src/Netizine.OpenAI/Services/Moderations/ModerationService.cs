@@ -47,7 +47,7 @@ namespace OpenAI
         /// <returns>Moderation.</returns>
         public Moderation Get(ModerationGetOptions options)
         {
-            return this.Get(options, null);
+            return Get(options, null);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace OpenAI
         /// <returns>Moderation.</returns>
         public Moderation Get(ModerationGetOptions options, RequestOptions requestOptions)
         {
-            return this.Request(HttpMethod.Post, "/v1/moderations", options, requestOptions);
+            return Request(HttpMethod.Post, "/v1/moderations", options, requestOptions);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace OpenAI
         /// <returns>Task&lt;Moderation&gt;.</returns>
         public Task<Moderation> GetAsync(ModerationGetOptions options)
         {
-            return this.GetAsync(options, null, default);
+            return GetAsync(options, null, default);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace OpenAI
         /// <returns>Task&lt;Moderation&gt;.</returns>
         public Task<Moderation> GetAsync(ModerationGetOptions options, CancellationToken cancellationToken)
         {
-            return this.GetAsync(options, null, cancellationToken);
+            return GetAsync(options, null, cancellationToken);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace OpenAI
         /// <returns>Task&lt;Moderation&gt;.</returns>
         public Task<Moderation> GetAsync(ModerationGetOptions options, RequestOptions requestOptions)
         {
-            return this.GetAsync(options, requestOptions, default);
+            return GetAsync(options, requestOptions, default);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace OpenAI
         /// <returns>Task&lt;Moderation&gt;.</returns>
         public Task<Moderation> GetAsync(ModerationGetOptions options, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.RequestAsync(HttpMethod.Post, "/v1/moderations", options, requestOptions, cancellationToken);
+            return RequestAsync(HttpMethod.Post, "/v1/moderations", options, requestOptions, cancellationToken);
         }
     }
 }

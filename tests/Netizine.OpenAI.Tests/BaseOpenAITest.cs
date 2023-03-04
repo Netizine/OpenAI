@@ -63,41 +63,41 @@ namespace OpenAI.Tests
             OpenAIMockFixture openAIMockFixture,
             MockHttpClientFixture mockHttpClientFixture)
         {
-            this.OpenAIMockFixture = openAIMockFixture;
-            this.MockHttpClientFixture = mockHttpClientFixture;
+            OpenAIMockFixture = openAIMockFixture;
+            MockHttpClientFixture = mockHttpClientFixture;
 
-            if ((this.OpenAIMockFixture != null) && (this.MockHttpClientFixture != null))
+            if ((OpenAIMockFixture != null) && (MockHttpClientFixture != null))
             {
                 // Set up OpenAIClient to use openai-mock with the mock HTTP client
                 var httpClient = new SystemNetHttpClient(
-                    new HttpClient(this.MockHttpClientFixture.MockHandler.Object));
-                this.OpenAIClient = this.OpenAIMockFixture.BuildOpenAIClient(
+                    new HttpClient(MockHttpClientFixture.MockHandler.Object));
+                OpenAIClient = OpenAIMockFixture.BuildOpenAIClient(
                     httpClient: httpClient);
 
                 // Reset the mock before each test
-                this.MockHttpClientFixture.Reset();
+                MockHttpClientFixture.Reset();
             }
-            else if (this.OpenAIMockFixture != null)
+            else if (OpenAIMockFixture != null)
             {
                 // Set up OpenAIClient to use openai-mock
-                this.OpenAIClient = this.OpenAIMockFixture.BuildOpenAIClient();
+                OpenAIClient = OpenAIMockFixture.BuildOpenAIClient();
             }
-            else if (this.MockHttpClientFixture != null)
+            else if (MockHttpClientFixture != null)
             {
                 // Set up OpenAIClient with the mock HTTP client
                 var httpClient = new SystemNetHttpClient(
-                    new HttpClient(this.MockHttpClientFixture.MockHandler.Object));
-                this.OpenAIClient = new OpenAIClient(
+                    new HttpClient(MockHttpClientFixture.MockHandler.Object));
+                OpenAIClient = new OpenAIClient(
                     "sk-test",
                     httpClient: httpClient);
 
                 // Reset the mock before each test
-                this.MockHttpClientFixture.Reset();
+                MockHttpClientFixture.Reset();
             }
             else
             {
                 // Use the default OpenAIClient
-                this.OpenAIClient = new OpenAIClient("sk-test");
+                OpenAIClient = new OpenAIClient("sk-test");
             }
         }
 
@@ -129,16 +129,16 @@ namespace OpenAI.Tests
         /// <param name="path">The HTTP path.</param>
         protected void AssertRequest(HttpMethod method, string path)
         {
-            if (this.MockHttpClientFixture == null)
+            if (MockHttpClientFixture == null)
             {
                 throw new OpenAITestException(
                     "AssertRequest called from a test class that doesn't have access to "
                     + "MockHttpClientFixture. Make sure that the constructor for "
-                    + $"{this.GetType().Name} receives MockHttpClientFixture and calls the "
+                    + $"{GetType().Name} receives MockHttpClientFixture and calls the "
                     + "base constructor.");
             }
 
-            this.MockHttpClientFixture.AssertRequest(method, path);
+            MockHttpClientFixture.AssertRequest(method, path);
         }
 
         /// <summary>
@@ -152,16 +152,16 @@ namespace OpenAI.Tests
         /// <param name="query">The HTTP query.</param>
         protected void StubRequest(HttpMethod method, string path, HttpStatusCode status, string response, string query = null)
         {
-            if (this.MockHttpClientFixture == null)
+            if (MockHttpClientFixture == null)
             {
                 throw new OpenAITestException(
                     "StubRequest called from a test class that doesn't have access to "
                     + "MockHttpClientFixture. Make sure that the constructor for "
-                    + $"{this.GetType().Name} receives MockHttpClientFixture and calls the "
+                    + $"{GetType().Name} receives MockHttpClientFixture and calls the "
                     + "base constructor.");
             }
 
-            this.MockHttpClientFixture.StubRequest(method, path, status, response, query);
+            MockHttpClientFixture.StubRequest(method, path, status, response, query);
         }
 
         /// <summary>
@@ -175,16 +175,16 @@ namespace OpenAI.Tests
         /// <returns>Fixture data encoded as JSON.</returns>
         protected string GetFixture(string path, string[] expansions = null)
         {
-            if (this.OpenAIMockFixture == null)
+            if (OpenAIMockFixture == null)
             {
                 throw new OpenAITestException(
                     "GetFixture called from a test class that doesn't have access to "
                     + "OpenAIMockFixture. Make sure that the constructor for "
-                    + $"{this.GetType().Name} receives OpenAIMockFixture and calls the "
+                    + $"{GetType().Name} receives OpenAIMockFixture and calls the "
                     + "base constructor.");
             }
 
-            return this.OpenAIMockFixture.GetFixture(path, expansions);
+            return OpenAIMockFixture.GetFixture(path, expansions);
         }
     }
 }

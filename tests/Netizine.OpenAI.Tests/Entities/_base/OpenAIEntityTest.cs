@@ -88,7 +88,7 @@ namespace OpenAI.Tests
         [Fact]
         public void RawJObject()
         {
-            var service = new EngineService(this.OpenAIClient);
+            var service = new EngineService(OpenAIClient);
             var engine = service.Get("text-davinci-003");
 
             Assert.NotNull(engine);

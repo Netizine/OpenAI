@@ -9,7 +9,7 @@ namespace OpenAI.Tests.Infrastructure.TestData
     {
         public TestOptionsWithList()
         {
-            this.SomeList = new List<TestNestedOptions>
+            SomeList = new List<TestNestedOptions>
             {
                 new TestNestedOptions
                 {

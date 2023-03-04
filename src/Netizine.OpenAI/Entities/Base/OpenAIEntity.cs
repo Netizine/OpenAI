@@ -7,7 +7,7 @@ namespace OpenAI
     using System.Runtime.CompilerServices;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
-    using OpenAI.Infrastructure;
+    using Infrastructure;
 
     /// <summary>
     /// OpenAI Entity.
@@ -58,7 +58,7 @@ namespace OpenAI
 
         internal void SetRawJObject(JObject rawJObject)
         {
-            this.RawJObject = rawJObject;
+            RawJObject = rawJObject;
         }
 
         /// <summary>Reports a OpenAI object as a string.</summary>
@@ -69,7 +69,7 @@ namespace OpenAI
         public override string ToString()
         {
             return
-                $"<{this.GetType().FullName}@{RuntimeHelpers.GetHashCode(this)} id={this.GetIdString()}> JSON: {this.ToJson()}";
+                $"<{GetType().FullName}@{RuntimeHelpers.GetHashCode(this)} id={GetIdString()}> JSON: {ToJson()}";
         }
 
         /// <summary>Serializes the OpenAI object as a JSON string.</summary>
@@ -84,7 +84,7 @@ namespace OpenAI
 
         private object GetIdString()
         {
-            return (from property in this.GetType().GetTypeInfo().DeclaredProperties where property.Name == "Id" select property.GetValue(this)).FirstOrDefault();
+            return (from property in GetType().GetTypeInfo().DeclaredProperties where property.Name == "Id" select property.GetValue(this)).FirstOrDefault();
         }
     }
 

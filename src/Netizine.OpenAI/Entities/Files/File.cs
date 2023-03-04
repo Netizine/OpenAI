@@ -3,7 +3,7 @@ namespace OpenAI
 {
     using System;
     using Newtonsoft.Json;
-    using OpenAI.Infrastructure;
+    using Infrastructure;
 
     /// <summary>
     /// Information about a specific file.

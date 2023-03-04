@@ -16,7 +16,7 @@ namespace OpenAI.Tests.Entities.Engines
         [Fact]
         public void Deserialize()
         {
-            string json = this.GetFixture("/v1/engines/text-davinci-003");
+            string json = GetFixture("/v1/engines/text-davinci-003");
             var engine = JsonConvert.DeserializeObject<Engine>(json);
             Assert.NotNull(engine);
             Assert.IsType<Engine>(engine);

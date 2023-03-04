@@ -4,7 +4,7 @@ namespace OpenAI.Tests
     using System;
     using Newtonsoft.Json;
     using OpenAI;
-    using OpenAI.Tests.Infrastructure.TestData;
+    using Infrastructure.TestData;
     using Xunit;
 
     public class SerializationTest : BaseOpenAITest

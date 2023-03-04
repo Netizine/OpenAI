@@ -20,14 +20,14 @@ namespace OpenAI.Tests
         {
             if (OpenAIMockHandler.StartOpenAIMock())
             {
-                this.port = OpenAIMockHandler.Port.ToString();
+                port = OpenAIMockHandler.Port.ToString();
             }
             else
             {
-                this.port = Environment.GetEnvironmentVariable("OPENAI_MOCK_PORT") ?? "8020";
+                port = Environment.GetEnvironmentVariable("OPENAI_MOCK_PORT") ?? "8020";
             }
 
-            this.EnsureOpenAIMockMinimumVersion();
+            EnsureOpenAIMockMinimumVersion();
         }
 
         public void Dispose()
@@ -50,7 +50,7 @@ namespace OpenAI.Tests
                 "sk-test",
                 "org_123",
                 httpClient: httpClient,
-                apiBase: $"http://localhost:{this.port}");
+                apiBase: $"http://localhost:{port}");
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace OpenAI.Tests
         /// <returns>Fixture data encoded as JSON.</returns>
         public string GetFixture(string path, string[] expansions = null)
         {
-            string url = $"http://localhost:{this.port}{path}";
+            string url = $"http://localhost:{port}{path}";
 
             if (expansions != null)
             {
@@ -72,7 +72,7 @@ namespace OpenAI.Tests
                 url += $"?{query}";
             }
 
-            using (System.Net.Http.HttpClient client = new System.Net.Http.HttpClient())
+            using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Authorization
                     = new System.Net.Http.Headers.AuthenticationHeaderValue(
@@ -88,7 +88,7 @@ namespace OpenAI.Tests
                 catch (Exception)
                 {
                     throw new OpenAITestException(
-                        $"Couldn't reach openai-mock at `localhost:{this.port}`. "
+                        $"Couldn't reach openai-mock at `localhost:{port}`. "
                         + "Is it running? Please see README for setup instructions.");
                 }
 
@@ -117,9 +117,9 @@ namespace OpenAI.Tests
 
         private void EnsureOpenAIMockMinimumVersion()
         {
-            string url = $"http://localhost:{this.port}/v1/version";
+            string url = $"http://localhost:{port}/v1/version";
 
-            using (System.Net.Http.HttpClient client = new System.Net.Http.HttpClient())
+            using (HttpClient client = new HttpClient())
             {
                 HttpResponseMessage response;
 
@@ -130,7 +130,7 @@ namespace OpenAI.Tests
                 catch (Exception)
                 {
                     throw new OpenAITestException(
-                        $"Couldn't reach openai-mock at `localhost:{this.port}`. "
+                        $"Couldn't reach openai-mock at `localhost:{port}`. "
                         + "Is it running? Please see README for setup instructions.");
                 }
 
@@ -139,7 +139,7 @@ namespace OpenAI.Tests
                 //string version = System.Text.Json.JsonDocument.Parse(json).RootElement.GetProperty("version").GetString();
                 dynamic d = JObject.Parse(json);
 
-                string version = ((Newtonsoft.Json.Linq.JValue)d.version).Value.ToString();
+                string version = ((JValue)d.version).Value.ToString();
 
                 if (!version.Equals(MockMinimumVersion))
                 {

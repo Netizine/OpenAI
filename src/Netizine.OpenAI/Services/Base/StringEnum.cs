@@ -29,7 +29,7 @@ namespace OpenAI
         /// <param name="value">The serialized value for the instance.</param>
         protected StringEnum(string value)
         {
-            this.Value = value;
+            Value = value;
         }
 
         /// <summary>Gets or sets the serialized value.</summary>
@@ -40,7 +40,7 @@ namespace OpenAI
         /// <returns>The serialized value.</returns>
         public override string ToString()
         {
-            return this.Value;
+            return Value;
         }
     }
 }

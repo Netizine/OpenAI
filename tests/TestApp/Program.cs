@@ -5,7 +5,7 @@ using OpenAI;
 
 var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
 
-OpenAI.OpenAIConfiguration.ApiKey = apiKey;
+OpenAIConfiguration.ApiKey = apiKey;
 
 //Test model
 var modelService = new ModelService();

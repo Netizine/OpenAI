@@ -7,7 +7,7 @@ namespace OpenAI
     using System.Threading;
     using System.Threading.Tasks;
     using Newtonsoft.Json.Linq;
-    using OpenAI.Infrastructure;
+    using Infrastructure;
 
     /// <summary>
     /// A OpenAI client, used to issue requests to OpenAI's API and deserialize responses.
@@ -32,10 +32,10 @@ namespace OpenAI
                 throw new ArgumentException("API key cannot contain whitespace.", nameof(apiKey));
             }
 
-            this.ApiKey = apiKey;
-            this.OrganizationId = null;
-            this.HttpClient = BuildDefaultHttpClient();
-            this.ApiBase = DefaultApiBase;
+            ApiKey = apiKey;
+            OrganizationId = null;
+            HttpClient = BuildDefaultHttpClient();
+            ApiBase = DefaultApiBase;
         }
 
         /// <summary>
@@ -57,10 +57,10 @@ namespace OpenAI
                 throw new ArgumentException("API key cannot contain whitespace.", nameof(apiKey));
             }
 
-            this.ApiKey = apiKey;
-            this.OrganizationId = null;
-            this.HttpClient = httpClient ?? BuildDefaultHttpClient();
-            this.ApiBase = DefaultApiBase;
+            ApiKey = apiKey;
+            OrganizationId = null;
+            HttpClient = httpClient ?? BuildDefaultHttpClient();
+            ApiBase = DefaultApiBase;
         }
 
         /// <summary>
@@ -83,10 +83,10 @@ namespace OpenAI
                 throw new ArgumentException("API key cannot contain whitespace.", nameof(apiKey));
             }
 
-            this.ApiKey = apiKey;
-            this.OrganizationId = null;
-            this.HttpClient = httpClient ?? BuildDefaultHttpClient();
-            this.ApiBase = apiBase ?? DefaultApiBase;
+            ApiKey = apiKey;
+            OrganizationId = null;
+            HttpClient = httpClient ?? BuildDefaultHttpClient();
+            ApiBase = apiBase ?? DefaultApiBase;
         }
 
         /// <summary>
@@ -108,10 +108,10 @@ namespace OpenAI
                 throw new ArgumentException("API key cannot contain whitespace.", nameof(apiKey));
             }
 
-            this.ApiKey = apiKey;
-            this.OrganizationId = organizationId;
-            this.HttpClient = BuildDefaultHttpClient();
-            this.ApiBase = DefaultApiBase;
+            ApiKey = apiKey;
+            OrganizationId = organizationId;
+            HttpClient = BuildDefaultHttpClient();
+            ApiBase = DefaultApiBase;
         }
 
         /// <summary>
@@ -134,10 +134,10 @@ namespace OpenAI
                 throw new ArgumentException("API key cannot contain whitespace.", nameof(apiKey));
             }
 
-            this.ApiKey = apiKey;
-            this.OrganizationId = organizationId;
-            this.HttpClient = httpClient ?? BuildDefaultHttpClient();
-            this.ApiBase = DefaultApiBase;
+            ApiKey = apiKey;
+            OrganizationId = organizationId;
+            HttpClient = httpClient ?? BuildDefaultHttpClient();
+            ApiBase = DefaultApiBase;
         }
 
         /// <summary>Initializes a new instance of the <see cref="OpenAIClient"/> class.</summary>
@@ -166,10 +166,10 @@ namespace OpenAI
                 throw new ArgumentException("API key cannot contain whitespace.", nameof(apiKey));
             }
 
-            this.ApiKey = apiKey;
-            this.OrganizationId = organizationId;
-            this.HttpClient = httpClient ?? BuildDefaultHttpClient();
-            this.ApiBase = apiBase ?? DefaultApiBase;
+            ApiKey = apiKey;
+            OrganizationId = organizationId;
+            HttpClient = httpClient ?? BuildDefaultHttpClient();
+            ApiBase = apiBase ?? DefaultApiBase;
         }
 
         /// <summary>Default base URL for OpenAI's API.</summary>
@@ -206,7 +206,7 @@ namespace OpenAI
             RequestOptions requestOptions)
             where T : IOpenAIEntity
         {
-            return this.RequestAsync<T>(method, path, options, requestOptions, default);
+            return RequestAsync<T>(method, path, options, requestOptions, default);
         }
 
         /// <summary>Sends a request to OpenAI's API as an asynchronous operation.</summary>
@@ -228,7 +228,7 @@ namespace OpenAI
         {
             var request = new OpenAIRequest(this, method, path, options, requestOptions);
 
-            var response = await this.HttpClient.MakeRequestAsync(request, cancellationToken)
+            var response = await HttpClient.MakeRequestAsync(request, cancellationToken)
                 .ConfigureAwait(false);
 
             if (request.Method == HttpMethod.Get && request.Uri.AbsoluteUri.Contains("/v1/files/") && request.Uri.AbsoluteUri.EndsWith("/content"))

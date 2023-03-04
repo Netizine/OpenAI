@@ -47,8 +47,8 @@ namespace OpenAI
         public OpenAIException(HttpStatusCode httpStatusCode, OpenAIError openAIError, string message)
             : base(message)
         {
-            this.HttpStatusCode = httpStatusCode;
-            this.OpenAIError = openAIError;
+            HttpStatusCode = httpStatusCode;
+            OpenAIError = openAIError;
         }
 
         /// <summary>

@@ -5,7 +5,7 @@ namespace OpenAI
     using System.Configuration;
     using System.Reflection;
     using Newtonsoft.Json;
-    using OpenAI.Infrastructure;
+    using Infrastructure;
 
     /// <summary>
     /// Global configuration class for OpenAI settings.

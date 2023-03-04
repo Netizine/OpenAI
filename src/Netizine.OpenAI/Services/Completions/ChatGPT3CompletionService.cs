@@ -41,7 +41,7 @@ namespace OpenAI
         /// <returns>The created entity.</returns>
         public virtual ChatCompletion Create(ChatGPT3CompletionCreateOptions chatGPT3CompletionCreateOptions)
         {
-            return this.Create(chatGPT3CompletionCreateOptions, null);
+            return Create(chatGPT3CompletionCreateOptions, null);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace OpenAI
         /// <returns>The created entity.</returns>
         public virtual ChatCompletion Create(ChatGPT3CompletionCreateOptions chatGPT3CompletionCreateOptions, RequestOptions requestOptions)
         {
-            return this.CreateEntity(chatGPT3CompletionCreateOptions, requestOptions);
+            return CreateEntity(chatGPT3CompletionCreateOptions, requestOptions);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace OpenAI
         /// <returns>Task&lt;Completion&gt;.</returns>
         public virtual Task<ChatCompletion> CreateAsync(ChatGPT3CompletionCreateOptions chatGPT3CompletionCreateOptions)
         {
-            return this.CreateAsync(chatGPT3CompletionCreateOptions, null, default);
+            return CreateAsync(chatGPT3CompletionCreateOptions, null, default);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace OpenAI
         /// <returns>Task&lt;Completion&gt;.</returns>
         public virtual Task<ChatCompletion> CreateAsync(ChatGPT3CompletionCreateOptions chatGPT3CompletionCreateOptions, CancellationToken cancellationToken)
         {
-            return this.CreateAsync(chatGPT3CompletionCreateOptions, null, cancellationToken);
+            return CreateAsync(chatGPT3CompletionCreateOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace OpenAI
         /// <returns>Task&lt;Completion&gt;.</returns>
         public virtual Task<ChatCompletion> CreateAsync(ChatGPT3CompletionCreateOptions chatGPT3CompletionCreateOptions, RequestOptions requestOptions)
         {
-            return this.CreateAsync(chatGPT3CompletionCreateOptions, requestOptions, default);
+            return CreateAsync(chatGPT3CompletionCreateOptions, requestOptions, default);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace OpenAI
         /// <returns>Task&lt;Completion&gt;.</returns>
         public virtual Task<ChatCompletion> CreateAsync(ChatGPT3CompletionCreateOptions chatGPT3CompletionCreateOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.CreateEntityAsync(chatGPT3CompletionCreateOptions, requestOptions, cancellationToken);
+            return CreateEntityAsync(chatGPT3CompletionCreateOptions, requestOptions, cancellationToken);
         }
     }
 }

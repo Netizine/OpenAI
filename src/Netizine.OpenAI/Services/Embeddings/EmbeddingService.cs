@@ -41,7 +41,7 @@ namespace OpenAI
         /// <returns>The created entity.</returns>
         public Embedding Create(EmbeddingCreateOptions embeddingCreateOptions)
         {
-            return this.Create(embeddingCreateOptions, null);
+            return Create(embeddingCreateOptions, null);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace OpenAI
         /// <returns>The created entity.</returns>
         public virtual Embedding Create(EmbeddingCreateOptions embeddingCreateOptions, RequestOptions requestOptions)
         {
-            return this.CreateEntity(embeddingCreateOptions, requestOptions);
+            return CreateEntity(embeddingCreateOptions, requestOptions);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace OpenAI
         /// <returns>Task&lt;Embedding&gt;.</returns>
         public Task<Embedding> CreateAsync(EmbeddingCreateOptions embeddingCreateOptions)
         {
-            return this.CreateAsync(embeddingCreateOptions, null, default);
+            return CreateAsync(embeddingCreateOptions, null, default);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace OpenAI
         /// <returns>Task&lt;Embedding&gt;.</returns>
         public Task<Embedding> CreateAsync(EmbeddingCreateOptions embeddingCreateOptions, CancellationToken cancellationToken)
         {
-            return this.CreateAsync(embeddingCreateOptions, null, cancellationToken);
+            return CreateAsync(embeddingCreateOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace OpenAI
         /// <returns>Task&lt;Embedding&gt;.</returns>
         public Task<Embedding> CreateAsync(EmbeddingCreateOptions embeddingCreateOptions, RequestOptions requestOptions)
         {
-            return this.CreateAsync(embeddingCreateOptions, requestOptions, default);
+            return CreateAsync(embeddingCreateOptions, requestOptions, default);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace OpenAI
         /// <returns>Task&lt;Embedding&gt;.</returns>
         public virtual Task<Embedding> CreateAsync(EmbeddingCreateOptions embeddingCreateOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.CreateEntityAsync(embeddingCreateOptions, requestOptions, cancellationToken);
+            return CreateEntityAsync(embeddingCreateOptions, requestOptions, cancellationToken);
         }
     }
 }

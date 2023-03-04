@@ -42,7 +42,7 @@ namespace OpenAI
         /// <summary>
         /// Gets the base URL.
         /// </summary>
-        public virtual string BaseUrl => this.Client.ApiBase;
+        public virtual string BaseUrl => Client.ApiBase;
 
         /// <summary>
         /// Gets or sets the client used by this service to send requests. If no client was set when the
@@ -55,8 +55,8 @@ namespace OpenAI
         /// </remarks>
         public IOpenAIClient Client
         {
-            get => this.client ?? OpenAIConfiguration.OpenAIClient;
-            set => this.client = value;
+            get => client ?? OpenAIConfiguration.OpenAIClient;
+            set => client = value;
         }
 
         /// <summary>
@@ -67,9 +67,9 @@ namespace OpenAI
         /// <returns>The type of <see cref="IOpenAIEntity"/> that this service returns.</returns>
         protected TEntityReturned CreateEntity(BaseOptions options, RequestOptions requestOptions)
         {
-            return this.Request(
+            return Request(
                 HttpMethod.Post,
-                this.ClassUrl(),
+                ClassUrl(),
                 options,
                 requestOptions);
         }
@@ -86,9 +86,9 @@ namespace OpenAI
             RequestOptions requestOptions,
             CancellationToken cancellationToken)
         {
-            return this.RequestAsync(
+            return RequestAsync(
                 HttpMethod.Post,
-                this.ClassUrl(),
+                ClassUrl(),
                 options,
                 requestOptions,
                 cancellationToken);
@@ -106,9 +106,9 @@ namespace OpenAI
             BaseOptions options,
             RequestOptions requestOptions)
         {
-            return this.Request(
+            return Request(
                 HttpMethod.Delete,
-                this.InstanceUrl(id),
+                InstanceUrl(id),
                 options,
                 requestOptions);
         }
@@ -127,9 +127,9 @@ namespace OpenAI
             RequestOptions requestOptions,
             CancellationToken cancellationToken)
         {
-            return this.RequestAsync(
+            return RequestAsync(
                 HttpMethod.Delete,
-                this.InstanceUrl(id),
+                InstanceUrl(id),
                 options,
                 requestOptions,
                 cancellationToken);
@@ -147,9 +147,9 @@ namespace OpenAI
             BaseOptions options,
             RequestOptions requestOptions)
         {
-            return this.Request(
+            return Request(
                 HttpMethod.Get,
-                this.InstanceUrl(id),
+                InstanceUrl(id),
                 options,
                 requestOptions);
         }
@@ -168,9 +168,9 @@ namespace OpenAI
             RequestOptions requestOptions,
             CancellationToken cancellationToken)
         {
-            return this.RequestAsync(
+            return RequestAsync(
                 HttpMethod.Get,
-                this.InstanceUrl(id),
+                InstanceUrl(id),
                 options,
                 requestOptions,
                 cancellationToken);
@@ -186,9 +186,9 @@ namespace OpenAI
             ListOptions options,
             RequestOptions requestOptions)
         {
-            return this.Request<OpenAIList<TEntityReturned>>(
+            return Request<OpenAIList<TEntityReturned>>(
                 HttpMethod.Get,
-                this.ClassUrl(),
+                ClassUrl(),
                 options,
                 requestOptions);
         }
@@ -205,9 +205,9 @@ namespace OpenAI
             RequestOptions requestOptions,
             CancellationToken cancellationToken)
         {
-            return this.RequestAsync<OpenAIList<TEntityReturned>>(
+            return RequestAsync<OpenAIList<TEntityReturned>>(
                 HttpMethod.Get,
-                this.ClassUrl(),
+                ClassUrl(),
                 options,
                 requestOptions,
                 cancellationToken);
@@ -225,9 +225,9 @@ namespace OpenAI
             BaseOptions options,
             RequestOptions requestOptions)
         {
-            return this.Request(
+            return Request(
                 HttpMethod.Post,
-                this.InstanceUrl(id),
+                InstanceUrl(id),
                 options,
                 requestOptions);
         }
@@ -246,9 +246,9 @@ namespace OpenAI
             RequestOptions requestOptions,
             CancellationToken cancellationToken)
         {
-            return this.RequestAsync(
+            return RequestAsync(
                 HttpMethod.Post,
-                this.InstanceUrl(id),
+                InstanceUrl(id),
                 options,
                 requestOptions,
                 cancellationToken);
@@ -268,7 +268,7 @@ namespace OpenAI
             BaseOptions options,
             RequestOptions requestOptions)
         {
-            return this.Request<TEntityReturned>(
+            return Request<TEntityReturned>(
                 method,
                 path,
                 options,
@@ -289,7 +289,7 @@ namespace OpenAI
             BaseOptions options,
             RequestOptions requestOptions)
         {
-            return this.RequestAsync<TEntityReturned>(
+            return RequestAsync<TEntityReturned>(
                 method,
                 path,
                 options,
@@ -313,7 +313,7 @@ namespace OpenAI
             RequestOptions requestOptions,
             CancellationToken cancellationToken)
         {
-            return this.RequestAsync<TEntityReturned>(
+            return RequestAsync<TEntityReturned>(
                 method,
                 path,
                 options,
@@ -337,7 +337,7 @@ namespace OpenAI
             RequestOptions requestOptions)
             where T : IOpenAIEntity
         {
-            return this.RequestAsync<T>(method, path, options, requestOptions)
+            return RequestAsync<T>(method, path, options, requestOptions)
                 .ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
@@ -357,8 +357,8 @@ namespace OpenAI
             RequestOptions requestOptions)
             where T : IOpenAIEntity
         {
-            requestOptions = this.SetupRequestOptions(requestOptions);
-            return await this.Client.RequestAsync<T>(
+            requestOptions = SetupRequestOptions(requestOptions);
+            return await Client.RequestAsync<T>(
                 method,
                 path,
                 options,
@@ -384,8 +384,8 @@ namespace OpenAI
             CancellationToken cancellationToken)
             where T : IOpenAIEntity
         {
-            requestOptions = this.SetupRequestOptions(requestOptions);
-            return await this.Client.RequestAsync<T>(
+            requestOptions = SetupRequestOptions(requestOptions);
+            return await Client.RequestAsync<T>(
                 method,
                 path,
                 options,
@@ -409,7 +409,7 @@ namespace OpenAI
                 }
             }
 
-            requestOptions.BaseUrl ??= this.BaseUrl;
+            requestOptions.BaseUrl ??= BaseUrl;
 
             return requestOptions;
         }
@@ -420,7 +420,7 @@ namespace OpenAI
         /// <returns>The class url.</returns>
         protected virtual string ClassUrl()
         {
-            return this.BasePath;
+            return BasePath;
         }
 
         /// <summary>
@@ -438,7 +438,7 @@ namespace OpenAI
                     nameof(id));
             }
 
-            return $"{this.ClassUrl()}/{WebUtility.UrlEncode(id)}";
+            return $"{ClassUrl()}/{WebUtility.UrlEncode(id)}";
         }
 
         private static bool IsOpenAIList<T>()

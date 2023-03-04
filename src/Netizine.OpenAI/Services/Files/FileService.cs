@@ -58,7 +58,7 @@ namespace OpenAI
         /// <returns>File.</returns>
         public virtual File Get(string id)
         {
-            return this.Get(id, null, null);
+            return Get(id, null, null);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace OpenAI
         /// <returns>File.</returns>
         public virtual File Get(string id, FileGetOptions fileGetOptions)
         {
-            return this.Get(id, fileGetOptions, null);
+            return Get(id, fileGetOptions, null);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace OpenAI
         /// <returns>File.</returns>
         public virtual File Get(string id, RequestOptions requestOptions)
         {
-            return this.Get(id, null, requestOptions);
+            return Get(id, null, requestOptions);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace OpenAI
         /// <returns>File.</returns>
         public virtual File Get(string id, FileGetOptions fileGetOptions, RequestOptions requestOptions)
         {
-            return this.GetEntity(id, fileGetOptions, requestOptions);
+            return GetEntity(id, fileGetOptions, requestOptions);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public virtual Task<File> GetAsync(string id)
         {
-            return this.GetAsync(id, null, null, default);
+            return GetAsync(id, null, null, default);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public virtual Task<File> GetAsync(string id, CancellationToken cancellationToken)
         {
-            return this.GetAsync(id, null, null, cancellationToken);
+            return GetAsync(id, null, null, cancellationToken);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public virtual Task<File> GetAsync(string id, FileGetOptions fileGetOptions)
         {
-            return this.GetAsync(id, fileGetOptions, null, default);
+            return GetAsync(id, fileGetOptions, null, default);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public virtual Task<File> GetAsync(string id, FileGetOptions fileGetOptions, CancellationToken cancellationToken)
         {
-            return this.GetAsync(id, fileGetOptions, null, cancellationToken);
+            return GetAsync(id, fileGetOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public virtual Task<File> GetAsync(string id, RequestOptions requestOptions)
         {
-            return this.GetAsync(id, null, requestOptions, default);
+            return GetAsync(id, null, requestOptions, default);
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public virtual Task<File> GetAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.GetAsync(id, null, requestOptions, cancellationToken);
+            return GetAsync(id, null, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public virtual Task<File> GetAsync(string id, FileGetOptions fileGetOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.GetEntityAsync(id, fileGetOptions, requestOptions, cancellationToken);
+            return GetEntityAsync(id, fileGetOptions, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace OpenAI
         /// <returns>OpenAIList&lt;File&gt;.</returns>
         public virtual OpenAIList<File> List()
         {
-            return this.List(null, null);
+            return List(null, null);
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace OpenAI
         /// <returns>OpenAIList&lt;File&gt;.</returns>
         public virtual OpenAIList<File> List(FileListOptions fileListOptions)
         {
-            return this.List(fileListOptions, null);
+            return List(fileListOptions, null);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace OpenAI
         /// <returns>OpenAIList&lt;File&gt;.</returns>
         public virtual OpenAIList<File> List(RequestOptions requestOptions)
         {
-            return this.List(null, requestOptions);
+            return List(null, requestOptions);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace OpenAI
         /// <returns>OpenAIList&lt;File&gt;.</returns>
         public virtual OpenAIList<File> List(FileListOptions fileListOptions, RequestOptions requestOptions)
         {
-            return this.ListEntities(fileListOptions, requestOptions);
+            return ListEntities(fileListOptions, requestOptions);
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;File&gt;&gt;.</returns>
         public virtual Task<OpenAIList<File>> ListAsync()
         {
-            return this.ListAsync(null, null, default);
+            return ListAsync(null, null, default);
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;File&gt;&gt;.</returns>
         public virtual Task<OpenAIList<File>> ListAsync(CancellationToken cancellationToken)
         {
-            return this.ListAsync(null, null, cancellationToken);
+            return ListAsync(null, null, cancellationToken);
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;File&gt;&gt;.</returns>
         public virtual Task<OpenAIList<File>> ListAsync(FileListOptions fileListOptions)
         {
-            return this.ListAsync(fileListOptions, null, default);
+            return ListAsync(fileListOptions, null, default);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;File&gt;&gt;.</returns>
         public virtual Task<OpenAIList<File>> ListAsync(FileListOptions fileListOptions, CancellationToken cancellationToken)
         {
-            return this.ListAsync(fileListOptions, null, cancellationToken);
+            return ListAsync(fileListOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;File&gt;&gt;.</returns>
         public virtual Task<OpenAIList<File>> ListAsync(RequestOptions requestOptions)
         {
-            return this.ListAsync(null, requestOptions, default);
+            return ListAsync(null, requestOptions, default);
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;File&gt;&gt;.</returns>
         public virtual Task<OpenAIList<File>> ListAsync(RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.ListAsync(null, requestOptions, cancellationToken);
+            return ListAsync(null, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;File&gt;&gt;.</returns>
         public virtual Task<OpenAIList<File>> ListAsync(FileListOptions fileListOptions, RequestOptions requestOptions)
         {
-            return this.ListAsync(fileListOptions, requestOptions, default);
+            return ListAsync(fileListOptions, requestOptions, default);
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;File&gt;&gt;.</returns>
         public virtual Task<OpenAIList<File>> ListAsync(FileListOptions fileListOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.ListEntitiesAsync(fileListOptions, requestOptions, cancellationToken);
+            return ListEntitiesAsync(fileListOptions, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -306,7 +306,7 @@ namespace OpenAI
         /// <returns>The created entity.</returns>
         public File Create(FileCreateOptions createOptions)
         {
-            return this.Create(createOptions, null);
+            return Create(createOptions, null);
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace OpenAI
         /// <returns>The created entity.</returns>
         public virtual File Create(FileCreateOptions createOptions, RequestOptions requestOptions)
         {
-            return this.CreateEntity(createOptions, requestOptions);
+            return CreateEntity(createOptions, requestOptions);
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public Task<File> CreateAsync(FileCreateOptions fileCreateOptions)
         {
-            return this.CreateAsync(fileCreateOptions, null, default);
+            return CreateAsync(fileCreateOptions, null, default);
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public Task<File> CreateAsync(FileCreateOptions fileCreateOptions, CancellationToken cancellationToken)
         {
-            return this.CreateAsync(fileCreateOptions, null, cancellationToken);
+            return CreateAsync(fileCreateOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public Task<File> CreateAsync(FileCreateOptions fileCreateOptions, RequestOptions requestOptions)
         {
-            return this.CreateAsync(fileCreateOptions, requestOptions, default);
+            return CreateAsync(fileCreateOptions, requestOptions, default);
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public virtual Task<File> CreateAsync(FileCreateOptions fileCreateOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.CreateEntityAsync(fileCreateOptions, requestOptions, cancellationToken);
+            return CreateEntityAsync(fileCreateOptions, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -371,7 +371,7 @@ namespace OpenAI
         /// <returns>File.</returns>
         public File Delete(string id)
         {
-            return this.DeleteEntity(id, null, null);
+            return DeleteEntity(id, null, null);
         }
 
         /// <summary>
@@ -382,7 +382,7 @@ namespace OpenAI
         /// <returns>File.</returns>
         public File Delete(string id, FileDeleteOptions fileDeleteOptions)
         {
-            return this.DeleteEntity(id, fileDeleteOptions, null);
+            return DeleteEntity(id, fileDeleteOptions, null);
         }
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace OpenAI
         /// <returns>File.</returns>
         public File Delete(string id, RequestOptions requestOptions)
         {
-            return this.DeleteEntity(id, null, requestOptions);
+            return DeleteEntity(id, null, requestOptions);
         }
 
         /// <summary>
@@ -405,7 +405,7 @@ namespace OpenAI
         /// <returns>File.</returns>
         public virtual File Delete(string id, FileDeleteOptions fileDeleteOptions, RequestOptions requestOptions)
         {
-            return this.DeleteEntity(id, fileDeleteOptions, requestOptions);
+            return DeleteEntity(id, fileDeleteOptions, requestOptions);
         }
 
         /// <summary>
@@ -415,7 +415,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public Task<File> DeleteAsync(string id)
         {
-            return this.DeleteAsync(id, null, null, default);
+            return DeleteAsync(id, null, null, default);
         }
 
         /// <summary>
@@ -426,7 +426,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public Task<File> DeleteAsync(string id, CancellationToken cancellationToken)
         {
-            return this.DeleteAsync(id, null, null, cancellationToken);
+            return DeleteAsync(id, null, null, cancellationToken);
         }
 
         /// <summary>
@@ -437,7 +437,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public Task<File> DeleteAsync(string id, FileDeleteOptions fileDeleteOptions)
         {
-            return this.DeleteAsync(id, fileDeleteOptions, null, default);
+            return DeleteAsync(id, fileDeleteOptions, null, default);
         }
 
         /// <summary>
@@ -449,7 +449,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public Task<File> DeleteAsync(string id, FileDeleteOptions fileDeleteOptions, CancellationToken cancellationToken)
         {
-            return this.DeleteAsync(id, fileDeleteOptions, null, cancellationToken);
+            return DeleteAsync(id, fileDeleteOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -460,7 +460,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public Task<File> DeleteAsync(string id, RequestOptions requestOptions)
         {
-            return this.DeleteAsync(id, null, requestOptions, default);
+            return DeleteAsync(id, null, requestOptions, default);
         }
 
         /// <summary>
@@ -472,7 +472,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public Task<File> DeleteAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.DeleteAsync(id, null, requestOptions, cancellationToken);
+            return DeleteAsync(id, null, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -484,7 +484,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public Task<File> DeleteAsync(string id, FileDeleteOptions fileDeleteOptions, RequestOptions requestOptions)
         {
-            return this.DeleteAsync(id, fileDeleteOptions, requestOptions, default);
+            return DeleteAsync(id, fileDeleteOptions, requestOptions, default);
         }
 
         /// <summary>
@@ -497,7 +497,7 @@ namespace OpenAI
         /// <returns>Task&lt;File&gt;.</returns>
         public virtual Task<File> DeleteAsync(string id, FileDeleteOptions fileDeleteOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.DeleteEntityAsync(id, fileDeleteOptions, requestOptions, cancellationToken);
+            return DeleteEntityAsync(id, fileDeleteOptions, requestOptions, cancellationToken);
         }
     }
 }

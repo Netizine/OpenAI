@@ -16,7 +16,7 @@ namespace OpenAI
         public OpenAIResponse(HttpStatusCode statusCode, HttpResponseHeaders headers, string content)
             : base(statusCode, headers)
         {
-            this.Content = content;
+            Content = content;
         }
 
         /// <summary>Gets the body of the response.</summary>

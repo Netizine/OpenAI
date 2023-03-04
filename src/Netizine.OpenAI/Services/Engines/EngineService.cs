@@ -54,7 +54,7 @@ namespace OpenAI
         /// <returns>Engine.</returns>
         public virtual Engine Get(string id)
         {
-            return this.Get(id, null, null);
+            return Get(id, null, null);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace OpenAI
         /// <returns>Engine.</returns>
         public virtual Engine Get(string id, EngineGetOptions engineGetOptions)
         {
-            return this.Get(id, engineGetOptions, null);
+            return Get(id, engineGetOptions, null);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace OpenAI
         /// <returns>Engine.</returns>
         public virtual Engine Get(string id, RequestOptions requestOptions)
         {
-            return this.Get(id, null, requestOptions);
+            return Get(id, null, requestOptions);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace OpenAI
         /// <returns>Engine.</returns>
         public virtual Engine Get(string id, EngineGetOptions engineGetOptions, RequestOptions requestOptions)
         {
-            return this.GetEntity(id, engineGetOptions, requestOptions);
+            return GetEntity(id, engineGetOptions, requestOptions);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace OpenAI
         /// <returns>Task&lt;Engine&gt;.</returns>
         public virtual Task<Engine> GetAsync(string id)
         {
-            return this.GetAsync(id, null, null, default);
+            return GetAsync(id, null, null, default);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace OpenAI
         /// <returns>Task&lt;Engine&gt;.</returns>
         public virtual Task<Engine> GetAsync(string id, CancellationToken cancellationToken)
         {
-            return this.GetAsync(id, null, null, cancellationToken);
+            return GetAsync(id, null, null, cancellationToken);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace OpenAI
         /// <returns>Task&lt;Engine&gt;.</returns>
         public virtual Task<Engine> GetAsync(string id, EngineGetOptions engineGetOptions)
         {
-            return this.GetAsync(id, engineGetOptions, null, default);
+            return GetAsync(id, engineGetOptions, null, default);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace OpenAI
         /// <returns>Task&lt;Engine&gt;.</returns>
         public virtual Task<Engine> GetAsync(string id, EngineGetOptions engineGetOptions, CancellationToken cancellationToken)
         {
-            return this.GetAsync(id, engineGetOptions, null, cancellationToken);
+            return GetAsync(id, engineGetOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace OpenAI
         /// <returns>Task&lt;Engine&gt;.</returns>
         public virtual Task<Engine> GetAsync(string id, RequestOptions requestOptions)
         {
-            return this.GetAsync(id, null, requestOptions, default);
+            return GetAsync(id, null, requestOptions, default);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace OpenAI
         /// <returns>Task&lt;Engine&gt;.</returns>
         public virtual Task<Engine> GetAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.GetAsync(id, null, requestOptions, cancellationToken);
+            return GetAsync(id, null, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace OpenAI
         /// <returns>Task&lt;Engine&gt;.</returns>
         public virtual Task<Engine> GetAsync(string id, EngineGetOptions engineGetOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.GetEntityAsync(id, engineGetOptions, requestOptions, cancellationToken);
+            return GetEntityAsync(id, engineGetOptions, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace OpenAI
         /// <returns>OpenAIList&lt;Engine&gt;.</returns>
         public virtual OpenAIList<Engine> List()
         {
-            return this.List(null, null);
+            return List(null, null);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace OpenAI
         /// <returns>OpenAIList&lt;Engine&gt;.</returns>
         public virtual OpenAIList<Engine> List(EngineListOptions engineListOptions)
         {
-            return this.List(engineListOptions, null);
+            return List(engineListOptions, null);
         }
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace OpenAI
         /// <returns>OpenAIList&lt;Engine&gt;.</returns>
         public virtual OpenAIList<Engine> List(RequestOptions requestOptions)
         {
-            return this.List(null, requestOptions);
+            return List(null, requestOptions);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace OpenAI
         /// <returns>OpenAIList&lt;Engine&gt;.</returns>
         public virtual OpenAIList<Engine> List(EngineListOptions engineListOptions, RequestOptions requestOptions)
         {
-            return this.ListEntities(engineListOptions, requestOptions);
+            return ListEntities(engineListOptions, requestOptions);
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;Engine&gt;&gt;.</returns>
         public virtual Task<OpenAIList<Engine>> ListAsync()
         {
-            return this.ListAsync(null, null, default);
+            return ListAsync(null, null, default);
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;Engine&gt;&gt;.</returns>
         public virtual Task<OpenAIList<Engine>> ListAsync(CancellationToken cancellationToken)
         {
-            return this.ListAsync(null, null, cancellationToken);
+            return ListAsync(null, null, cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;Engine&gt;&gt;.</returns>
         public virtual Task<OpenAIList<Engine>> ListAsync(EngineListOptions engineListOptions)
         {
-            return this.ListAsync(engineListOptions, null, default);
+            return ListAsync(engineListOptions, null, default);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;Engine&gt;&gt;.</returns>
         public virtual Task<OpenAIList<Engine>> ListAsync(EngineListOptions engineListOptions, CancellationToken cancellationToken)
         {
-            return this.ListAsync(engineListOptions, null, cancellationToken);
+            return ListAsync(engineListOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;Engine&gt;&gt;.</returns>
         public virtual Task<OpenAIList<Engine>> ListAsync(RequestOptions requestOptions)
         {
-            return this.ListAsync(null, requestOptions, default);
+            return ListAsync(null, requestOptions, default);
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;Engine&gt;&gt;.</returns>
         public virtual Task<OpenAIList<Engine>> ListAsync(RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.ListAsync(null, requestOptions, cancellationToken);
+            return ListAsync(null, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;Engine&gt;&gt;.</returns>
         public Task<OpenAIList<Engine>> ListAsync(EngineListOptions engineListOptions, RequestOptions requestOptions)
         {
-            return this.ListAsync(engineListOptions, requestOptions, default);
+            return ListAsync(engineListOptions, requestOptions, default);
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;Engine&gt;&gt;.</returns>
         public virtual Task<OpenAIList<Engine>> ListAsync(EngineListOptions engineListOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.ListEntitiesAsync(engineListOptions, requestOptions, cancellationToken);
+            return ListEntitiesAsync(engineListOptions, requestOptions, cancellationToken);
         }
     }
 }

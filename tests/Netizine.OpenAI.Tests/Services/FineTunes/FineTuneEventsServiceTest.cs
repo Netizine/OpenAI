@@ -19,14 +19,14 @@ namespace OpenAI.Tests.Services.FineTunes
             MockHttpClientFixture mockHttpClientFixture)
             : base(openAIMockFixture, mockHttpClientFixture)
         {
-            this.service = new FineTuneEventsService(this.OpenAIClient);
+            service = new FineTuneEventsService(OpenAIClient);
         }
 
         [Fact]
         public void Get()
         {
-            var fineTuneEvents = this.service.Get(FineTuneId);
-            this.AssertRequest(HttpMethod.Get, "/v1/fine-tunes/ft-AF1WoRqd3aJAHsqc9NY7iL8F/events");
+            var fineTuneEvents = service.Get(FineTuneId);
+            AssertRequest(HttpMethod.Get, "/v1/fine-tunes/ft-AF1WoRqd3aJAHsqc9NY7iL8F/events");
             Assert.NotNull(fineTuneEvents);
             Assert.NotNull(fineTuneEvents.Data);
             Assert.Equal("list", fineTuneEvents.Object);
@@ -36,8 +36,8 @@ namespace OpenAI.Tests.Services.FineTunes
         [Fact]
         public async Task GetAsync()
         {
-            var fineTuneEvents = await this.service.GetAsync(FineTuneId);
-            this.AssertRequest(HttpMethod.Get, "/v1/fine-tunes/ft-AF1WoRqd3aJAHsqc9NY7iL8F/events");
+            var fineTuneEvents = await service.GetAsync(FineTuneId);
+            AssertRequest(HttpMethod.Get, "/v1/fine-tunes/ft-AF1WoRqd3aJAHsqc9NY7iL8F/events");
             Assert.NotNull(fineTuneEvents);
             Assert.NotNull(fineTuneEvents.Data);
             Assert.Equal("list", fineTuneEvents.Object);

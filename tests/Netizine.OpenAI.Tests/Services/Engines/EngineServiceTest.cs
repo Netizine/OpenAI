@@ -22,16 +22,16 @@ namespace OpenAI.Tests.Services.Engines
             MockHttpClientFixture mockHttpClientFixture)
             : base(openAIMockFixture, mockHttpClientFixture)
         {
-            this.service = new EngineService(this.OpenAIClient);
+            service = new EngineService(OpenAIClient);
 
-            this.listOptions = new EngineListOptions();
+            listOptions = new EngineListOptions();
         }
 
         [Fact]
         public void Get()
         {
-            var engine = this.service.Get(EngineId);
-            this.AssertRequest(HttpMethod.Get, "/v1/engines/text-davinci-003");
+            var engine = service.Get(EngineId);
+            AssertRequest(HttpMethod.Get, "/v1/engines/text-davinci-003");
             Assert.NotNull(engine);
             Assert.Equal("engine", engine.Object);
         }
@@ -39,8 +39,8 @@ namespace OpenAI.Tests.Services.Engines
         [Fact]
         public async Task GetAsync()
         {
-            var engine = await this.service.GetAsync(EngineId);
-            this.AssertRequest(HttpMethod.Get, "/v1/engines/text-davinci-003");
+            var engine = await service.GetAsync(EngineId);
+            AssertRequest(HttpMethod.Get, "/v1/engines/text-davinci-003");
             Assert.NotNull(engine);
             Assert.Equal("engine", engine.Object);
         }
@@ -48,8 +48,8 @@ namespace OpenAI.Tests.Services.Engines
         [Fact]
         public void List()
         {
-            var engines = this.service.List(this.listOptions);
-            this.AssertRequest(HttpMethod.Get, "/v1/engines");
+            var engines = service.List(listOptions);
+            AssertRequest(HttpMethod.Get, "/v1/engines");
             Assert.NotNull(engines);
             Assert.Equal("list", engines.Object);
             Assert.Equal(52, engines.Data.Count);
@@ -59,8 +59,8 @@ namespace OpenAI.Tests.Services.Engines
         [Fact]
         public async Task ListAsync()
         {
-            var engines = await this.service.ListAsync(this.listOptions);
-            this.AssertRequest(HttpMethod.Get, "/v1/engines");
+            var engines = await service.ListAsync(listOptions);
+            AssertRequest(HttpMethod.Get, "/v1/engines");
             Assert.NotNull(engines);
             Assert.Equal("list", engines.Object);
             Assert.Equal(52, engines.Data.Count);

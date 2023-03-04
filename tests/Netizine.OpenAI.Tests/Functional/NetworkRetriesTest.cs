@@ -18,13 +18,13 @@ namespace OpenAI.Tests
             : base(mockHttpClientFixture)
         {
             var httpClient = new SystemNetHttpClient(
-                httpClient: new System.Net.Http.HttpClient(
-                    this.MockHttpClientFixture.MockHandler.Object),
+                httpClient: new HttpClient(
+                    MockHttpClientFixture.MockHandler.Object),
                 maxNetworkRetries: 2)
             {
                 NetworkRetriesSleep = false,
             };
-            this.OpenAIClient = new OpenAIClient("sk-test", httpClient: httpClient);
+            OpenAIClient = new OpenAIClient("sk-test", httpClient: httpClient);
         }
 
         private new IOpenAIClient OpenAIClient { get; }
@@ -38,7 +38,7 @@ namespace OpenAI.Tests
         [Fact]
         public void RetryOnConflict()
         {
-            this.MockHttpClientFixture.MockHandler.Protected()
+            MockHttpClientFixture.MockHandler.Protected()
                 .SetupSequence<Task<HttpResponseMessage>>(
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
@@ -55,7 +55,7 @@ namespace OpenAI.Tests
                     }))
                 .Throws(new OpenAITestException("Unexpected invocation"));
 
-            var service = new EngineService(this.OpenAIClient);
+            var service = new EngineService(OpenAIClient);
             var engine = service.Get("text-davinci-003");
 
             Assert.NotNull(engine);
@@ -65,7 +65,7 @@ namespace OpenAI.Tests
         [Fact]
         public void RetryOnServiceUnavailable()
         {
-            this.MockHttpClientFixture.MockHandler.Protected()
+            MockHttpClientFixture.MockHandler.Protected()
                 .SetupSequence<Task<HttpResponseMessage>>(
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
@@ -82,7 +82,7 @@ namespace OpenAI.Tests
                     }))
                 .Throws(new OpenAITestException("Unexpected invocation"));
 
-            var service = new EngineService(this.OpenAIClient);
+            var service = new EngineService(OpenAIClient);
             var engine = service.Get("text-davinci-003");
 
             Assert.NotNull(engine);
@@ -92,7 +92,7 @@ namespace OpenAI.Tests
         [Fact]
         public void RetryOnInternalServerError()
         {
-            this.MockHttpClientFixture.MockHandler.Protected()
+            MockHttpClientFixture.MockHandler.Protected()
                 .SetupSequence<Task<HttpResponseMessage>>(
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
@@ -109,7 +109,7 @@ namespace OpenAI.Tests
                     }))
                 .Throws(new OpenAITestException("Unexpected invocation"));
 
-            var service = new EngineService(this.OpenAIClient);
+            var service = new EngineService(OpenAIClient);
             var engine = service.Get("text-davinci-003");
 
             Assert.NotNull(engine);
@@ -119,7 +119,7 @@ namespace OpenAI.Tests
         [Fact]
         public void RetryOnHttpRequestException()
         {
-            this.MockHttpClientFixture.MockHandler.Protected()
+            MockHttpClientFixture.MockHandler.Protected()
                 .SetupSequence<Task<HttpResponseMessage>>(
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
@@ -132,7 +132,7 @@ namespace OpenAI.Tests
                     }))
                 .Throws(new OpenAITestException("Unexpected invocation"));
 
-            var service = new EngineService(this.OpenAIClient);
+            var service = new EngineService(OpenAIClient);
             var engine = service.Get("text-davinci-003");
 
             Assert.NotNull(engine);
@@ -142,7 +142,7 @@ namespace OpenAI.Tests
         [Fact]
         public void RethrowHttpRequestExceptionAfterAllAttempts()
         {
-            this.MockHttpClientFixture.MockHandler.Protected()
+            MockHttpClientFixture.MockHandler.Protected()
                 .SetupSequence<Task<HttpResponseMessage>>(
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
@@ -152,7 +152,7 @@ namespace OpenAI.Tests
                 .Throws(new HttpRequestException("Connection error 3"))
                 .Throws(new OpenAITestException("Unexpected invocation"));
 
-            var service = new EngineService(this.OpenAIClient);
+            var service = new EngineService(OpenAIClient);
             var exception = Assert.Throws<HttpRequestException>(() => service.Get("text-davinci-003"));
 
             Assert.NotNull(exception);
@@ -162,7 +162,7 @@ namespace OpenAI.Tests
         [Fact]
         public void RetryOnTimeout()
         {
-            this.MockHttpClientFixture.MockHandler.Protected()
+            MockHttpClientFixture.MockHandler.Protected()
                 .SetupSequence<Task<HttpResponseMessage>>(
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
@@ -175,7 +175,7 @@ namespace OpenAI.Tests
                     }))
                 .Throws(new OpenAITestException("Unexpected invocation"));
 
-            var service = new EngineService(this.OpenAIClient);
+            var service = new EngineService(OpenAIClient);
             var engine = service.Get("text-davinci-003");
 
             Assert.NotNull(engine);
@@ -185,7 +185,7 @@ namespace OpenAI.Tests
         [Fact]
         public void RethrowTimeoutExceptionAfterAllAttempts()
         {
-            this.MockHttpClientFixture.MockHandler.Protected()
+            MockHttpClientFixture.MockHandler.Protected()
                 .SetupSequence<Task<HttpResponseMessage>>(
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
@@ -195,7 +195,7 @@ namespace OpenAI.Tests
                 .Throws(new TaskCanceledException("Timeout 3"))
                 .Throws(new OpenAITestException("Unexpected invocation"));
 
-            var service = new EngineService(this.OpenAIClient);
+            var service = new EngineService(OpenAIClient);
             var exception = Assert.Throws<TaskCanceledException>(() => service.Get("text-davinci-003"));
 
             Assert.NotNull(exception);
@@ -214,7 +214,7 @@ namespace OpenAI.Tests
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             var requestCount = 0;
-            this.MockHttpClientFixture.MockHandler.Protected()
+            MockHttpClientFixture.MockHandler.Protected()
                 .Setup<Task<HttpResponseMessage>>(
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
@@ -229,7 +229,7 @@ namespace OpenAI.Tests
                         };
                     });
 
-            var service = new EngineService(this.OpenAIClient);
+            var service = new EngineService(OpenAIClient);
             var source = new CancellationTokenSource();
             source.CancelAfter(TimeSpan.FromMilliseconds(10));
             await Assert.ThrowsAsync<TaskCanceledException>(async () =>

@@ -15,14 +15,14 @@
             MockHttpClientFixture mockHttpClientFixture)
             : base(openAIMockFixture, mockHttpClientFixture)
         {
-            this.service = new FileContentService(this.OpenAIClient);
+            service = new FileContentService(OpenAIClient);
         }
 
         [Fact]
         public void Get()
         {
-            var fileContent = this.service.Get(FileId);
-            this.AssertRequest(HttpMethod.Get, "/v1/files/file-GpNxfyq0WSPw0UT0Vxr4a1Bn/content");
+            var fileContent = service.Get(FileId);
+            AssertRequest(HttpMethod.Get, "/v1/files/file-GpNxfyq0WSPw0UT0Vxr4a1Bn/content");
             Assert.NotNull(fileContent);
             Assert.NotEmpty(fileContent.Content);
         }
@@ -30,8 +30,8 @@
         [Fact]
         public async Task GetAsync()
         {
-            var fileContent = await this.service.GetAsync(FileId);
-            this.AssertRequest(HttpMethod.Get, "/v1/files/file-GpNxfyq0WSPw0UT0Vxr4a1Bn/content");
+            var fileContent = await service.GetAsync(FileId);
+            AssertRequest(HttpMethod.Get, "/v1/files/file-GpNxfyq0WSPw0UT0Vxr4a1Bn/content");
             Assert.NotNull(fileContent);
             Assert.NotEmpty(fileContent.Content);
         }

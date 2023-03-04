@@ -4,7 +4,7 @@ namespace OpenAI
     using System;
     using System.Collections.Generic;
     using Newtonsoft.Json;
-    using OpenAI.Infrastructure;
+    using Infrastructure;
 
     /// <summary>
     /// List and describe the various models available in the API.

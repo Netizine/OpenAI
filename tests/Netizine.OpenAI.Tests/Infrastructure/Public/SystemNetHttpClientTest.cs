@@ -24,16 +24,16 @@ namespace OpenAI.Tests
         {
             var responseMessage = new HttpResponseMessage(HttpStatusCode.OK);
             responseMessage.Content = new StringContent("Hello world!");
-            this.MockHttpClientFixture.MockHandler.Protected()
+            MockHttpClientFixture.MockHandler.Protected()
                 .Setup<Task<HttpResponseMessage>>(
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.FromResult(responseMessage));
             var client = new SystemNetHttpClient(
-                new HttpClient(this.MockHttpClientFixture.MockHandler.Object));
+                new HttpClient(MockHttpClientFixture.MockHandler.Object));
             var request = new OpenAIRequest(
-                this.OpenAIClient,
+                OpenAIClient,
                 HttpMethod.Post,
                 "/foo",
                 null,
@@ -49,7 +49,7 @@ namespace OpenAI.Tests
         public void CanInspectMaxNetworkRetries()
         {
             var client = new SystemNetHttpClient(
-                httpClient: new HttpClient(this.MockHttpClientFixture.MockHandler.Object),
+                httpClient: new HttpClient(MockHttpClientFixture.MockHandler.Object),
                 maxNetworkRetries: 2);
 
             Assert.Equal(2, client.MaxNetworkRetries);

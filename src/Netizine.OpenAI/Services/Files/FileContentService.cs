@@ -47,7 +47,7 @@ namespace OpenAI
         /// <returns>FileContent.</returns>
         public virtual FileContent Get(string id)
         {
-            return this.Get(id, null);
+            return Get(id, null);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace OpenAI
         /// <returns>FileContent.</returns>
         public virtual FileContent Get(string id, RequestOptions requestOptions)
         {
-            return this.Request(HttpMethod.Get, $"/v1/files/{id}/content", null, requestOptions);
+            return Request(HttpMethod.Get, $"/v1/files/{id}/content", null, requestOptions);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace OpenAI
         /// <returns>Task&lt;FileContent&gt;.</returns>
         public virtual Task<FileContent> GetAsync(string id)
         {
-            return this.GetAsync(id, null, default);
+            return GetAsync(id, null, default);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace OpenAI
         /// <returns>Task&lt;FileContent&gt;.</returns>
         public virtual Task<FileContent> GetAsync(string id, CancellationToken cancellationToken)
         {
-            return this.GetAsync(id, null, cancellationToken);
+            return GetAsync(id, null, cancellationToken);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace OpenAI
         /// <returns>Task&lt;FileContent&gt;.</returns>
         public virtual Task<FileContent> GetAsync(string id, RequestOptions requestOptions)
         {
-            return this.GetAsync(id, requestOptions, default);
+            return GetAsync(id, requestOptions, default);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace OpenAI
         /// <returns>Task&lt;FileContent&gt;.</returns>
         public virtual Task<FileContent> GetAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.RequestAsync(HttpMethod.Get, $"/v1/files/{id}/content", null, requestOptions, cancellationToken);
+            return RequestAsync(HttpMethod.Get, $"/v1/files/{id}/content", null, requestOptions, cancellationToken);
         }
     }
 }

@@ -47,7 +47,7 @@ namespace OpenAI
         /// <returns>Image.</returns>
         public virtual Image Create(ImageCreateOptions imageCreateOptions)
         {
-            return this.Create(imageCreateOptions, null);
+            return Create(imageCreateOptions, null);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace OpenAI
         /// <returns>Image.</returns>
         public virtual Image Create(ImageCreateOptions imageCreateOptions, RequestOptions requestOptions)
         {
-            return this.Request(HttpMethod.Post, "/v1/images/generations", imageCreateOptions, requestOptions);
+            return Request(HttpMethod.Post, "/v1/images/generations", imageCreateOptions, requestOptions);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace OpenAI
         /// <returns>Task&lt;Image&gt;.</returns>
         public virtual Task<Image> CreateAsync(ImageCreateOptions imageCreateOptions)
         {
-            return this.CreateAsync(imageCreateOptions, null, default);
+            return CreateAsync(imageCreateOptions, null, default);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace OpenAI
         /// <returns>Task&lt;Image&gt;.</returns>
         public virtual Task<Image> CreateAsync(ImageCreateOptions imageCreateOptions, RequestOptions requestOptions)
         {
-            return this.CreateAsync(imageCreateOptions, requestOptions, default);
+            return CreateAsync(imageCreateOptions, requestOptions, default);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace OpenAI
         /// <returns>Task&lt;Image&gt;.</returns>
         public virtual Task<Image> CreateAsync(ImageCreateOptions imageCreateOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.RequestAsync(HttpMethod.Post, "/v1/images/generations", imageCreateOptions, requestOptions, cancellationToken);
+            return RequestAsync(HttpMethod.Post, "/v1/images/generations", imageCreateOptions, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace OpenAI
         /// <returns>Image.</returns>
         public virtual Image Edit(EditImageCreateOptions editImageCreateOptions)
         {
-            return this.Edit(editImageCreateOptions, null);
+            return Edit(editImageCreateOptions, null);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace OpenAI
         /// <returns>Image.</returns>
         public virtual Image Edit(EditImageCreateOptions editImageCreateOptions, RequestOptions requestOptions)
         {
-            return this.Request(HttpMethod.Post, "/v1/images/edits", editImageCreateOptions, requestOptions);
+            return Request(HttpMethod.Post, "/v1/images/edits", editImageCreateOptions, requestOptions);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace OpenAI
         /// <returns>Task&lt;Image&gt;.</returns>
         public virtual Task<Image> EditAsync(EditImageCreateOptions editImageCreateOptions)
         {
-            return this.EditAsync(editImageCreateOptions, null, default);
+            return EditAsync(editImageCreateOptions, null, default);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace OpenAI
         /// <returns>Task&lt;Image&gt;.</returns>
         public virtual Task<Image> EditAsync(EditImageCreateOptions editImageCreateOptions, CancellationToken cancellationToken)
         {
-            return this.EditAsync(editImageCreateOptions, null, cancellationToken);
+            return EditAsync(editImageCreateOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace OpenAI
         /// <returns>Task&lt;Image&gt;.</returns>
         public virtual Task<Image> EditAsync(EditImageCreateOptions editImageCreateOptions, RequestOptions requestOptions)
         {
-            return this.EditAsync(editImageCreateOptions, requestOptions, default);
+            return EditAsync(editImageCreateOptions, requestOptions, default);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace OpenAI
         /// <returns>Task&lt;Image&gt;.</returns>
         public virtual Task<Image> EditAsync(EditImageCreateOptions editImageCreateOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.RequestAsync(HttpMethod.Post, "/v1/images/edits", editImageCreateOptions, requestOptions, cancellationToken);
+            return RequestAsync(HttpMethod.Post, "/v1/images/edits", editImageCreateOptions, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace OpenAI
         /// <returns>Image.</returns>
         public virtual Image CreateVariation(ImageVariationCreateOption imageVariationCreateOption)
         {
-            return this.CreateVariation(imageVariationCreateOption, null);
+            return CreateVariation(imageVariationCreateOption, null);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace OpenAI
         /// <returns>Image.</returns>
         public virtual Image CreateVariation(ImageVariationCreateOption imageVariationCreateOption, RequestOptions requestOptions)
         {
-            return this.Request(HttpMethod.Post, "/v1/images/variations", imageVariationCreateOption, requestOptions);
+            return Request(HttpMethod.Post, "/v1/images/variations", imageVariationCreateOption, requestOptions);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace OpenAI
         /// <returns>Task&lt;Image&gt;.</returns>
         public virtual Task<Image> CreateVariationAsync(ImageVariationCreateOption imageVariationCreateOption)
         {
-            return this.CreateVariationAsync(imageVariationCreateOption, null, default);
+            return CreateVariationAsync(imageVariationCreateOption, null, default);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace OpenAI
         /// <returns>Task&lt;Image&gt;.</returns>
         public virtual Task<Image> CreateVariationAsync(ImageVariationCreateOption imageVariationCreateOption, CancellationToken cancellationToken)
         {
-            return this.CreateVariationAsync(imageVariationCreateOption, null, cancellationToken);
+            return CreateVariationAsync(imageVariationCreateOption, null, cancellationToken);
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace OpenAI
         /// <returns>Task&lt;Image&gt;.</returns>
         public virtual Task<Image> CreateVariationAsync(ImageVariationCreateOption imageVariationCreateOption, RequestOptions requestOptions)
         {
-            return this.CreateVariationAsync(imageVariationCreateOption, requestOptions, default);
+            return CreateVariationAsync(imageVariationCreateOption, requestOptions, default);
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace OpenAI
         /// <returns>Task&lt;Image&gt;.</returns>
         public virtual Task<Image> CreateVariationAsync(ImageVariationCreateOption imageVariationCreateOption, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.RequestAsync(HttpMethod.Post, "/v1/images/variations", imageVariationCreateOption, requestOptions, cancellationToken);
+            return RequestAsync(HttpMethod.Post, "/v1/images/variations", imageVariationCreateOption, requestOptions, cancellationToken);
         }
     }
 }

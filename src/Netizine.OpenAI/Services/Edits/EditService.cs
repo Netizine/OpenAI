@@ -41,7 +41,7 @@ namespace OpenAI
         /// <returns>The created entity.</returns>
         public Edit Create(EditCreateOptions editCreateOptions)
         {
-            return this.Create(editCreateOptions, null);
+            return Create(editCreateOptions, null);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace OpenAI
         /// <returns>The created entity.</returns>
         public virtual Edit Create(EditCreateOptions editCreateOptions, RequestOptions requestOptions)
         {
-            return this.CreateEntity(editCreateOptions, requestOptions);
+            return CreateEntity(editCreateOptions, requestOptions);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace OpenAI
         /// <returns>Task&lt;Edit&gt;.</returns>
         public Task<Edit> CreateAsync(EditCreateOptions editCreateOptions)
         {
-            return this.CreateAsync(editCreateOptions, null, default);
+            return CreateAsync(editCreateOptions, null, default);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace OpenAI
         /// <returns>Task&lt;Edit&gt;.</returns>
         public Task<Edit> CreateAsync(EditCreateOptions editCreateOptions, CancellationToken cancellationToken)
         {
-            return this.CreateAsync(editCreateOptions, null, cancellationToken);
+            return CreateAsync(editCreateOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace OpenAI
         /// <returns>Task&lt;Edit&gt;.</returns>
         public Task<Edit> CreateAsync(EditCreateOptions editCreateOptions, RequestOptions requestOptions)
         {
-            return this.CreateAsync(editCreateOptions, requestOptions, default);
+            return CreateAsync(editCreateOptions, requestOptions, default);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace OpenAI
         /// <returns>Task&lt;Edit&gt;.</returns>
         public virtual Task<Edit> CreateAsync(EditCreateOptions editCreateOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.CreateEntityAsync(editCreateOptions, requestOptions, cancellationToken);
+            return CreateEntityAsync(editCreateOptions, requestOptions, cancellationToken);
         }
     }
 }

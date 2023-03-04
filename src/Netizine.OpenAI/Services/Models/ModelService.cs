@@ -55,7 +55,7 @@ namespace OpenAI
         /// <returns>Model.</returns>
         public virtual Model Get(string id)
         {
-            return this.Get(id, null, null);
+            return Get(id, null, null);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace OpenAI
         /// <returns>Model.</returns>
         public virtual Model Get(string id, ModelGetOptions modelGetOptions)
         {
-            return this.Get(id, modelGetOptions, null);
+            return Get(id, modelGetOptions, null);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace OpenAI
         /// <returns>Model.</returns>
         public virtual Model Get(string id, RequestOptions requestOptions)
         {
-            return this.Get(id, null, requestOptions);
+            return Get(id, null, requestOptions);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace OpenAI
         /// <returns>Model.</returns>
         public virtual Model Get(string id, ModelGetOptions modelGetOptions, RequestOptions requestOptions)
         {
-            return this.GetEntity(id, modelGetOptions, requestOptions);
+            return GetEntity(id, modelGetOptions, requestOptions);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace OpenAI
         /// <returns>Task&lt;Model&gt;.</returns>
         public virtual Task<Model> GetAsync(string id)
         {
-            return this.GetAsync(id, null, null, default);
+            return GetAsync(id, null, null, default);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace OpenAI
         /// <returns>Task&lt;Model&gt;.</returns>
         public virtual Task<Model> GetAsync(string id, CancellationToken cancellationToken)
         {
-            return this.GetAsync(id, null, null, cancellationToken);
+            return GetAsync(id, null, null, cancellationToken);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace OpenAI
         /// <returns>Task&lt;Model&gt;.</returns>
         public virtual Task<Model> GetAsync(string id, ModelGetOptions modelGetOptions)
         {
-            return this.GetAsync(id, modelGetOptions, null, default);
+            return GetAsync(id, modelGetOptions, null, default);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace OpenAI
         /// <returns>Task&lt;Model&gt;.</returns>
         public virtual Task<Model> GetAsync(string id, ModelGetOptions modelGetOptions, CancellationToken cancellationToken)
         {
-            return this.GetAsync(id, modelGetOptions, null, cancellationToken);
+            return GetAsync(id, modelGetOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace OpenAI
         /// <returns>Task&lt;Model&gt;.</returns>
         public virtual Task<Model> GetAsync(string id, RequestOptions requestOptions)
         {
-            return this.GetAsync(id, null, requestOptions, default);
+            return GetAsync(id, null, requestOptions, default);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace OpenAI
         /// <returns>Task&lt;Model&gt;.</returns>
         public virtual Task<Model> GetAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.GetAsync(id, null, requestOptions, cancellationToken);
+            return GetAsync(id, null, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace OpenAI
         /// <returns>Task&lt;Model&gt;.</returns>
         public virtual Task<Model> GetAsync(string id, ModelGetOptions modelGetOptions, RequestOptions requestOptions)
         {
-            return this.GetAsync(id, modelGetOptions, requestOptions, default);
+            return GetAsync(id, modelGetOptions, requestOptions, default);
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace OpenAI
         /// <returns>Task&lt;Model&gt;.</returns>
         public virtual Task<Model> GetAsync(string id, ModelGetOptions modelGetOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.GetEntityAsync(id, modelGetOptions, requestOptions, cancellationToken);
+            return GetEntityAsync(id, modelGetOptions, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace OpenAI
         /// <returns>The deleted entity.</returns>
         public Model Delete(string id)
         {
-            return this.Delete(id, null, null);
+            return Delete(id, null, null);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace OpenAI
         /// <returns>The deleted entity.</returns>
         public Model Delete(string id, ModelDeleteOptions modelDeleteOptions)
         {
-            return this.Delete(id, modelDeleteOptions, null);
+            return Delete(id, modelDeleteOptions, null);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace OpenAI
         /// <returns>The deleted entity.</returns>
         public Model Delete(string id, RequestOptions requestOptions)
         {
-            return this.Delete(id, null, requestOptions);
+            return Delete(id, null, requestOptions);
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace OpenAI
         /// <returns>The deleted entity.</returns>
         public Model Delete(string id, ModelDeleteOptions modelDeleteOptions, RequestOptions requestOptions)
         {
-            return this.DeleteEntity(id, modelDeleteOptions, requestOptions);
+            return DeleteEntity(id, modelDeleteOptions, requestOptions);
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace OpenAI
         /// <returns>Task&lt;Model&gt;.</returns>
         public Task<Model> DeleteAsync(string id)
         {
-            return this.DeleteAsync(id, null, null, default);
+            return DeleteAsync(id, null, null, default);
         }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace OpenAI
         /// <returns>Task&lt;Model&gt;.</returns>
         public Task<Model> DeleteAsync(string id, CancellationToken cancellationToken)
         {
-            return this.DeleteAsync(id, null, null, cancellationToken);
+            return DeleteAsync(id, null, null, cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace OpenAI
         /// <returns>Task&lt;Model&gt;.</returns>
         public Task<Model> DeleteAsync(string id, ModelDeleteOptions modelDeleteOptions)
         {
-            return this.DeleteAsync(id, modelDeleteOptions, null, default);
+            return DeleteAsync(id, modelDeleteOptions, null, default);
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace OpenAI
         /// <returns>Task&lt;Model&gt;.</returns>
         public Task<Model> DeleteAsync(string id, ModelDeleteOptions modelDeleteOptions, CancellationToken cancellationToken)
         {
-            return this.DeleteAsync(id, modelDeleteOptions, null, cancellationToken);
+            return DeleteAsync(id, modelDeleteOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace OpenAI
         /// <returns>Task&lt;Model&gt;.</returns>
         public Task<Model> DeleteAsync(string id, RequestOptions requestOptions)
         {
-            return this.DeleteAsync(id, null, requestOptions, default);
+            return DeleteAsync(id, null, requestOptions, default);
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace OpenAI
         /// <returns>Task&lt;Model&gt;.</returns>
         public Task<Model> DeleteAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.DeleteAsync(id, null, requestOptions, cancellationToken);
+            return DeleteAsync(id, null, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -304,7 +304,7 @@ namespace OpenAI
         /// <returns>Task&lt;Model&gt;.</returns>
         public Task<Model> DeleteAsync(string id, ModelDeleteOptions modelDeleteOptions, RequestOptions requestOptions)
         {
-            return this.DeleteAsync(id, modelDeleteOptions, requestOptions, default);
+            return DeleteAsync(id, modelDeleteOptions, requestOptions, default);
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace OpenAI
         /// <returns>Task&lt;Model&gt;.</returns>
         public Task<Model> DeleteAsync(string id, ModelDeleteOptions modelDeleteOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.DeleteEntityAsync(id, modelDeleteOptions, requestOptions, cancellationToken);
+            return DeleteEntityAsync(id, modelDeleteOptions, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace OpenAI
         /// <returns>OpenAIList&lt;Model&gt;.</returns>
         public virtual OpenAIList<Model> List()
         {
-            return this.List(null, null);
+            return List(null, null);
         }
 
         /// <summary>
@@ -336,7 +336,7 @@ namespace OpenAI
         /// <returns>OpenAIList&lt;Model&gt;.</returns>
         public virtual OpenAIList<Model> List(ModelListOptions modelListOptions)
         {
-            return this.List(modelListOptions, null);
+            return List(modelListOptions, null);
         }
 
         /// <summary>
@@ -346,7 +346,7 @@ namespace OpenAI
         /// <returns>OpenAIList&lt;Model&gt;.</returns>
         public virtual OpenAIList<Model> List(RequestOptions requestOptions)
         {
-            return this.List(null, requestOptions);
+            return List(null, requestOptions);
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace OpenAI
         /// <returns>OpenAIList&lt;Model&gt;.</returns>
         public virtual OpenAIList<Model> List(ModelListOptions modelListOptions, RequestOptions requestOptions)
         {
-            return this.ListEntities(modelListOptions, requestOptions);
+            return ListEntities(modelListOptions, requestOptions);
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;Model&gt;&gt;.</returns>
         public Task<OpenAIList<Model>> ListAsync()
         {
-            return this.ListAsync(null, null, default);
+            return ListAsync(null, null, default);
         }
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;Model&gt;&gt;.</returns>
         public Task<OpenAIList<Model>> ListAsync(CancellationToken cancellationToken)
         {
-            return this.ListAsync(null, null, cancellationToken);
+            return ListAsync(null, null, cancellationToken);
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;Model&gt;&gt;.</returns>
         public Task<OpenAIList<Model>> ListAsync(ModelListOptions modelListOptions)
         {
-            return this.ListAsync(modelListOptions, null, default);
+            return ListAsync(modelListOptions, null, default);
         }
 
         /// <summary>
@@ -397,7 +397,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;Model&gt;&gt;.</returns>
         public Task<OpenAIList<Model>> ListAsync(ModelListOptions modelListOptions, CancellationToken cancellationToken)
         {
-            return this.ListAsync(modelListOptions, null, cancellationToken);
+            return ListAsync(modelListOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -407,7 +407,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;Model&gt;&gt;.</returns>
         public Task<OpenAIList<Model>> ListAsync(RequestOptions requestOptions)
         {
-            return this.ListAsync(null, requestOptions, default);
+            return ListAsync(null, requestOptions, default);
         }
 
         /// <summary>
@@ -418,7 +418,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;Model&gt;&gt;.</returns>
         public Task<OpenAIList<Model>> ListAsync(RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.ListAsync(null, requestOptions, cancellationToken);
+            return ListAsync(null, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -429,7 +429,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;Model&gt;&gt;.</returns>
         public Task<OpenAIList<Model>> ListAsync(ModelListOptions modelListOptions, RequestOptions requestOptions)
         {
-            return this.ListAsync(modelListOptions, requestOptions, default);
+            return ListAsync(modelListOptions, requestOptions, default);
         }
 
         /// <summary>
@@ -441,7 +441,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;Model&gt;&gt;.</returns>
         public virtual Task<OpenAIList<Model>> ListAsync(ModelListOptions modelListOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.ListEntitiesAsync(modelListOptions, requestOptions, cancellationToken);
+            return ListEntitiesAsync(modelListOptions, requestOptions, cancellationToken);
         }
     }
 }

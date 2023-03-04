@@ -11,7 +11,7 @@ namespace OpenAI
     using System.Net.Http.Headers;
     using System.Threading;
     using System.Threading.Tasks;
-    using OpenAI.Infrastructure;
+    using Infrastructure;
 
     /// <summary>
     /// Standard client to make requests to OpenAI's API, using
@@ -37,10 +37,10 @@ namespace OpenAI
 #endif
         ;
 
-        private static readonly Lazy<System.Net.Http.HttpClient> LazyDefaultHttpClient
-            = new Lazy<System.Net.Http.HttpClient>(BuildDefaultSystemNetHttpClient);
+        private static readonly Lazy<HttpClient> LazyDefaultHttpClient
+            = new Lazy<HttpClient>(BuildDefaultSystemNetHttpClient);
 
-        private readonly System.Net.Http.HttpClient httpClient;
+        private readonly HttpClient httpClient;
 
         private readonly object randLock = new object();
 
@@ -61,9 +61,9 @@ namespace OpenAI
         /// </summary>
         public SystemNetHttpClient()
         {
-            this.httpClient = LazyDefaultHttpClient.Value;
-            this.MaxNetworkRetries = DefaultMaxNumberRetries;
-            this.userAgentString = BuildOpenAIClientUserAgentString();
+            httpClient = LazyDefaultHttpClient.Value;
+            MaxNetworkRetries = DefaultMaxNumberRetries;
+            userAgentString = BuildOpenAIClientUserAgentString();
         }
 
         /// <summary>
@@ -75,9 +75,9 @@ namespace OpenAI
         /// </param>
         public SystemNetHttpClient(int maxNetworkRetries)
         {
-            this.httpClient = LazyDefaultHttpClient.Value;
-            this.MaxNetworkRetries = maxNetworkRetries;
-            this.userAgentString = BuildOpenAIClientUserAgentString();
+            httpClient = LazyDefaultHttpClient.Value;
+            MaxNetworkRetries = maxNetworkRetries;
+            userAgentString = BuildOpenAIClientUserAgentString();
         }
 
         /// <summary>
@@ -87,11 +87,11 @@ namespace OpenAI
         /// The <see cref="System.Net.Http.HttpClient"/> client to use. If <c>null</c>, an HTTP
         /// client will be created with default parameters.
         /// </param>
-        public SystemNetHttpClient(System.Net.Http.HttpClient httpClient)
+        public SystemNetHttpClient(HttpClient httpClient)
         {
             this.httpClient = httpClient ?? LazyDefaultHttpClient.Value;
-            this.MaxNetworkRetries = DefaultMaxNumberRetries;
-            this.userAgentString = BuildOpenAIClientUserAgentString();
+            MaxNetworkRetries = DefaultMaxNumberRetries;
+            userAgentString = BuildOpenAIClientUserAgentString();
         }
 
         /// <summary>
@@ -106,12 +106,12 @@ namespace OpenAI
         /// intermittent problem.
         /// </param>
         public SystemNetHttpClient(
-            System.Net.Http.HttpClient httpClient,
+            HttpClient httpClient,
             int maxNetworkRetries)
         {
             this.httpClient = httpClient ?? LazyDefaultHttpClient.Value;
-            this.MaxNetworkRetries = maxNetworkRetries;
-            this.userAgentString = BuildOpenAIClientUserAgentString();
+            MaxNetworkRetries = maxNetworkRetries;
+            userAgentString = BuildOpenAIClientUserAgentString();
         }
 
         /// <summary>Default timespan before the request times out.</summary>
@@ -178,12 +178,12 @@ namespace OpenAI
         /// with default parameters.
         /// </summary>
         /// <returns>The new instance of the <see cref="System.Net.Http.HttpClient"/> class.</returns>
-        public static System.Net.Http.HttpClient BuildDefaultSystemNetHttpClient()
+        public static HttpClient BuildDefaultSystemNetHttpClient()
         {
             // We set the User-Agent headers in each request
             // message rather than through the client's `DefaultRequestHeaders` because we
             // want these headers to be present even when a custom HTTP client is used.
-            return new System.Net.Http.HttpClient
+            return new HttpClient
             {
                 Timeout = DefaultHttpTimeout,
             };
@@ -197,7 +197,7 @@ namespace OpenAI
         public Task<OpenAIResponse> MakeRequestAsync(
             OpenAIRequest request)
         {
-            return this.MakeRequestAsync(request, default);
+            return MakeRequestAsync(request, default);
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace OpenAI
             OpenAIRequest request,
             CancellationToken cancellationToken)
         {
-            var (response, retries) = await this.SendHttpRequest(request, cancellationToken).ConfigureAwait(false);
+            var (response, retries) = await SendHttpRequest(request, cancellationToken).ConfigureAwait(false);
 
 #if NET7_0 || NET6_0
             var reader = new StreamReader(
@@ -242,13 +242,13 @@ namespace OpenAI
             {
                 requestException = null;
 
-                var httpRequest = this.BuildRequestMessage(request);
+                var httpRequest = BuildRequestMessage(request);
 
                 var stopwatch = Stopwatch.StartNew();
 
                 try
                 {
-                    response = await this.httpClient.SendAsync(httpRequest, cancellationToken)
+                    response = await httpClient.SendAsync(httpRequest, cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (HttpRequestException exception)
@@ -265,7 +265,7 @@ namespace OpenAI
 
                 duration = stopwatch.Elapsed;
 
-                if (!this.ShouldRetry(
+                if (!ShouldRetry(
                     retry,
                     requestException != null,
                     response?.StatusCode,
@@ -275,7 +275,7 @@ namespace OpenAI
                 }
 
                 retry += 1;
-                await Task.Delay(this.SleepTime(retry), cancellationToken).ConfigureAwait(false);
+                await Task.Delay(SleepTime(retry), cancellationToken).ConfigureAwait(false);
             }
 
             if (requestException != null)
@@ -294,7 +294,7 @@ namespace OpenAI
             HttpHeaders headers)
         {
             // Do not retry if we are out of retries.
-            if (numRetries >= this.MaxNetworkRetries)
+            if (numRetries >= MaxNetworkRetries)
             {
                 return false;
             }
@@ -332,12 +332,12 @@ namespace OpenAI
             return statusCode.HasValue && ((int)statusCode.Value >= 500);
         }
 
-        private System.Net.Http.HttpRequestMessage BuildRequestMessage(OpenAIRequest request)
+        private HttpRequestMessage BuildRequestMessage(OpenAIRequest request)
         {
-            var requestMessage = new System.Net.Http.HttpRequestMessage(request.Method, request.Uri);
+            var requestMessage = new HttpRequestMessage(request.Method, request.Uri);
 
             // Standard headers
-            requestMessage.Headers.TryAddWithoutValidation("User-Agent", this.userAgentString);
+            requestMessage.Headers.TryAddWithoutValidation("User-Agent", userAgentString);
             requestMessage.Headers.Authorization = request.AuthorizationHeader;
 
             // Custom headers
@@ -355,7 +355,7 @@ namespace OpenAI
         private TimeSpan SleepTime(int numRetries)
         {
             // We disable sleeping in some cases for tests.
-            if (!this.NetworkRetriesSleep)
+            if (!NetworkRetriesSleep)
             {
                 return TimeSpan.Zero;
             }
@@ -373,9 +373,9 @@ namespace OpenAI
 
             // Apply some jitter by randomizing the value in the range of 75%-100%.
             double jitter;
-            lock (this.randLock)
+            lock (randLock)
             {
-                jitter = (3.0 + this.rand.NextDouble()) / 4.0;
+                jitter = (3.0 + rand.NextDouble()) / 4.0;
             }
 
             delay = TimeSpan.FromTicks((long)(delay.Ticks * jitter));

@@ -16,8 +16,8 @@ namespace OpenAI
         /// <param name="headers">The HTTP headers of the response.</param>
         protected OpenAIResponseBase(HttpStatusCode statusCode, HttpResponseHeaders headers)
         {
-            this.StatusCode = statusCode;
-            this.Headers = headers;
+            StatusCode = statusCode;
+            Headers = headers;
         }
 
         /// <summary>Gets the HTTP status code of the response.</summary>
@@ -30,15 +30,15 @@ namespace OpenAI
 
         /// <summary>Gets the date of the request, as returned by OpenAI.</summary>
         /// <value>The date of the request, as returned by OpenAI.</value>
-        public DateTimeOffset? Date => this.Headers?.Date;
+        public DateTimeOffset? Date => Headers?.Date;
 
         /// <summary>Gets the organization id key of the request, as returned by OpenAI.</summary>
         /// <value>The organization id key of the request, as returned by OpenAI.</value>
-        public string OrganizationId => MaybeGetHeader(this.Headers, "OpenAI-Organization");
+        public string OrganizationId => MaybeGetHeader(Headers, "OpenAI-Organization");
 
         /// <summary>Gets the ID of the request, as returned by OpenAI.</summary>
         /// <value>The ID of the request, as returned by OpenAI.</value>
-        public string RequestId => MaybeGetHeader(this.Headers, "Request-Id");
+        public string RequestId => MaybeGetHeader(Headers, "Request-Id");
 
         internal int NumRetries { get; set; }
 
@@ -47,7 +47,7 @@ namespace OpenAI
         public override string ToString()
         {
             return
-                $"<{this.GetType().FullName} status={(int)this.StatusCode} Request-Id={this.RequestId} Date={this.Date?.ToString("s")}>";
+                $"<{GetType().FullName} status={(int)StatusCode} Request-Id={RequestId} Date={Date?.ToString("s")}>";
         }
 
         private static string MaybeGetHeader(HttpHeaders headers, string name)

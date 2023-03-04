@@ -21,16 +21,16 @@
             MockHttpClientFixture mockHttpClientFixture)
             : base(openAIMockFixture, mockHttpClientFixture)
         {
-            this.service = new ModelService(this.OpenAIClient);
+            service = new ModelService(OpenAIClient);
 
-            this.listOptions = new ModelListOptions();
+            listOptions = new ModelListOptions();
         }
 
         [Fact]
         public void Get()
         {
-            var model = this.service.Get(ModelId);
-            this.AssertRequest(HttpMethod.Get, "/v1/models/davinci");
+            var model = service.Get(ModelId);
+            AssertRequest(HttpMethod.Get, "/v1/models/davinci");
             Assert.NotNull(model);
             Assert.Equal("model", model.Object);
         }
@@ -38,8 +38,8 @@
         [Fact]
         public async Task GetAsync()
         {
-            var model = await this.service.GetAsync(ModelId);
-            this.AssertRequest(HttpMethod.Get, "/v1/models/davinci");
+            var model = await service.GetAsync(ModelId);
+            AssertRequest(HttpMethod.Get, "/v1/models/davinci");
             Assert.NotNull(model);
             Assert.Equal("model", model.Object);
         }
@@ -47,8 +47,8 @@
         [Fact]
         public void List()
         {
-            var models = this.service.List(this.listOptions);
-            this.AssertRequest(HttpMethod.Get, "/v1/models");
+            var models = service.List(listOptions);
+            AssertRequest(HttpMethod.Get, "/v1/models");
             Assert.NotNull(models);
             Assert.Equal("list", models.Object);
             Assert.Equal(66, models.Data.Count);
@@ -58,8 +58,8 @@
         [Fact]
         public async Task ListAsync()
         {
-            var engines = await this.service.ListAsync(this.listOptions);
-            this.AssertRequest(HttpMethod.Get, "/v1/models");
+            var engines = await service.ListAsync(listOptions);
+            AssertRequest(HttpMethod.Get, "/v1/models");
             Assert.NotNull(engines);
             Assert.Equal("list", engines.Object);
             Assert.Equal(66, engines.Data.Count);
@@ -69,7 +69,7 @@
         [Fact]
         public void Delete()
         {
-            var model = this.service.Delete("curie:ft-acmeco-2021-03-03-21-44-20");
+            var model = service.Delete("curie:ft-acmeco-2021-03-03-21-44-20");
             Assert.NotNull(model);
             Assert.Equal("model", model.Object);
             Assert.Equal(true, model.Deleted);
@@ -78,7 +78,7 @@
         [Fact]
         public async Task DeleteAsync()
         {
-            var model = await this.service.DeleteAsync("curie:ft-acmeco-2021-03-03-21-44-20");
+            var model = await service.DeleteAsync("curie:ft-acmeco-2021-03-03-21-44-20");
             Assert.NotNull(model);
             Assert.Equal("model", model.Object);
             Assert.Equal(true, model.Deleted);

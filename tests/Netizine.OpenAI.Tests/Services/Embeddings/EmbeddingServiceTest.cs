@@ -19,9 +19,9 @@
             MockHttpClientFixture mockHttpClientFixture)
             : base(openAIMockFixture, mockHttpClientFixture)
         {
-            this.service = new EmbeddingService(this.OpenAIClient);
+            service = new EmbeddingService(OpenAIClient);
 
-            this.createOptions = new EmbeddingCreateOptions
+            createOptions = new EmbeddingCreateOptions
             {
                 Model = "text-embedding-ada-002",
                 Input = "The food was delicious and the waiter...",
@@ -31,8 +31,8 @@
         [Fact]
         public void Create()
         {
-            var embedding = this.service.Create(this.createOptions);
-            this.AssertRequest(HttpMethod.Post, "/v1/embeddings");
+            var embedding = service.Create(createOptions);
+            AssertRequest(HttpMethod.Post, "/v1/embeddings");
             Assert.NotNull(embedding);
             Assert.NotNull(embedding.Model);
             Assert.NotNull(embedding.Data);
@@ -43,8 +43,8 @@
         [Fact]
         public async Task CreateAsync()
         {
-            var embedding = await this.service.CreateAsync(this.createOptions);
-            this.AssertRequest(HttpMethod.Post, "/v1/embeddings");
+            var embedding = await service.CreateAsync(createOptions);
+            AssertRequest(HttpMethod.Post, "/v1/embeddings");
             Assert.NotNull(embedding);
             Assert.NotNull(embedding.Model);
             Assert.NotNull(embedding.Data);

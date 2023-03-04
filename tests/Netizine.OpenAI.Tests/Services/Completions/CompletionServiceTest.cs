@@ -19,9 +19,9 @@
             MockHttpClientFixture mockHttpClientFixture)
             : base(openAIMockFixture, mockHttpClientFixture)
         {
-            this.service = new CompletionService(this.OpenAIClient);
+            service = new CompletionService(OpenAIClient);
 
-            this.createOptions = new CompletionCreateOptions
+            createOptions = new CompletionCreateOptions
             {
                 Model = "text-davinci-003",
                 Prompt = "Say this is a test",
@@ -33,8 +33,8 @@
         [Fact]
         public void Create()
         {
-            var completion = this.service.Create(this.createOptions);
-            this.AssertRequest(HttpMethod.Post, "/v1/completions");
+            var completion = service.Create(createOptions);
+            AssertRequest(HttpMethod.Post, "/v1/completions");
             Assert.NotNull(completion);
             Assert.Equal("text_completion", completion.Object);
         }
@@ -42,8 +42,8 @@
         [Fact]
         public async Task CreateAsync()
         {
-            var completion = await this.service.CreateAsync(this.createOptions);
-            this.AssertRequest(HttpMethod.Post, "/v1/completions");
+            var completion = await service.CreateAsync(createOptions);
+            AssertRequest(HttpMethod.Post, "/v1/completions");
             Assert.NotNull(completion);
             Assert.Equal("text_completion", completion.Object);
         }

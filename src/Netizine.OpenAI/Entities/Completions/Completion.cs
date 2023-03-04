@@ -5,7 +5,7 @@ namespace OpenAI
     using System.Collections.Generic;
 
     using Newtonsoft.Json;
-    using OpenAI.Infrastructure;
+    using Infrastructure;
 
     /// <summary>
     /// The completion model will return one or more predicted completions, and can also return the probabilities of alternative tokens at each position.

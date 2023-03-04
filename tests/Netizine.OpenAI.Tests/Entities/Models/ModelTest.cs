@@ -15,7 +15,7 @@
         [Fact]
         public void Deserialize()
         {
-            string json = this.GetFixture("/v1/models/davinci");
+            string json = GetFixture("/v1/models/davinci");
             var model = JsonConvert.DeserializeObject<Model>(json);
             Assert.NotNull(model);
             Assert.IsType<Model>(model);

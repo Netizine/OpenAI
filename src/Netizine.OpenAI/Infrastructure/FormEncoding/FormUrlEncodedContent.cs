@@ -20,7 +20,7 @@ namespace OpenAI.Infrastructure.FormEncoding
         public FormUrlEncodedContent(IEnumerable<KeyValuePair<string, string>> nameValueCollection)
             : base(CreateContentByteArray(nameValueCollection))
         {
-            this.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded")
+            Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded")
             {
                 CharSet = "utf-8",
             };

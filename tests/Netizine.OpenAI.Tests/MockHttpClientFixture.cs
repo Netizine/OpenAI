@@ -13,12 +13,12 @@ namespace OpenAI.Tests
     {
         public MockHttpClientFixture()
         {
-            this.MockHandler = new Mock<HttpClientHandler>
+            MockHandler = new Mock<HttpClientHandler>
             {
                 CallBase = true,
             };
-            this.HttpClient = new SystemNetHttpClient(
-                new System.Net.Http.HttpClient(this.MockHandler.Object));
+            HttpClient = new SystemNetHttpClient(
+                new HttpClient(MockHandler.Object));
         }
 
         public Mock<HttpClientHandler> MockHandler { get; }
@@ -30,7 +30,7 @@ namespace OpenAI.Tests
         /// </summary>
         public void Reset()
         {
-            this.MockHandler.Reset();
+            MockHandler.Reset();
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace OpenAI.Tests
         /// <param name="path">The HTTP path.</param>
         public void AssertRequest(HttpMethod method, string path)
         {
-            this.MockHandler.Protected()
+            MockHandler.Protected()
                 .Verify(
                     "SendAsync",
                     Times.Once(),
@@ -64,7 +64,7 @@ namespace OpenAI.Tests
             var responseMessage = new HttpResponseMessage(status);
             responseMessage.Content = new StringContent(response);
 
-            this.MockHandler.Protected()
+            MockHandler.Protected()
                 .Setup<Task<HttpResponseMessage>>(
                     "SendAsync",
                     ItExpr.Is<HttpRequestMessage>(m =>

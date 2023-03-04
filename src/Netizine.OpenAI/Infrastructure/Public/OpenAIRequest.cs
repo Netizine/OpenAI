@@ -6,7 +6,7 @@ namespace OpenAI
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Text;
-    using OpenAI.Infrastructure.FormEncoding;
+    using Infrastructure.FormEncoding;
 
     /// <summary>
     /// Represents a request to OpenAI's API.
@@ -35,13 +35,13 @@ namespace OpenAI
 
             this.options = options;
 
-            this.Method = method;
+            Method = method;
 
-            this.Uri = BuildUri(client, method, path, options, requestOptions);
+            Uri = BuildUri(client, method, path, options, requestOptions);
 
-            this.AuthorizationHeader = BuildAuthorizationHeader(client, requestOptions);
+            AuthorizationHeader = BuildAuthorizationHeader(client, requestOptions);
 
-            this.OpenAIHeaders = BuildOpenAIHeaders(requestOptions);
+            OpenAIHeaders = BuildOpenAIHeaders(requestOptions);
         }
 
         /// <summary>The HTTP method for the request (GET, POST or DELETE).</summary>
@@ -67,13 +67,13 @@ namespace OpenAI
         /// For non-POST requests, this will be <c>null</c>.
         /// </summary>
         /// <remarks>This getter creates a new instance every time it is called.</remarks>
-        public HttpContent Content => BuildContent(this.Method, this.options);
+        public HttpContent Content => BuildContent(Method, options);
 
         /// <summary>Returns a string that represents the <see cref="OpenAIRequest"/>.</summary>
         /// <returns>A string that represents the <see cref="OpenAIRequest"/>.</returns>
         public override string ToString()
         {
-            return $"<{this.GetType().FullName} Method={this.Method} Uri={this.Uri}>";
+            return $"<{GetType().FullName} Method={Method} Uri={Uri}>";
         }
 
         private static Uri BuildUri(

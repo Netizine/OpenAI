@@ -4,7 +4,7 @@ namespace OpenAI
     using System;
     using System.Collections.Generic;
     using Newtonsoft.Json;
-    using OpenAI.Infrastructure;
+    using Infrastructure;
 
     /// <summary>
     /// Given a prompt and an instruction, the model will return an edited version of the prompt.

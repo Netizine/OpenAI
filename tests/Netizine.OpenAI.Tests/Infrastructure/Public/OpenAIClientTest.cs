@@ -22,10 +22,10 @@ namespace OpenAI.Tests
 
         public OpenAIClientTest()
         {
-            this.httpClient = new DummyHttpClient();
-            this.openAIClient = new OpenAIClient(
+            httpClient = new DummyHttpClient();
+            openAIClient = new OpenAIClient(
                 "sk-test",
-                httpClient: this.httpClient);
+                httpClient: httpClient);
 
             // James
 
@@ -35,7 +35,7 @@ namespace OpenAI.Tests
             //     Currency = "usd",
             //     Source = "tok_visa",
             // };
-            this.requestOptions = new RequestOptions();
+            requestOptions = new RequestOptions();
         }
 
         [Fact]
@@ -64,13 +64,13 @@ namespace OpenAI.Tests
         public async Task RequestAsync_OkResponse()
         {
             var response = new OpenAIResponse(HttpStatusCode.OK, null, "{\n  \"id\": \"text-davinci-003\",\n  \"object\": \"engine\",\n  \"owner\": \"openai\",\n  \"ready\": true\n}");
-            this.httpClient.Response = response;
+            httpClient.Response = response;
 
-            var charge = await this.openAIClient.RequestAsync<OpenAI.Engine>(
+            var charge = await openAIClient.RequestAsync<Engine>(
                 HttpMethod.Post,
                 "/v1/engines",
-                this.options,
-                this.requestOptions);
+                options,
+                requestOptions);
 
             Assert.NotNull(charge);
             Assert.Equal("text-davinci-003", charge.Id);
@@ -81,14 +81,14 @@ namespace OpenAI.Tests
         public async Task RequestAsync_OkResponse_InvalidJson()
         {
             var response = new OpenAIResponse(HttpStatusCode.OK, null, "this isn't JSON");
-            this.httpClient.Response = response;
+            httpClient.Response = response;
 
             var exception = await Assert.ThrowsAsync<OpenAIException>(async () =>
-                await this.openAIClient.RequestAsync<OpenAI.Engine>(
+                await openAIClient.RequestAsync<Engine>(
                     HttpMethod.Post,
                     "/v1/engines",
-                    this.options,
-                    this.requestOptions));
+                    options,
+                    requestOptions));
 
             Assert.NotNull(exception);
             Assert.Equal(HttpStatusCode.OK, exception.HttpStatusCode);
@@ -103,14 +103,14 @@ namespace OpenAI.Tests
                 HttpStatusCode.InternalServerError,
                 null,
                 "this isn't JSON");
-            this.httpClient.Response = response;
+            httpClient.Response = response;
 
             var exception = await Assert.ThrowsAsync<OpenAIException>(async () =>
-                await this.openAIClient.RequestAsync<OpenAI.Engine>(
+                await openAIClient.RequestAsync<Engine>(
                     HttpMethod.Post,
                     "/v1/engines",
-                    this.options,
-                    this.requestOptions));
+                    options,
+                    requestOptions));
 
             Assert.NotNull(exception);
             Assert.Equal(HttpStatusCode.InternalServerError, exception.HttpStatusCode);
@@ -125,14 +125,14 @@ namespace OpenAI.Tests
                 HttpStatusCode.InternalServerError,
                 null,
                 "{}");
-            this.httpClient.Response = response;
+            httpClient.Response = response;
 
             var exception = await Assert.ThrowsAsync<OpenAIException>(async () =>
-                await this.openAIClient.RequestAsync<OpenAI.Engine>(
+                await openAIClient.RequestAsync<Engine>(
                     HttpMethod.Post,
                     "/v1/engines",
-                    this.options,
-                    this.requestOptions));
+                    options,
+                    requestOptions));
 
             Assert.NotNull(exception);
             Assert.Equal(HttpStatusCode.InternalServerError, exception.HttpStatusCode);
@@ -152,24 +152,24 @@ namespace OpenAI.Tests
             public Task<OpenAIResponse> MakeRequestAsync(
                 OpenAIRequest request)
             {
-                if (this.Response == null)
+                if (Response == null)
                 {
                     throw new OpenAITestException("Response is null");
                 }
 
-                return Task.FromResult<OpenAIResponse>(this.Response);
+                return Task.FromResult<OpenAIResponse>(Response);
             }
 
             public Task<OpenAIResponse> MakeRequestAsync(
                 OpenAIRequest request,
                 CancellationToken cancellationToken = default)
             {
-                if (this.Response == null)
+                if (Response == null)
                 {
                     throw new OpenAITestException("Response is null");
                 }
 
-                return Task.FromResult<OpenAIResponse>(this.Response);
+                return Task.FromResult<OpenAIResponse>(Response);
             }
         }
     }

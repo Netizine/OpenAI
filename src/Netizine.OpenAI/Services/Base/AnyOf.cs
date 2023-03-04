@@ -20,7 +20,7 @@ namespace OpenAI
 
         /// <summary>Returns a string that represents the current object.</summary>
         /// <returns>A string that represents the current object.</returns>
-        public override string ToString() => this.Value == null ? "AnyOf(null)" : this.Value.ToString();
+        public override string ToString() => Value == null ? "AnyOf(null)" : Value.ToString();
     }
 
     /// <summary>
@@ -44,8 +44,8 @@ namespace OpenAI
         /// <param name="value">The value to hold.</param>
         public AnyOf(T1 value)
         {
-            this.value1 = value;
-            this.setValue = Values.Value1;
+            value1 = value;
+            setValue = Values.Value1;
         }
 
         /// <summary>
@@ -54,8 +54,8 @@ namespace OpenAI
         /// <param name="value">The value to hold.</param>
         public AnyOf(T2 value)
         {
-            this.value2 = value;
-            this.setValue = Values.Value2;
+            value2 = value;
+            setValue = Values.Value2;
         }
 
         private enum Values
@@ -70,14 +70,14 @@ namespace OpenAI
         {
             get
             {
-                switch (this.setValue)
+                switch (setValue)
                 {
                     case Values.Value1:
-                        return this.value1;
+                        return value1;
                     case Values.Value2:
-                        return this.value2;
+                        return value2;
                     default:
-                        throw new InvalidOperationException($"Unexpected state, setValue={this.setValue}");
+                        throw new InvalidOperationException($"Unexpected state, setValue={setValue}");
                 }
             }
         }
@@ -88,14 +88,14 @@ namespace OpenAI
         {
             get
             {
-                switch (this.setValue)
+                switch (setValue)
                 {
                     case Values.Value1:
                         return typeof(T1);
                     case Values.Value2:
                         return typeof(T2);
                     default:
-                        throw new InvalidOperationException($"Unexpected state, setValue={this.setValue}");
+                        throw new InvalidOperationException($"Unexpected state, setValue={setValue}");
                 }
             }
         }
@@ -160,8 +160,8 @@ namespace OpenAI
         /// <param name="value">The value to hold.</param>
         public AnyOf(T1 value)
         {
-            this.value1 = value;
-            this.setValue = Values.Value1;
+            value1 = value;
+            setValue = Values.Value1;
         }
 
         /// <summary>
@@ -171,8 +171,8 @@ namespace OpenAI
         /// <param name="value">The value to hold.</param>
         public AnyOf(T2 value)
         {
-            this.value2 = value;
-            this.setValue = Values.Value2;
+            value2 = value;
+            setValue = Values.Value2;
         }
 
         /// <summary>
@@ -182,8 +182,8 @@ namespace OpenAI
         /// <param name="value">The value to hold.</param>
         public AnyOf(T3 value)
         {
-            this.value3 = value;
-            this.setValue = Values.Value3;
+            value3 = value;
+            setValue = Values.Value3;
         }
 
         private enum Values
@@ -199,16 +199,16 @@ namespace OpenAI
         {
             get
             {
-                switch (this.setValue)
+                switch (setValue)
                 {
                     case Values.Value1:
-                        return this.value1;
+                        return value1;
                     case Values.Value2:
-                        return this.value2;
+                        return value2;
                     case Values.Value3:
-                        return this.value3;
+                        return value3;
                     default:
-                        throw new InvalidOperationException($"Unexpected state, setValue={this.setValue}");
+                        throw new InvalidOperationException($"Unexpected state, setValue={setValue}");
                 }
             }
         }
@@ -219,7 +219,7 @@ namespace OpenAI
         {
             get
             {
-                switch (this.setValue)
+                switch (setValue)
                 {
                     case Values.Value1:
                         return typeof(T1);
@@ -228,7 +228,7 @@ namespace OpenAI
                     case Values.Value3:
                         return typeof(T3);
                     default:
-                        throw new InvalidOperationException($"Unexpected state, setValue={this.setValue}");
+                        throw new InvalidOperationException($"Unexpected state, setValue={setValue}");
                 }
             }
         }

@@ -36,7 +36,7 @@ namespace OpenAI.Infrastructure.FormEncoding
                 throw new ArgumentNullException(nameof(nameValueCollection));
             }
 
-            this.ProcessParameters(nameValueCollection);
+            ProcessParameters(nameValueCollection);
         }
 
         private static StringContent CreateStringContent(string value)
@@ -76,11 +76,11 @@ namespace OpenAI.Infrastructure.FormEncoding
                 switch (kvp.Value)
                 {
                     case string s:
-                        this.Add(CreateStringContent(s), QuoteString(kvp.Key));
+                        Add(CreateStringContent(s), QuoteString(kvp.Key));
                         break;
 
                     case Stream s:
-                        this.Add(CreateStreamContent(s, QuoteString(kvp.Key)));
+                        Add(CreateStreamContent(s, QuoteString(kvp.Key)));
                         break;
 
                     default:

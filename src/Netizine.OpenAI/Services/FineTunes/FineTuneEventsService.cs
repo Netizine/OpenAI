@@ -47,7 +47,7 @@ namespace OpenAI
         /// <returns>FineTuneEvents.</returns>
         public FineTuneEvents Get(string id)
         {
-            return this.Get(id, null, null);
+            return Get(id, null, null);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace OpenAI
         /// <returns>FineTuneEvents.</returns>
         public FineTuneEvents Get(string id, FineTuneEventsGetOptions fineTuneEventsGetOptions)
         {
-            return this.Get(id, fineTuneEventsGetOptions, null);
+            return Get(id, fineTuneEventsGetOptions, null);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace OpenAI
         /// <returns>FineTuneEvents.</returns>
         public FineTuneEvents Get(string id, RequestOptions requestOptions)
         {
-            return this.Get(id, null, requestOptions);
+            return Get(id, null, requestOptions);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace OpenAI
         /// <returns>FineTuneEvents.</returns>
         public FineTuneEvents Get(string id, FineTuneEventsGetOptions fineTuneEventsGetOptions, RequestOptions requestOptions)
         {
-            return this.Request(HttpMethod.Get, $"/v1/fine-tunes/{id}/events", fineTuneEventsGetOptions, requestOptions);
+            return Request(HttpMethod.Get, $"/v1/fine-tunes/{id}/events", fineTuneEventsGetOptions, requestOptions);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTuneEvents&gt;.</returns>
         public Task<FineTuneEvents> GetAsync(string id)
         {
-            return this.GetAsync(id, null, null, default);
+            return GetAsync(id, null, null, default);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTuneEvents&gt;.</returns>
         public Task<FineTuneEvents> GetAsync(string id, CancellationToken cancellationToken)
         {
-            return this.GetAsync(id, null, null, cancellationToken);
+            return GetAsync(id, null, null, cancellationToken);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTuneEvents&gt;.</returns>
         public Task<FineTuneEvents> GetAsync(string id, FineTuneEventsGetOptions fineTuneEventsGetOptions)
         {
-            return this.GetAsync(id, fineTuneEventsGetOptions, null, default);
+            return GetAsync(id, fineTuneEventsGetOptions, null, default);
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTuneEvents&gt;.</returns>
         public Task<FineTuneEvents> GetAsync(string id, FineTuneEventsGetOptions fineTuneEventsGetOptions, CancellationToken cancellationToken)
         {
-            return this.GetAsync(id, fineTuneEventsGetOptions, null, cancellationToken);
+            return GetAsync(id, fineTuneEventsGetOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTuneEvents&gt;.</returns>
         public Task<FineTuneEvents> GetAsync(string id, RequestOptions requestOptions)
         {
-            return this.GetAsync(id, null, requestOptions, default);
+            return GetAsync(id, null, requestOptions, default);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTuneEvents&gt;.</returns>
         public Task<FineTuneEvents> GetAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.GetAsync(id, null, requestOptions, cancellationToken);
+            return GetAsync(id, null, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTuneEvents&gt;.</returns>
         public Task<FineTuneEvents> GetAsync(string id, FineTuneEventsGetOptions fineTuneEventsGetOptions, RequestOptions requestOptions)
         {
-            return this.GetAsync(id, fineTuneEventsGetOptions, requestOptions, default);
+            return GetAsync(id, fineTuneEventsGetOptions, requestOptions, default);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTuneEvents&gt;.</returns>
         public Task<FineTuneEvents> GetAsync(string id, FineTuneEventsGetOptions fineTuneEventsGetOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.RequestAsync(HttpMethod.Get, $"/v1/fine-tunes/{id}/events", fineTuneEventsGetOptions, requestOptions, cancellationToken);
+            return RequestAsync(HttpMethod.Get, $"/v1/fine-tunes/{id}/events", fineTuneEventsGetOptions, requestOptions, cancellationToken);
         }
     }
 }

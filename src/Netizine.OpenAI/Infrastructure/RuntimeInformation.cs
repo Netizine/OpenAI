@@ -105,7 +105,7 @@ namespace OpenAI.Infrastructure
 
         internal static string GetFullFrameworkVersion()
         {
-            var fullName = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription; // sth like .NET Framework 4.7.3324.0
+            var fullName = FrameworkDescription; // sth like .NET Framework 4.7.3324.0
             var servicingVersion = new string(fullName.SkipWhile(c => !char.IsDigit(c)).ToArray());
             var releaseVersion = MapToReleaseVersion(servicingVersion);
 

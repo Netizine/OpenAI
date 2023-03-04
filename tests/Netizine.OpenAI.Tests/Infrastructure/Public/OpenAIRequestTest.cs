@@ -3,7 +3,7 @@ namespace OpenAI.Tests
     using System.Net.Http;
     using System.Threading.Tasks;
     using OpenAI;
-    using OpenAI.Tests.Infrastructure.TestData;
+    using Infrastructure.TestData;
     using Xunit;
 
     public class OpenAIRequestTest : BaseOpenAITest
@@ -12,7 +12,7 @@ namespace OpenAI.Tests
 
         public OpenAIRequestTest()
         {
-            this.openAIClient = new OpenAIClient(
+            openAIClient = new OpenAIClient(
                 "sk-test", null,
                 apiBase: "https://client.example.com");
         }
@@ -21,16 +21,16 @@ namespace OpenAI.Tests
         public void Ctor_GetRequest()
         {
             var request = new OpenAIRequest(
-                this.openAIClient,
+                openAIClient,
                 HttpMethod.Get,
                 "/get",
                 new TestOptions { String = "string!" },
                 new RequestOptions());
 
             Assert.Equal(HttpMethod.Get, request.Method);
-            Assert.Equal($"{this.openAIClient.ApiBase}/get?string=string!", request.Uri.ToString());
+            Assert.Equal($"{openAIClient.ApiBase}/get?string=string!", request.Uri.ToString());
             Assert.Equal(
-                $"Bearer {this.openAIClient.ApiKey}",
+                $"Bearer {openAIClient.ApiKey}",
                 request.AuthorizationHeader.ToString());
             Assert.False(request.OpenAIHeaders.ContainsKey("OpenAI-Organization"));
             Assert.Null(request.Content);
@@ -40,16 +40,16 @@ namespace OpenAI.Tests
         public async Task Ctor_PostRequest()
         {
             var request = new OpenAIRequest(
-                this.openAIClient,
+                openAIClient,
                 HttpMethod.Post,
                 "/v1/edits",
                 new TestOptions { String = "{\r\n  \"model\": \"text-davinci-edit-001\",\r\n  \"input\": \"What day of the wek is it?\",\r\n  \"instruction\": \"Fix the spelling mistakes.\",\r\n  \"n\": 1,\r\n  \"temperature\": 1,\r\n  \"top_p\": 1\r\n}" },
                 new RequestOptions());
 
             Assert.Equal(HttpMethod.Post, request.Method);
-            Assert.Equal($"{this.openAIClient.ApiBase}/v1/edits", request.Uri.ToString());
+            Assert.Equal($"{openAIClient.ApiBase}/v1/edits", request.Uri.ToString());
             Assert.Equal(
-                $"Bearer {this.openAIClient.ApiKey}",
+                $"Bearer {openAIClient.ApiKey}",
                 request.AuthorizationHeader.ToString());
             Assert.NotNull(request.Content);
             var content = await request.Content.ReadAsStringAsync();
@@ -60,7 +60,7 @@ namespace OpenAI.Tests
         public void Ctor_DeleteRequest()
         {
             var request = new OpenAIRequest(
-                this.openAIClient,
+                openAIClient,
                 HttpMethod.Delete,
                 "/delete",
                 new TestOptions { String = "string!" },
@@ -68,10 +68,10 @@ namespace OpenAI.Tests
 
             Assert.Equal(HttpMethod.Delete, request.Method);
             Assert.Equal(
-                $"{this.openAIClient.ApiBase}/delete?string=string!",
+                $"{openAIClient.ApiBase}/delete?string=string!",
                 request.Uri.ToString());
             Assert.Equal(
-                $"Bearer {this.openAIClient.ApiKey}",
+                $"Bearer {openAIClient.ApiKey}",
                 request.AuthorizationHeader.ToString());
             Assert.False(request.OpenAIHeaders.ContainsKey("OpenAI-Organization"));
             Assert.Null(request.Content);
@@ -88,7 +88,7 @@ namespace OpenAI.Tests
                 BaseUrl = "https://override.example.com"
             };
             var request = new OpenAIRequest(
-                this.openAIClient,
+                openAIClient,
                 HttpMethod.Get,
                 "/v1/engines",
                 null,

@@ -57,7 +57,7 @@ namespace OpenAI
         /// <returns>FineTune.</returns>
         public virtual FineTune Get(string id)
         {
-            return this.Get(id, null, null);
+            return Get(id, null, null);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace OpenAI
         /// <returns>FineTune.</returns>
         public virtual FineTune Get(string id, FineTuneGetOptions fineTuneGetOptions)
         {
-            return this.Get(id, fineTuneGetOptions, null);
+            return Get(id, fineTuneGetOptions, null);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace OpenAI
         /// <returns>FineTune.</returns>
         public virtual FineTune Get(string id, RequestOptions requestOptions)
         {
-            return this.Get(id, null, requestOptions);
+            return Get(id, null, requestOptions);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace OpenAI
         /// <returns>FineTune.</returns>
         public virtual FineTune Get(string id, FineTuneGetOptions fineTuneGetOptions, RequestOptions requestOptions)
         {
-            return this.GetEntity(id, fineTuneGetOptions, requestOptions);
+            return GetEntity(id, fineTuneGetOptions, requestOptions);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public virtual Task<FineTune> GetAsync(string id)
         {
-            return this.GetAsync(id, null, null, default);
+            return GetAsync(id, null, null, default);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public virtual Task<FineTune> GetAsync(string id, CancellationToken cancellationToken)
         {
-            return this.GetAsync(id, null, null, cancellationToken);
+            return GetAsync(id, null, null, cancellationToken);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public virtual Task<FineTune> GetAsync(string id, FineTuneGetOptions fineTuneGetOptions)
         {
-            return this.GetAsync(id, fineTuneGetOptions, null, default);
+            return GetAsync(id, fineTuneGetOptions, null, default);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public virtual Task<FineTune> GetAsync(string id, FineTuneGetOptions fineTuneGetOptions, CancellationToken cancellationToken)
         {
-            return this.GetAsync(id, fineTuneGetOptions, null, cancellationToken);
+            return GetAsync(id, fineTuneGetOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public virtual Task<FineTune> GetAsync(string id, RequestOptions requestOptions)
         {
-            return this.GetAsync(id, null, requestOptions, default);
+            return GetAsync(id, null, requestOptions, default);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public virtual Task<FineTune> GetAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.GetAsync(id, null, requestOptions, cancellationToken);
+            return GetAsync(id, null, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public virtual Task<FineTune> GetAsync(string id, FineTuneGetOptions fineTuneGetOptions, RequestOptions requestOptions)
         {
-            return this.GetAsync(id, fineTuneGetOptions, requestOptions, default);
+            return GetAsync(id, fineTuneGetOptions, requestOptions, default);
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public virtual Task<FineTune> GetAsync(string id, FineTuneGetOptions fineTuneGetOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.GetEntityAsync(id, fineTuneGetOptions, requestOptions, cancellationToken);
+            return GetEntityAsync(id, fineTuneGetOptions, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace OpenAI
         /// <returns>OpenAIList&lt;FineTune&gt;.</returns>
         public virtual OpenAIList<FineTune> List()
         {
-            return this.List(null, null);
+            return List(null, null);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace OpenAI
         /// <returns>OpenAIList&lt;FineTune&gt;.</returns>
         public virtual OpenAIList<FineTune> List(FineTuneListOptions fineTuneListOptions)
         {
-            return this.List(fineTuneListOptions, null);
+            return List(fineTuneListOptions, null);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace OpenAI
         /// <returns>OpenAIList&lt;FineTune&gt;.</returns>
         public virtual OpenAIList<FineTune> List(RequestOptions requestOptions)
         {
-            return this.List(null, requestOptions);
+            return List(null, requestOptions);
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace OpenAI
         /// <returns>OpenAIList&lt;FineTune&gt;.</returns>
         public virtual OpenAIList<FineTune> List(FineTuneListOptions fineTuneListOptions, RequestOptions requestOptions)
         {
-            return this.ListEntities(fineTuneListOptions, requestOptions);
+            return ListEntities(fineTuneListOptions, requestOptions);
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;FineTune&gt;&gt;.</returns>
         public virtual Task<OpenAIList<FineTune>> ListAsync()
         {
-            return this.ListAsync(null, null, default);
+            return ListAsync(null, null, default);
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;FineTune&gt;&gt;.</returns>
         public virtual Task<OpenAIList<FineTune>> ListAsync(CancellationToken cancellationToken)
         {
-            return this.ListAsync(null, null, cancellationToken);
+            return ListAsync(null, null, cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;FineTune&gt;&gt;.</returns>
         public virtual Task<OpenAIList<FineTune>> ListAsync(FineTuneListOptions fineTuneListOptions)
         {
-            return this.ListAsync(fineTuneListOptions, null, default);
+            return ListAsync(fineTuneListOptions, null, default);
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;FineTune&gt;&gt;.</returns>
         public virtual Task<OpenAIList<FineTune>> ListAsync(FineTuneListOptions fineTuneListOptions, CancellationToken cancellationToken)
         {
-            return this.ListAsync(fineTuneListOptions, null, cancellationToken);
+            return ListAsync(fineTuneListOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;FineTune&gt;&gt;.</returns>
         public virtual Task<OpenAIList<FineTune>> ListAsync(RequestOptions requestOptions)
         {
-            return this.ListAsync(null, requestOptions, default);
+            return ListAsync(null, requestOptions, default);
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;FineTune&gt;&gt;.</returns>
         public virtual Task<OpenAIList<FineTune>> ListAsync(RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.ListAsync(null, requestOptions, cancellationToken);
+            return ListAsync(null, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;FineTune&gt;&gt;.</returns>
         public virtual Task<OpenAIList<FineTune>> ListAsync(FineTuneListOptions fineTuneListOptions, RequestOptions requestOptions)
         {
-            return this.ListAsync(fineTuneListOptions, requestOptions, default);
+            return ListAsync(fineTuneListOptions, requestOptions, default);
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace OpenAI
         /// <returns>Task&lt;OpenAIList&lt;FineTune&gt;&gt;.</returns>
         public virtual Task<OpenAIList<FineTune>> ListAsync(FineTuneListOptions fineTuneListOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.ListEntitiesAsync(fineTuneListOptions, requestOptions, cancellationToken);
+            return ListEntitiesAsync(fineTuneListOptions, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace OpenAI
         /// <returns>The created entity.</returns>
         public FineTune Create(FineTuneCreateOptions fineTuneCreateOptions)
         {
-            return this.Create(fineTuneCreateOptions, null);
+            return Create(fineTuneCreateOptions, null);
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace OpenAI
         /// <returns>The created entity.</returns>
         public FineTune Create(FineTuneCreateOptions fineTuneCreateOptions, RequestOptions requestOptions)
         {
-            return this.CreateEntity(fineTuneCreateOptions, requestOptions);
+            return CreateEntity(fineTuneCreateOptions, requestOptions);
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public Task<FineTune> CreateAsync(FineTuneCreateOptions fineTuneCreateOptions)
         {
-            return this.CreateEntityAsync(fineTuneCreateOptions, null, default);
+            return CreateEntityAsync(fineTuneCreateOptions, null, default);
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public Task<FineTune> CreateAsync(FineTuneCreateOptions fineTuneCreateOptions, CancellationToken cancellationToken)
         {
-            return this.CreateEntityAsync(fineTuneCreateOptions, null, cancellationToken);
+            return CreateEntityAsync(fineTuneCreateOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public Task<FineTune> CreateAsync(FineTuneCreateOptions fineTuneCreateOptions, RequestOptions requestOptions)
         {
-            return this.CreateEntityAsync(fineTuneCreateOptions, requestOptions, default);
+            return CreateEntityAsync(fineTuneCreateOptions, requestOptions, default);
         }
 
         /// <summary>
@@ -372,7 +372,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public Task<FineTune> CreateAsync(FineTuneCreateOptions fineTuneCreateOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.CreateEntityAsync(fineTuneCreateOptions, requestOptions, cancellationToken);
+            return CreateEntityAsync(fineTuneCreateOptions, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -382,7 +382,7 @@ namespace OpenAI
         /// <returns>FineTune.</returns>
         public virtual FineTune Cancel(string id)
         {
-            return this.Cancel(id, null, null);
+            return Cancel(id, null, null);
         }
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace OpenAI
         /// <returns>FineTune.</returns>
         public virtual FineTune Cancel(string id, FineTuneCancelPutOptions fineTuneCancelPutOptions)
         {
-            return this.Cancel(id, fineTuneCancelPutOptions, null);
+            return Cancel(id, fineTuneCancelPutOptions, null);
         }
 
         /// <summary>
@@ -404,7 +404,7 @@ namespace OpenAI
         /// <returns>FineTune.</returns>
         public virtual FineTune Cancel(string id, RequestOptions requestOptions)
         {
-            return this.Cancel(id, null, requestOptions);
+            return Cancel(id, null, requestOptions);
         }
 
         /// <summary>
@@ -416,7 +416,7 @@ namespace OpenAI
         /// <returns>FineTune.</returns>
         public virtual FineTune Cancel(string id, FineTuneCancelPutOptions fineTuneCancelPutOptions, RequestOptions requestOptions)
         {
-            return this.Request(HttpMethod.Post, $"/v1/fine-tunes/{id}/cancel", fineTuneCancelPutOptions, requestOptions);
+            return Request(HttpMethod.Post, $"/v1/fine-tunes/{id}/cancel", fineTuneCancelPutOptions, requestOptions);
         }
 
         /// <summary>
@@ -426,7 +426,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public virtual Task<FineTune> CancelAsync(string id)
         {
-            return this.CancelAsync(id, null, null, default);
+            return CancelAsync(id, null, null, default);
         }
 
         /// <summary>
@@ -437,7 +437,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public virtual Task<FineTune> CancelAsync(string id, CancellationToken cancellationToken)
         {
-            return this.CancelAsync(id, null, null, cancellationToken);
+            return CancelAsync(id, null, null, cancellationToken);
         }
 
         /// <summary>
@@ -448,7 +448,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public virtual Task<FineTune> CancelAsync(string id, FineTuneCancelPutOptions fineTuneCancelPutOptions)
         {
-            return this.CancelAsync(id, fineTuneCancelPutOptions, null, default);
+            return CancelAsync(id, fineTuneCancelPutOptions, null, default);
         }
 
         /// <summary>
@@ -460,7 +460,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public virtual Task<FineTune> CancelAsync(string id, FineTuneCancelPutOptions fineTuneCancelPutOptions, CancellationToken cancellationToken)
         {
-            return this.CancelAsync(id, fineTuneCancelPutOptions, null, cancellationToken);
+            return CancelAsync(id, fineTuneCancelPutOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -471,7 +471,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public virtual Task<FineTune> CancelAsync(string id, RequestOptions requestOptions)
         {
-            return this.CancelAsync(id, null, requestOptions, default);
+            return CancelAsync(id, null, requestOptions, default);
         }
 
         /// <summary>
@@ -483,7 +483,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public virtual Task<FineTune> CancelAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.CancelAsync(id, null, requestOptions, cancellationToken);
+            return CancelAsync(id, null, requestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -495,7 +495,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public virtual Task<FineTune> CancelAsync(string id, FineTuneCancelPutOptions fineTuneCancelPutOptions, RequestOptions requestOptions)
         {
-            return this.CancelAsync(id, fineTuneCancelPutOptions, requestOptions, default);
+            return CancelAsync(id, fineTuneCancelPutOptions, requestOptions, default);
         }
 
         /// <summary>
@@ -508,7 +508,7 @@ namespace OpenAI
         /// <returns>Task&lt;FineTune&gt;.</returns>
         public virtual Task<FineTune> CancelAsync(string id, FineTuneCancelPutOptions fineTuneCancelPutOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.RequestAsync(HttpMethod.Post, $"/v1/fine-tunes/{id}/cancel", fineTuneCancelPutOptions, requestOptions, cancellationToken);
+            return RequestAsync(HttpMethod.Post, $"/v1/fine-tunes/{id}/cancel", fineTuneCancelPutOptions, requestOptions, cancellationToken);
         }
     }
 }

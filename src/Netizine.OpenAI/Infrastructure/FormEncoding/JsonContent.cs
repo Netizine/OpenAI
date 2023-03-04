@@ -21,7 +21,7 @@ namespace OpenAI.Infrastructure.FormEncoding
         public JsonContent(object nameValueCollection)
             : base(CreateContentByteArray(nameValueCollection))
         {
-            this.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            Headers.ContentType = new MediaTypeHeaderValue("application/json");
         }
 
         private static byte[] CreateContentByteArray(

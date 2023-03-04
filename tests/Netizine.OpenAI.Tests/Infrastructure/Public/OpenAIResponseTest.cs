@@ -23,7 +23,7 @@ namespace OpenAI.Tests
         [Fact]
         public void Date()
         {
-            var response = new EngineService(this.OpenAIClient).Get("text-davinci-003").OpenAIResponse;
+            var response = new EngineService(OpenAIClient).Get("text-davinci-003").OpenAIResponse;
 
             Assert.NotNull(response.Date);
         }

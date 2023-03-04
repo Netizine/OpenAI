@@ -31,7 +31,7 @@ namespace OpenAI
         /// <returns>The cloned instance.</returns>
         internal RequestOptions Clone()
         {
-            return (RequestOptions)this.MemberwiseClone();
+            return (RequestOptions)MemberwiseClone();
         }
     }
 }

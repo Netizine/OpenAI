@@ -4,7 +4,7 @@ namespace OpenAI
     using System.Collections;
     using System.Collections.Generic;
     using Newtonsoft.Json;
-    using OpenAI.Infrastructure;
+    using Infrastructure;
 
     /// <summary>
     /// The OpenAI list.
@@ -33,7 +33,7 @@ namespace OpenAI
         /// </returns>
         public IEnumerator<T> GetEnumerator()
         {
-            return this.Data.GetEnumerator();
+            return Data.GetEnumerator();
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace OpenAI
         /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.Data.GetEnumerator();
+            return Data.GetEnumerator();
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace OpenAI
         /// </summary>
         public void Reverse()
         {
-            this.Data.Reverse();
+            Data.Reverse();
         }
     }
 }

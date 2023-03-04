@@ -21,16 +21,16 @@
             MockHttpClientFixture mockHttpClientFixture)
             : base(openAIMockFixture, mockHttpClientFixture)
         {
-            this.service = new ImageService(this.OpenAIClient);
+            service = new ImageService(OpenAIClient);
 
-            this.imageCreateOptions = new ImageCreateOptions
+            imageCreateOptions = new ImageCreateOptions
             {
                 Prompt = "A cute baby sea otter",
                 N = 2,
                 Size = "1024x1024",
             };
 
-            this.editCreateOptions = new EditImageCreateOptions
+            editCreateOptions = new EditImageCreateOptions
             {
                 Image = "otters.png",
                 ImageSource = System.IO.File.ReadAllBytes("otters.png"),
@@ -41,7 +41,7 @@
                 Size = "1024x1024",
             };
 
-            this.variationCreateOptions = new ImageVariationCreateOption
+            variationCreateOptions = new ImageVariationCreateOption
             {
                 Image = "otters.png",
                 ImageSource = System.IO.File.ReadAllBytes("otters.png"),
@@ -53,8 +53,8 @@
         [Fact]
         public void Create()
         {
-            var image = this.service.Create(this.imageCreateOptions);
-            this.AssertRequest(HttpMethod.Post, "/v1/images/generations");
+            var image = service.Create(imageCreateOptions);
+            AssertRequest(HttpMethod.Post, "/v1/images/generations");
             Assert.NotNull(image);
             Assert.IsType<Image>(image);
             Assert.NotEmpty(image.Data);
@@ -64,8 +64,8 @@
         [Fact]
         public async Task CreateAsync()
         {
-            var image = await this.service.CreateAsync(this.imageCreateOptions);
-            this.AssertRequest(HttpMethod.Post, "/v1/images/generations");
+            var image = await service.CreateAsync(imageCreateOptions);
+            AssertRequest(HttpMethod.Post, "/v1/images/generations");
             Assert.NotNull(image);
             Assert.IsType<Image>(image);
             Assert.NotEmpty(image.Data);
@@ -75,8 +75,8 @@
         [Fact]
         public void Edit()
         {
-            var image = this.service.Edit(this.editCreateOptions);
-            this.AssertRequest(HttpMethod.Post, "/v1/images/edits");
+            var image = service.Edit(editCreateOptions);
+            AssertRequest(HttpMethod.Post, "/v1/images/edits");
             Assert.NotNull(image);
             Assert.IsType<Image>(image);
             Assert.NotEmpty(image.Data);
@@ -86,8 +86,8 @@
         [Fact]
         public async Task EditAsync()
         {
-            var image = await this.service.EditAsync(this.editCreateOptions);
-            this.AssertRequest(HttpMethod.Post, "/v1/images/edits");
+            var image = await service.EditAsync(editCreateOptions);
+            AssertRequest(HttpMethod.Post, "/v1/images/edits");
             Assert.NotNull(image);
             Assert.IsType<Image>(image);
             Assert.NotEmpty(image.Data);
@@ -97,8 +97,8 @@
         [Fact]
         public void CreateVariation()
         {
-            var image = this.service.CreateVariation(this.variationCreateOptions);
-            this.AssertRequest(HttpMethod.Post, "/v1/images/variations");
+            var image = service.CreateVariation(variationCreateOptions);
+            AssertRequest(HttpMethod.Post, "/v1/images/variations");
             Assert.NotNull(image);
             Assert.IsType<Image>(image);
             Assert.NotEmpty(image.Data);
@@ -108,8 +108,8 @@
         [Fact]
         public async Task CreateVariationAsync()
         {
-            var image = await this.service.CreateVariationAsync(this.variationCreateOptions);
-            this.AssertRequest(HttpMethod.Post, "/v1/images/variations");
+            var image = await service.CreateVariationAsync(variationCreateOptions);
+            AssertRequest(HttpMethod.Post, "/v1/images/variations");
             Assert.NotNull(image);
             Assert.IsType<Image>(image);
             Assert.NotEmpty(image.Data);

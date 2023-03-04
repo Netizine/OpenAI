@@ -41,7 +41,7 @@ namespace OpenAI
         /// <returns>The created entity.</returns>
         public virtual Completion Create(CompletionCreateOptions completionCreateOptions)
         {
-            return this.Create(completionCreateOptions, null);
+            return Create(completionCreateOptions, null);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace OpenAI
         /// <returns>The created entity.</returns>
         public virtual Completion Create(CompletionCreateOptions completionCreateOptions, RequestOptions requestOptions)
         {
-            return this.CreateEntity(completionCreateOptions, requestOptions);
+            return CreateEntity(completionCreateOptions, requestOptions);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace OpenAI
         /// <returns>Task&lt;Completion&gt;.</returns>
         public virtual Task<Completion> CreateAsync(CompletionCreateOptions completionCreateOptions)
         {
-            return this.CreateAsync(completionCreateOptions, null, default);
+            return CreateAsync(completionCreateOptions, null, default);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace OpenAI
         /// <returns>Task&lt;Completion&gt;.</returns>
         public virtual Task<Completion> CreateAsync(CompletionCreateOptions completionCreateOptions, CancellationToken cancellationToken)
         {
-            return this.CreateAsync(completionCreateOptions, null, cancellationToken);
+            return CreateAsync(completionCreateOptions, null, cancellationToken);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace OpenAI
         /// <returns>Task&lt;Completion&gt;.</returns>
         public virtual Task<Completion> CreateAsync(CompletionCreateOptions completionCreateOptions, RequestOptions requestOptions)
         {
-            return this.CreateAsync(completionCreateOptions, requestOptions, default);
+            return CreateAsync(completionCreateOptions, requestOptions, default);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace OpenAI
         /// <returns>Task&lt;Completion&gt;.</returns>
         public virtual Task<Completion> CreateAsync(CompletionCreateOptions completionCreateOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
-            return this.CreateEntityAsync(completionCreateOptions, requestOptions, cancellationToken);
+            return CreateEntityAsync(completionCreateOptions, requestOptions, cancellationToken);
         }
     }
 }

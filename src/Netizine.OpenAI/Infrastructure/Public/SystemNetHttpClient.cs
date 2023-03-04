@@ -156,7 +156,7 @@ namespace OpenAI
             {
                 values.Add("lang_version", RuntimeInformation.GetRuntimeVersion());
             }
-            catch (Exception)
+            catch
             {
                 values.Add("lang_version", "(unknown)");
             }
@@ -165,7 +165,7 @@ namespace OpenAI
             {
                 values.Add("os_version", RuntimeInformation.GetOSVersion());
             }
-            catch (Exception)
+            catch
             {
                 values.Add("os_version", "(unknown)");
             }

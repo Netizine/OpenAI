@@ -84,7 +84,7 @@ namespace OpenAI.Tests
                 {
                     response = client.GetAsync(url).Result;
                 }
-                catch (Exception)
+                catch
                 {
                     throw new OpenAITestException(
                         $"Couldn't reach openai-mock at `localhost:{port}`. "
@@ -118,34 +118,32 @@ namespace OpenAI.Tests
         {
             string url = $"http://localhost:{port}/v1/version";
 
-            using (HttpClient client = new HttpClient())
+            using HttpClient client = new HttpClient();
+            HttpResponseMessage response;
+
+            try
             {
-                HttpResponseMessage response;
+                response = client.GetAsync(url).Result;
+            }
+            catch
+            {
+                throw new OpenAITestException(
+                    $"Couldn't reach openai-mock at `localhost:{port}`. "
+                    + "Is it running? Please see README for setup instructions.");
+            }
 
-                try
-                {
-                    response = client.GetAsync(url).Result;
-                }
-                catch (Exception)
-                {
-                    throw new OpenAITestException(
-                        $"Couldn't reach openai-mock at `localhost:{port}`. "
-                        + "Is it running? Please see README for setup instructions.");
-                }
+            string json = response.Content.ReadAsStringAsync().Result;
 
-                string json = response.Content.ReadAsStringAsync().Result;
+            //string version = System.Text.Json.JsonDocument.Parse(json).RootElement.GetProperty("version").GetString();
+            dynamic d = JObject.Parse(json);
 
-                //string version = System.Text.Json.JsonDocument.Parse(json).RootElement.GetProperty("version").GetString();
-                dynamic d = JObject.Parse(json);
+            string version = ((JValue)d.version).Value.ToString();
 
-                string version = ((JValue)d.version).Value.ToString();
-
-                if (!version.Equals(MockMinimumVersion))
-                {
-                    throw new OpenAITestException(
-                        $"openai-mock version {version} is not supported. "
-                        + $"Please upgrade to at least version {MockMinimumVersion}.");
-                }
+            if (!version.Equals(MockMinimumVersion))
+            {
+                throw new OpenAITestException(
+                    $"openai-mock version {version} is not supported. "
+                    + $"Please upgrade to at least version {MockMinimumVersion}.");
             }
         }
     }

@@ -276,7 +276,7 @@ must be formatted before PRs are submitted, otherwise CI will fail. Run the
 formatter with:
 
 ```sh
-dotnet format src/OpenAI.sln
+dotnet format Netizine.OpenAI.sln
 ```
 
 For any requests, bug or comments, please [open an issue][issues] or [submit a

@@ -115,7 +115,7 @@ namespace OpenAI.Tests
 
                 return environmentalPort;
             }
-            
+
             l = new TcpListener(IPAddress.Loopback, 0);
             l.Start();
             availablePort = ((IPEndPoint)l.LocalEndpoint).Port;

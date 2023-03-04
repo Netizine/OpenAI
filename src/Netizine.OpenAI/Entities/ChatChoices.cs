@@ -1,12 +1,12 @@
 ﻿// ReSharper disable once CheckNamespace
-namespace OpenAI 
+namespace OpenAI
 {
     using Newtonsoft.Json;
 
     /// <summary>
     /// The Chat Choice class.
     /// </summary>
-    public class ChatChoice 
+    public class ChatChoice
     {
         /// <summary>
         /// Gets or sets the message.

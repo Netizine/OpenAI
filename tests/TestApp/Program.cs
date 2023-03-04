@@ -13,13 +13,15 @@ var model = modelService.Get("davinci");
 var featureEnabled = model.RawJObject["feature_enabled"];
 Console.WriteLine(model.OwnedBy);
 OpenAIList<Model> models = modelService.List();
-foreach (var m in models) {
+foreach (var m in models)
+{
     Console.WriteLine(m.Id + ",");
 }
 Console.WriteLine(models.Data[0].Id);
 
 // chat completion
-ChatCompletionMessage chatMessage = new ChatCompletionMessage {
+ChatCompletionMessage chatMessage = new ChatCompletionMessage
+{
     Role = ChatRoles.User,
     Content = "Can you explain the meaning of life"
 };
@@ -28,7 +30,8 @@ List<ChatCompletionMessage> chatMessageList = new List<ChatCompletionMessage>
     chatMessage
 };
 ChatGPT3CompletionService chatCompletionService = new ChatGPT3CompletionService();
-ChatGPT3CompletionCreateOptions chatCompletionOptions = new ChatGPT3CompletionCreateOptions {
+ChatGPT3CompletionCreateOptions chatCompletionOptions = new ChatGPT3CompletionCreateOptions
+{
     Model = "gpt-3.5-turbo",
     Messages = chatMessageList,
     Temperature = 0,

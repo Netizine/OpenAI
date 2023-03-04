@@ -74,7 +74,7 @@ namespace OpenAI.Infrastructure
                 return null;
             }
             serializer.Populate(reader, e);
-            e.SetRawJObject((JObject) jToken);
+            e.SetRawJObject((JObject)jToken);
             return e;
 
         }

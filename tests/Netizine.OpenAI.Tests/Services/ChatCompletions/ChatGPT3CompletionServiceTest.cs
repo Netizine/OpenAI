@@ -1,4 +1,5 @@
-﻿namespace OpenAI.Tests.Services.ChatCompletions {
+﻿namespace OpenAI.Tests.Services.ChatCompletions
+{
     using System.Collections.Generic;
     using System.Net.Http;
     using System.Threading.Tasks;
@@ -28,7 +29,8 @@
                 chatMessage
             };
 
-            createOptions = new ChatGPT3CompletionCreateOptions {
+            createOptions = new ChatGPT3CompletionCreateOptions
+            {
                 Model = "gpt-3.5-turbo",
                 Messages = chatMessageList,
             };

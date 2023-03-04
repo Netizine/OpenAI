@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Entities\Models\Model.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    using System;
+    using System.Collections.Generic;
+    using Newtonsoft.Json;
+    using OpenAI.Infrastructure;
+
+    /// &lt;summary&gt;
+    /// List and describe the various models available in the API.
+    /// You can refer to the Models documentation to understand what models are available and the differences between them.
+    /// &lt;/summary&gt;
+    public class Model : OpenAIEntity&lt;Model&gt;, IHasId, IHasObject
+    {
+        /// &lt;summary&gt;
+        /// Unique identifier for the object.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;id&quot;)]
+        public string Id { get; set; }
+
+        /// &lt;summary&gt;
+        /// String representing the object&#39;s type. Objects of the same type share the same value.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;object&quot;)]
+        public string Object { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the created date.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;created&quot;, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(UnixDateTimeConverter))]
+        public DateTime? Created { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets who the model is owned by.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;owned_by&quot;, NullValueHandling = NullValueHandling.Ignore)]
+        public string OwnedBy { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the permissions.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;permission&quot;, NullValueHandling = NullValueHandling.Ignore)]
+        [AllowNameMismatch]
+        public List&lt;Permission&gt; Permissions { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the root.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;root&quot;, NullValueHandling = NullValueHandling.Ignore)]
+        public string Root { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the parent.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;parent&quot;, NullValueHandling = NullValueHandling.Ignore)]
+        public string Parent { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets if the model is deleted.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;deleted&quot;, NullValueHandling = NullValueHandling.Ignore)]
+        public bool? Deleted { get; set; }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[18,28,18,32,1],[18,33,18,37,1],[24,32,24,36,1],[24,37,24,41,1],[31,36,31,40,1],[31,41,31,45,1],[37,33,37,37,0],[37,38,37,42,1],[44,47,44,51,1],[44,52,44,56,1],[50,30,50,34,0],[50,35,50,39,1],[56,32,56,36,0],[56,37,56,41,0],[62,32,62,36,1],[62,37,62,41,1]]);
+    </script>
+  </body>
+</html>

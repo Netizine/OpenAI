@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Entities\Completions\CompletionTest.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Tests.Entities.Completions
+{
+    using Newtonsoft.Json;
+    using Xunit;
+
+    public class CompletionTest : BaseOpenAITest
+    {
+        public CompletionTest(OpenAIMockFixture openAIMockFixture)
+            : base(openAIMockFixture)
+        {
+        }
+
+        [Fact]
+        public void Deserialize()
+        {
+            string json = &quot;{\r\n  \&quot;id\&quot;: \&quot;cmpl-uqkvlQyYK7bGYrRHQ0eXlWi7\&quot;,\r\n  \&quot;object\&quot;: \&quot;text_completion\&quot;,\r\n  \&quot;created\&quot;: 1589478378,\r\n  \&quot;model\&quot;: \&quot;text-davinci-003\&quot;,\r\n  \&quot;choices\&quot;: [\r\n    {\r\n      \&quot;text\&quot;: \&quot;\\n\\nThis is indeed a test\&quot;,\r\n      \&quot;index\&quot;: 0,\r\n      \&quot;logprobs\&quot;: null,\r\n      \&quot;finish_reason\&quot;: \&quot;length\&quot;\r\n    }\r\n  ],\r\n  \&quot;usage\&quot;: {\r\n    \&quot;prompt_tokens\&quot;: 5,\r\n    \&quot;completion_tokens\&quot;: 7,\r\n    \&quot;total_tokens\&quot;: 12\r\n  }\r\n}&quot;;
+            var completion = JsonConvert.DeserializeObject&lt;Completion&gt;(json);
+            Assert.NotNull(completion);
+            Assert.IsType&lt;Completion&gt;(completion);
+            Assert.NotNull(completion.Id);
+            Assert.Equal(&quot;text_completion&quot;, completion.Object);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[9,15,9,38,1],[11,9,11,10,1],[16,13,16,494,1],[17,13,17,78,1],[18,13,18,40,1],[19,13,19,51,1],[20,13,20,43,1],[21,13,21,64,1],[22,9,22,10,1]]);
+    </script>
+  </body>
+</html>

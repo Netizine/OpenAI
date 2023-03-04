@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Services\_base\AnyOfTest.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Tests
+{
+    using System;
+    using OpenAI;
+    using Xunit;
+
+    public class AnyOfTest : BaseOpenAITest
+    {
+        [Fact]
+        public void Ctor_Variant2Types()
+        {
+            var testCases = new[]
+            {
+                new TestCase
+                {
+                    AnyOf = new AnyOf&lt;int, string&gt;(default(int)),
+                    WantValue = default(int),
+                    WantType = typeof(int),
+                },
+                new TestCase
+                {
+                    AnyOf = new AnyOf&lt;int, string&gt;(234),
+                    WantValue = 234,
+                    WantType = typeof(int),
+                },
+                new TestCase
+                {
+                    AnyOf = new AnyOf&lt;int, string&gt;(default(string)),
+                    WantValue = default(string),
+                    WantType = typeof(string),
+                },
+                new TestCase
+                {
+                    AnyOf = new AnyOf&lt;int, string&gt;(&quot;Hello!&quot;),
+                    WantValue = &quot;Hello!&quot;,
+                    WantType = typeof(string),
+                },
+                new TestCase
+                {
+                    AnyOf = new AnyOf&lt;int?, string&gt;(default(int?)),
+                    WantValue = default(int?),
+                    WantType = typeof(int?),
+                },
+            };
+
+            foreach (var testCase in testCases)
+            {
+                Assert.Equal(testCase.WantValue, testCase.AnyOf.Value);
+                Assert.Equal(testCase.WantType, testCase.AnyOf.Type);
+            }
+        }
+
+        [Fact]
+        public void Ctor_Variant3Types()
+        {
+            var someClass = new SomeClass { SomeString = &quot;foo&quot; };
+            var testCases = new[]
+            {
+                new TestCase
+                {
+                    AnyOf = new AnyOf&lt;int, string, SomeClass&gt;(default(int)),
+                    WantValue = default(int),
+                    WantType = typeof(int),
+                },
+                new TestCase
+                {
+                    AnyOf = new AnyOf&lt;int, string, SomeClass&gt;(234),
+                    WantValue = 234,
+                    WantType = typeof(int),
+                },
+                new TestCase
+                {
+                    AnyOf = new AnyOf&lt;int, string, SomeClass&gt;(default(string)),
+                    WantValue = default(string),
+                    WantType = typeof(string),
+                },
+                new TestCase
+                {
+                    AnyOf = new AnyOf&lt;int, string, SomeClass&gt;(&quot;Hello!&quot;),
+                    WantValue = &quot;Hello!&quot;,
+                    WantType = typeof(string),
+                },
+                new TestCase
+                {
+                    AnyOf = new AnyOf&lt;int?, string, SomeClass&gt;(default(int?)),
+                    WantValue = default(int?),
+                    WantType = typeof(int?),
+                },
+                new TestCase
+                {
+                    AnyOf = new AnyOf&lt;int?, string, SomeClass&gt;(default(SomeClass)),
+                    WantValue = default(SomeClass),
+                    WantType = typeof(SomeClass),
+                },
+                new TestCase
+                {
+                    AnyOf = new AnyOf&lt;int?, string, SomeClass&gt;(someClass),
+                    WantValue = someClass,
+                    WantType = typeof(SomeClass),
+                },
+            };
+
+            foreach (var testCase in testCases)
+            {
+                Assert.Equal(testCase.WantValue, testCase.AnyOf.Value);
+                Assert.Equal(testCase.WantType, testCase.AnyOf.Type);
+            }
+        }
+
+        [Fact]
+        public void ImplicitOperator_ReturnsNullForNullValuesRegardlessOfType()
+        {
+            var testCases = new[]
+            {
+                new Container(),
+                new Container { AnyOf2 = null },
+                new Container { AnyOf2 = (AnyOf&lt;int, string&gt;)null },
+                new Container { AnyOf2 = (string)null },
+                new Container { AnyOf3 = null },
+                new Container { AnyOf3 = (AnyOf&lt;int, string, SomeClass&gt;)null },
+                new Container { AnyOf3 = (string)null },
+                new Container { AnyOf3 = (SomeClass)null },
+            };
+
+            foreach (var testCase in testCases)
+            {
+                Assert.Null(testCase.AnyOf2);
+                Assert.Null(testCase.AnyOf3);
+            }
+        }
+
+        private class TestCase
+        {
+            public IAnyOf AnyOf { get; set; }
+
+            public object WantValue { get; set; }
+
+            public Type WantType { get; set; }
+        }
+
+        private class SomeClass
+        {
+            public string SomeString { get; set; }
+        }
+
+        private class Container
+        {
+            public AnyOf&lt;int, string&gt; AnyOf2 { get; set; }
+
+            public AnyOf&lt;int, string, SomeClass&gt; AnyOf3 { get; set; }
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[12,13,44,15,1],[46,22,46,34,1],[46,35,46,37,1],[46,38,46,47,1],[48,17,48,72,1],[49,17,49,70,1],[51,9,51,10,1],[56,13,56,66,1],[57,13,101,15,1],[103,22,103,34,1],[103,35,103,37,1],[103,38,103,47,1],[105,17,105,72,1],[106,17,106,70,1],[108,9,108,10,1],[113,13,123,15,1],[125,22,125,34,1],[125,35,125,37,1],[125,38,125,47,1],[127,17,127,46,1],[128,17,128,46,1],[130,9,130,10,1],[134,35,134,39,1],[134,40,134,44,1],[136,39,136,43,1],[136,44,136,48,1],[138,36,138,40,1],[138,41,138,45,1],[143,40,143,44,0],[143,45,143,49,1],[148,48,148,52,1],[148,53,148,57,1],[150,59,150,63,1],[150,64,150,68,1]]);
+    </script>
+  </body>
+</html>

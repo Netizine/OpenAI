@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Wholesome\DontForgetEntityType.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Tests
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using OpenAI;
+    using Xunit;
+
+    /// &lt;summary&gt;
+    /// This wholesome test ensures that all OpenAI entity and options classes implement the
+    /// &lt;c&gt;IHasX&lt;/c&gt; interfaces when they have matching properties.
+    /// &lt;/summary&gt;
+    public class DontForgetEntityType : WholesomeTest
+    {
+        private const string AssertionMessage =
+            &quot;Found at least one class with an incorrect base type.&quot;;
+
+        [Fact]
+        public void Check()
+        {
+            List&lt;string&gt; results = new List&lt;string&gt;();
+
+            // Get all classes that derive from OpenAIEntity
+            var openAIClasses = GetSubclassesOf(typeof(OpenAIEntity));
+
+            foreach (Type openAIClass in openAIClasses)
+            {
+                var baseType = openAIClass.GetTypeInfo().BaseType;
+
+                // Skip the generic version of OpenAIEntity
+                if (openAIClass == typeof(OpenAIEntity&lt;&gt;))
+                {
+                    continue;
+                }
+
+                if (!baseType.GetTypeInfo().IsGenericType ||
+                    baseType.GetGenericTypeDefinition() != typeof(OpenAIEntity&lt;&gt;))
+                {
+                    results.Add($&quot;{openAIClass.Name} inherits from {baseType.Name} instead of OpenAIEntity&lt;{openAIClass.Name}&gt;&quot;);
+                    continue;
+                }
+
+                var typeParam = baseType.GetTypeInfo().GetGenericArguments()[0];
+                if (typeParam != openAIClass)
+                {
+                    results.Add($&quot;{openAIClass.Name} inherits from OpenAIEntity&lt;{typeParam.Name}&gt; instead of OpenAIEntity&lt;{openAIClass.Name}&gt;&quot;);
+                    continue;
+                }
+            }
+
+            AssertEmpty(results, AssertionMessage);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[22,13,22,55,1],[25,13,25,71,1],[27,22,27,38,1],[27,39,27,41,1],[27,42,27,55,1],[29,17,29,67,1],[32,17,32,59,1],[37,17,38,83,1],[40,21,40,130,0],[41,21,41,30,0],[44,17,44,81,1],[45,17,45,46,1],[47,21,47,145,0],[52,13,52,52,1],[53,9,53,10,1]]);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Services\Base\AnyOf.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+
+    /// &lt;summary&gt;
+    /// Abstract base class for &lt;c&gt;AnyOf&amp;lt;&amp;gt;&lt;/c&gt; generic classes.
+    /// &lt;/summary&gt;
+    public abstract class AnyOf : IAnyOf
+    {
+        /// &lt;summary&gt;Gets the value of the current &lt;see cref=&quot;AnyOf&quot;/&gt; object.&lt;/summary&gt;
+        /// &lt;returns&gt;The value of the current &lt;see cref=&quot;AnyOf&quot;/&gt; object.&lt;/returns&gt;
+        public abstract object Value { get; }
+
+        /// &lt;summary&gt;Gets the type of the current &lt;see cref=&quot;AnyOf&quot;/&gt; object.&lt;/summary&gt;
+        /// &lt;returns&gt;The type of the current &lt;see cref=&quot;AnyOf&quot;/&gt; object.&lt;/returns&gt;
+        public abstract Type Type { get; }
+
+        /// &lt;summary&gt;Returns a string that represents the current object.&lt;/summary&gt;
+        /// &lt;returns&gt;A string that represents the current object.&lt;/returns&gt;
+        public override string ToString() =&gt; this.Value == null ? &quot;AnyOf(null)&quot; : this.Value.ToString();
+    }
+
+    /// &lt;summary&gt;
+    /// &lt;see cref=&quot;AnyOf{T1, T2}&quot;/&gt; is a generic class that can hold a value of one of two different
+    /// types. It uses implicit conversion operators to seamlessly accept or return either type.
+    /// This is used to represent polymorphic request parameters, i.e. parameters that can
+    /// be different types (typically a string or an options class).
+    /// &lt;/summary&gt;
+    /// &lt;typeparam name=&quot;T1&quot;&gt;The first possible type of the value.&lt;/typeparam&gt;
+    /// &lt;typeparam name=&quot;T2&quot;&gt;The second possible type of the value.&lt;/typeparam&gt;
+    [SuppressMessage(&quot;StyleCop.CSharp.MaintainabilityRules&quot;, &quot;SA1402:FileMayOnlyContainASingleType&quot;, Justification = &quot;Generic variant&quot;)]
+    public class AnyOf&lt;T1, T2&gt; : AnyOf
+    {
+        private readonly T1 value1;
+        private readonly T2 value2;
+        private readonly Values setValue;
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;AnyOf{T1, T2}&quot;/&gt; class with type &lt;c&gt;T1&lt;/c&gt;.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The value to hold.&lt;/param&gt;
+        public AnyOf(T1 value)
+        {
+            this.value1 = value;
+            this.setValue = Values.Value1;
+        }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;AnyOf{T1, T2}&quot;/&gt; class with type &lt;c&gt;T2&lt;/c&gt;.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The value to hold.&lt;/param&gt;
+        public AnyOf(T2 value)
+        {
+            this.value2 = value;
+            this.setValue = Values.Value2;
+        }
+
+        private enum Values
+        {
+            Value1,
+            Value2,
+        }
+
+        /// &lt;summary&gt;Gets the value of the current &lt;see cref=&quot;AnyOf{T1, T2}&quot;/&gt; object.&lt;/summary&gt;
+        /// &lt;returns&gt;The value of the current &lt;see cref=&quot;AnyOf{T1, T2}&quot;/&gt; object.&lt;/returns&gt;
+        public override object Value
+        {
+            get
+            {
+                switch (this.setValue)
+                {
+                    case Values.Value1:
+                        return this.value1;
+                    case Values.Value2:
+                        return this.value2;
+                    default:
+                        throw new InvalidOperationException($&quot;Unexpected state, setValue={this.setValue}&quot;);
+                }
+            }
+        }
+
+        /// &lt;summary&gt;Gets the type of the current &lt;see cref=&quot;AnyOf{T1, T2}&quot;/&gt; object.&lt;/summary&gt;
+        /// &lt;returns&gt;The type of the current &lt;see cref=&quot;AnyOf{T1, T2}&quot;/&gt; object.&lt;/returns&gt;
+        public override Type Type
+        {
+            get
+            {
+                switch (this.setValue)
+                {
+                    case Values.Value1:
+                        return typeof(T1);
+                    case Values.Value2:
+                        return typeof(T2);
+                    default:
+                        throw new InvalidOperationException($&quot;Unexpected state, setValue={this.setValue}&quot;);
+                }
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// Converts a value of type &lt;c&gt;T1&lt;/c&gt; to an &lt;see cref=&quot;AnyOf{T1, T2}&quot;/&gt; object.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The value to convert.&lt;/param&gt;
+        /// &lt;returns&gt;An &lt;see cref=&quot;AnyOf{T1, T2}&quot;/&gt; object that holds the value.&lt;/returns&gt;
+        public static implicit operator AnyOf&lt;T1, T2&gt;(T1 value) =&gt; EqualityComparer&lt;T1&gt;.Default.Equals(value, default(T1)) ? null : new AnyOf&lt;T1, T2&gt;(value);
+
+        /// &lt;summary&gt;
+        /// Converts a value of type &lt;c&gt;T2&lt;/c&gt; to an &lt;see cref=&quot;AnyOf{T1, T2}&quot;/&gt; object.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The value to convert.&lt;/param&gt;
+        /// &lt;returns&gt;An &lt;see cref=&quot;AnyOf{T1, T2}&quot;/&gt; object that holds the value.&lt;/returns&gt;
+        public static implicit operator AnyOf&lt;T1, T2&gt;(T2 value) =&gt; EqualityComparer&lt;T2&gt;.Default.Equals(value, default(T2)) ? null : new AnyOf&lt;T1, T2&gt;(value);
+
+        /// &lt;summary&gt;
+        /// Converts an &lt;see cref=&quot;AnyOf{T1, T2}&quot;/&gt; object to a value of type &lt;c&gt;T1&lt;/c&gt;.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;anyOf&quot;&gt;The &lt;see cref=&quot;AnyOf{T1, T2}&quot;/&gt; object to convert.&lt;/param&gt;
+        /// &lt;returns&gt;
+        /// A value of type &lt;c&gt;T1&lt;/c&gt;. If the &lt;see cref=&quot;AnyOf{T1, T2}&quot;/&gt; object currently
+        /// holds a value of a different type, the default value for type &lt;c&gt;T1&lt;/c&gt; is returned.
+        /// &lt;/returns&gt;
+        public static implicit operator T1(AnyOf&lt;T1, T2&gt; anyOf) =&gt; anyOf.value1;
+
+        /// &lt;summary&gt;
+        /// Converts a value of type &lt;c&gt;T2&lt;/c&gt; to an &lt;see cref=&quot;AnyOf{T1, T2}&quot;/&gt; object.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;anyOf&quot;&gt;The &lt;see cref=&quot;AnyOf{T1, T2}&quot;/&gt; object to convert.&lt;/param&gt;
+        /// &lt;returns&gt;
+        /// A value of type &lt;c&gt;T2&lt;/c&gt;. If the &lt;see cref=&quot;AnyOf{T1, T2}&quot;/&gt; object currently
+        /// holds a value of a different type, the default value for type &lt;c&gt;T2&lt;/c&gt; is returned.
+        /// &lt;/returns&gt;
+        public static implicit operator T2(AnyOf&lt;T1, T2&gt; anyOf) =&gt; anyOf.value2;
+    }
+
+    /// &lt;summary&gt;
+    /// &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; is a generic class that can hold a value of one of three
+    /// different types. It uses implicit conversion operators to seamlessly accept or return any
+    /// of the possible types.
+    /// This is used to represent polymorphic request parameters, i.e. parameters that can
+    /// be different types (typically a string or an options class).
+    /// &lt;/summary&gt;
+    /// &lt;typeparam name=&quot;T1&quot;&gt;The first possible type of the value.&lt;/typeparam&gt;
+    /// &lt;typeparam name=&quot;T2&quot;&gt;The second possible type of the value.&lt;/typeparam&gt;
+    /// &lt;typeparam name=&quot;T3&quot;&gt;The third possible type of the value.&lt;/typeparam&gt;
+    [SuppressMessage(&quot;StyleCop.CSharp.MaintainabilityRules&quot;, &quot;SA1402:FileMayOnlyContainASingleType&quot;, Justification = &quot;Generic variant&quot;)]
+    public class AnyOf&lt;T1, T2, T3&gt; : AnyOf
+    {
+        private readonly T1 value1;
+        private readonly T2 value2;
+        private readonly T3 value3;
+        private readonly Values setValue;
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; class with type
+        /// &lt;c&gt;T1&lt;/c&gt;.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The value to hold.&lt;/param&gt;
+        public AnyOf(T1 value)
+        {
+            this.value1 = value;
+            this.setValue = Values.Value1;
+        }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; class with type
+        /// &lt;c&gt;T2&lt;/c&gt;.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The value to hold.&lt;/param&gt;
+        public AnyOf(T2 value)
+        {
+            this.value2 = value;
+            this.setValue = Values.Value2;
+        }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; class with type
+        /// &lt;c&gt;T3&lt;/c&gt;.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The value to hold.&lt;/param&gt;
+        public AnyOf(T3 value)
+        {
+            this.value3 = value;
+            this.setValue = Values.Value3;
+        }
+
+        private enum Values
+        {
+            Value1,
+            Value2,
+            Value3,
+        }
+
+        /// &lt;summary&gt;Gets the value of the current &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object.&lt;/summary&gt;
+        /// &lt;returns&gt;The value of the current &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object.&lt;/returns&gt;
+        public override object Value
+        {
+            get
+            {
+                switch (this.setValue)
+                {
+                    case Values.Value1:
+                        return this.value1;
+                    case Values.Value2:
+                        return this.value2;
+                    case Values.Value3:
+                        return this.value3;
+                    default:
+                        throw new InvalidOperationException($&quot;Unexpected state, setValue={this.setValue}&quot;);
+                }
+            }
+        }
+
+        /// &lt;summary&gt;Gets the type of the current &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object.&lt;/summary&gt;
+        /// &lt;returns&gt;The type of the current &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object.&lt;/returns&gt;
+        public override Type Type
+        {
+            get
+            {
+                switch (this.setValue)
+                {
+                    case Values.Value1:
+                        return typeof(T1);
+                    case Values.Value2:
+                        return typeof(T2);
+                    case Values.Value3:
+                        return typeof(T3);
+                    default:
+                        throw new InvalidOperationException($&quot;Unexpected state, setValue={this.setValue}&quot;);
+                }
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// Converts a value of type &lt;c&gt;T1&lt;/c&gt; to an &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The value to convert.&lt;/param&gt;
+        /// &lt;returns&gt;An &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object that holds the value.&lt;/returns&gt;
+        public static implicit operator AnyOf&lt;T1, T2, T3&gt;(T1 value) =&gt; EqualityComparer&lt;T1&gt;.Default.Equals(value, default(T1)) ? null : new AnyOf&lt;T1, T2, T3&gt;(value);
+
+        /// &lt;summary&gt;
+        /// Converts a value of type &lt;c&gt;T2&lt;/c&gt; to an &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The value to convert.&lt;/param&gt;
+        /// &lt;returns&gt;An &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object that holds the value.&lt;/returns&gt;
+        public static implicit operator AnyOf&lt;T1, T2, T3&gt;(T2 value) =&gt; EqualityComparer&lt;T2&gt;.Default.Equals(value, default(T2)) ? null : new AnyOf&lt;T1, T2, T3&gt;(value);
+
+        /// &lt;summary&gt;
+        /// Converts a value of type &lt;c&gt;T3&lt;/c&gt; to an &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The value to convert.&lt;/param&gt;
+        /// &lt;returns&gt;An &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object that holds the value.&lt;/returns&gt;
+        public static implicit operator AnyOf&lt;T1, T2, T3&gt;(T3 value) =&gt; EqualityComparer&lt;T3&gt;.Default.Equals(value, default(T3)) ? null : new AnyOf&lt;T1, T2, T3&gt;(value);
+
+        /// &lt;summary&gt;
+        /// Converts an &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object to a value of type &lt;c&gt;T1&lt;/c&gt;.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;anyOf&quot;&gt;The &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object to convert.&lt;/param&gt;
+        /// &lt;returns&gt;
+        /// A value of type &lt;c&gt;T1&lt;/c&gt;. If the &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object currently
+        /// holds a value of a different type, the default value for type &lt;c&gt;T3&lt;/c&gt; is returned.
+        /// &lt;/returns&gt;
+        public static implicit operator T1(AnyOf&lt;T1, T2, T3&gt; anyOf) =&gt; anyOf.value1;
+
+        /// &lt;summary&gt;
+        /// Converts an &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object to a value of type &lt;c&gt;T2&lt;/c&gt;.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;anyOf&quot;&gt;The &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object to convert.&lt;/param&gt;
+        /// &lt;returns&gt;
+        /// A value of type &lt;c&gt;T2&lt;/c&gt;. If the &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object currently
+        /// holds a value of a different type, the default value for type &lt;c&gt;T3&lt;/c&gt; is returned.
+        /// &lt;/returns&gt;
+        public static implicit operator T2(AnyOf&lt;T1, T2, T3&gt; anyOf) =&gt; anyOf.value2;
+
+        /// &lt;summary&gt;
+        /// Converts an &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object to a value of type &lt;c&gt;T3&lt;/c&gt;.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;anyOf&quot;&gt;The &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object to convert.&lt;/param&gt;
+        /// &lt;returns&gt;
+        /// A value of type &lt;c&gt;T3&lt;/c&gt;. If the &lt;see cref=&quot;AnyOf{T1, T2, T3}&quot;/&gt; object currently
+        /// holds a value of a different type, the default value for type &lt;c&gt;T3&lt;/c&gt; is returned.
+        /// &lt;/returns&gt;
+        public static implicit operator T3(AnyOf&lt;T1, T2, T3&gt; anyOf) =&gt; anyOf.value3;
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[22,46,22,104,0],[44,9,44,31,1],[46,13,46,33,1],[47,13,47,43,1],[48,9,48,10,1],[54,9,54,31,1],[56,13,56,33,1],[57,13,57,43,1],[58,9,58,10,1],[72,17,72,39,1],[75,25,75,44,1],[77,25,77,44,1],[79,25,79,108,0],[90,17,90,39,1],[93,25,93,43,1],[95,25,95,43,1],[97,25,97,108,0],[107,68,107,157,1],[114,68,114,157,1],[124,68,124,80,1],[134,68,134,80,1],[160,9,160,31,1],[162,13,162,33,1],[163,13,163,43,1],[164,9,164,10,1],[171,9,171,31,1],[173,13,173,33,1],[174,13,174,43,1],[175,9,175,10,1],[182,9,182,31,1],[184,13,184,33,1],[185,13,185,43,1],[186,9,186,10,1],[201,17,201,39,1],[204,25,204,44,1],[206,25,206,44,1],[208,25,208,44,1],[210,25,210,108,0],[221,17,221,39,1],[224,25,224,43,1],[226,25,226,43,1],[228,25,228,43,1],[230,25,230,108,0],[240,72,240,165,0],[247,72,247,165,1],[254,72,254,165,1],[264,72,264,84,0],[274,72,274,84,0],[284,72,284,84,0]]);
+    </script>
+  </body>
+</html>

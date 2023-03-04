@@ -1,5 +1,7 @@
-﻿using OpenAI;
+﻿using System.Diagnostics.CodeAnalysis;
+using OpenAI;
 
+[assembly: ExcludeFromCodeCoverage]
 
 var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
 
@@ -126,6 +128,5 @@ Console.WriteLine(fileContent.Content);
 var deleteFile = fileService.Delete(createdFile.Id, new FileDeleteOptions());
 Console.WriteLine(deleteFile.Id);
 
-//
 
 

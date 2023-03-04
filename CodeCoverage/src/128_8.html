@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Infrastructure\Public\OpenAIException.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+// ReSharper disable once CheckNamespace
+namespace OpenAI
+{
+    using System;
+    using System.Net;
+
+    /// &lt;summary&gt;
+    /// The OpenAI exception.
+    /// &lt;/summary&gt;
+    /// &lt;seealso cref=&quot;System.Exception&quot; /&gt;
+    public class OpenAIException : Exception
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;OpenAIException&quot;/&gt; class.
+        /// &lt;/summary&gt;
+        // ReSharper disable once UnusedMember.Global
+        public OpenAIException()
+        {
+        }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;OpenAIException&quot;/&gt; class.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;message&quot;&gt;The message that describes the error.&lt;/param&gt;
+        public OpenAIException(string message)
+            : base(message)
+        {
+        }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;OpenAIException&quot;/&gt; class.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;message&quot;&gt;The message.&lt;/param&gt;
+        /// &lt;param name=&quot;err&quot;&gt;The error.&lt;/param&gt;
+        // ReSharper disable once UnusedMember.Global
+        public OpenAIException(string message, Exception err)
+            : base(message, err)
+        {
+        }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;OpenAIException&quot;/&gt; class.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;httpStatusCode&quot;&gt;The HTTP status code.&lt;/param&gt;
+        /// &lt;param name=&quot;openAIError&quot;&gt;The OpenAI error.&lt;/param&gt;
+        /// &lt;param name=&quot;message&quot;&gt;The message.&lt;/param&gt;
+        public OpenAIException(HttpStatusCode httpStatusCode, OpenAIError openAIError, string message)
+            : base(message)
+        {
+            this.HttpStatusCode = httpStatusCode;
+            this.OpenAIError = openAIError;
+        }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the HTTP status code.
+        /// &lt;/summary&gt;
+        public HttpStatusCode HttpStatusCode { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the OpenAI error.
+        /// &lt;/summary&gt;
+        public OpenAIError OpenAIError { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the OpenAI response.
+        /// &lt;/summary&gt;
+        public OpenAIResponse OpenAIResponse { get; set; }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[17,9,17,33,0],[19,9,19,10,0],[26,15,26,28,1],[28,9,28,10,1],[37,15,37,33,0],[39,9,39,10,0],[48,15,48,28,1],[50,13,50,50,1],[51,13,51,44,1],[52,9,52,10,1],[57,48,57,52,1],[57,53,57,57,1],[62,42,62,46,0],[62,47,62,51,1],[67,48,67,52,1],[67,53,67,57,1]]);
+    </script>
+  </body>
+</html>

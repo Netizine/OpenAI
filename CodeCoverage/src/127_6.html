@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Infrastructure\Public\OpenAIConfiguration.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+// ReSharper disable once CheckNamespace
+namespace OpenAI
+{
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Reflection;
+    using Newtonsoft.Json;
+    using OpenAI.Infrastructure;
+
+    /// &lt;summary&gt;
+    /// Global configuration class for OpenAI settings.
+    /// &lt;/summary&gt;
+    public static class OpenAIConfiguration
+    {
+        private static string apiKey;
+
+        private static string organizationId;
+
+        private static int maxNetworkRetries = SystemNetHttpClient.DefaultMaxNumberRetries;
+
+        private static IOpenAIClient openAIClient;
+
+        static OpenAIConfiguration()
+        {
+            OpenAIClientVersion = new AssemblyName(typeof(OpenAIConfiguration).GetTypeInfo().Assembly.FullName).Version.ToString(3);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the API key.
+        /// &lt;/summary&gt;
+        public static string ApiKey
+        {
+            get
+            {
+                return apiKey;
+            }
+
+            set
+            {
+                if (value != apiKey)
+                {
+                    OpenAIClient = null;
+                }
+
+                apiKey = value;
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// Organization id passed to OpenAI.
+        /// &lt;/summary&gt;
+        public static string OrganizationId
+        {
+            get
+            {
+                return organizationId;
+            }
+
+            set =&gt; organizationId = value;
+        }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the settings used for deserializing JSON objects returned by OpenAI&#39;s API.
+        /// It is highly recommended you do not change these settings, as doing so can produce
+        /// unexpected results. If you do change these settings, make sure that
+        /// &lt;see cref=&quot;OpenAIObjectConverter&quot;/&gt; is among the converters,
+        /// otherwise OpenAI will no longer be able to deserialize polymorphic resources
+        /// represented by interfaces.
+        /// &lt;/summary&gt;
+        public static JsonSerializerSettings SerializerSettings { get; set; } = DefaultSerializerSettings();
+
+        /// &lt;summary&gt;
+        /// Gets or sets the maximum number of times that the library will retry requests that
+        /// appear to have failed due to an intermittent problem.
+        /// &lt;/summary&gt;
+        public static int MaxNetworkRetries
+        {
+            get =&gt; maxNetworkRetries;
+
+            set
+            {
+                if (value != maxNetworkRetries)
+                {
+                    OpenAIClient = null;
+                }
+
+                maxNetworkRetries = value;
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// Gets or sets a custom &lt;see cref=&quot;OpenAIClient&quot;/&gt; for sending requests to OpenAI&#39;s
+        /// API. You can use this to use a custom message handler, set proxy parameters, etc.
+        /// &lt;/summary&gt;
+        /// &lt;example&gt;
+        /// To use a custom message handler:
+        /// &lt;code&gt;
+        /// System.Net.Http.HttpMessageHandler messageHandler = ...;
+        /// var httpClient = new System.Net.HttpClient(messageHandler);
+        /// var openAIClient = new OpenAI.OpenAIClient(
+        ///     openAIApiKey,
+        ///     httpClient: new OpenAI.SystemNetHttpClient(httpClient));
+        /// OpenAI.OpenAIConfiguration.OpenAIClient = openAIClient;
+        /// &lt;/code&gt;
+        /// &lt;/example&gt;
+        public static IOpenAIClient OpenAIClient
+        {
+            get =&gt; openAIClient ??= BuildDefaultOpenAIClient();
+
+            set =&gt; openAIClient = value;
+        }
+
+        /// &lt;summary&gt;Gets the version of the OpenAI client library.&lt;/summary&gt;
+        internal static string OpenAIClientVersion { get; }
+
+        /// &lt;summary&gt;
+        /// Returns a new instance of &lt;see cref=&quot;Newtonsoft.Json.JsonSerializerSettings&quot;/&gt; with
+        /// the default settings used by OpenAI.
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;A &lt;see cref=&quot;Newtonsoft.Json.JsonSerializerSettings&quot;/&gt; instance.&lt;/returns&gt;
+        public static JsonSerializerSettings DefaultSerializerSettings()
+        {
+            return new JsonSerializerSettings
+            {
+                Converters = new List&lt;JsonConverter&gt;
+                {
+                    new OpenAIObjectConverter(),
+                },
+                DateParseHandling = DateParseHandling.None,
+                MaxDepth = 128,
+            };
+        }
+
+        private static OpenAIClient BuildDefaultOpenAIClient()
+        {
+            if (ApiKey is { Length: 0 })
+            {
+                const string message = &quot;Your API key is invalid, as it is an empty string. You can &quot;
+                                       + &quot;double-check your API key from the OpenAI Dashboard. See &quot;
+                                       + &quot;https://beta.openai.com/docs/api-reference/authentication for details&quot;;
+                throw new OpenAIException(message);
+            }
+
+            if (ApiKey != null &amp;&amp; StringUtils.ContainsWhitespace(ApiKey))
+            {
+                const string message = &quot;Your API key is invalid, as it contains whitespace. You can &quot;
+                                       + &quot;double-check your API key from the OpenAI Dashboard. See &quot;
+                                       + &quot;https://beta.openai.com/docs/api-reference/authentication for details&quot;;
+                throw new OpenAIException(message);
+            }
+
+            var httpClient = new SystemNetHttpClient(
+                httpClient: null,
+                maxNetworkRetries: MaxNetworkRetries);
+            return new OpenAIClient(ApiKey, OrganizationId, httpClient: httpClient);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[19,9,19,92,1],[25,13,25,133,1],[26,9,26,10,1],[35,17,35,31,1],[40,17,40,37,1],[42,21,42,41,1],[45,17,45,32,1],[46,13,46,14,1],[56,17,56,39,1],[59,20,59,42,1],[70,67,70,71,1],[70,72,70,76,0],[70,81,70,108,1],[78,20,78,37,1],[82,17,82,48,0],[84,21,84,41,0],[87,17,87,43,0],[88,13,88,14,0],[108,20,108,63,1],[110,20,110,40,1],[114,54,114,58,1],[123,13,131,15,1],[136,13,136,41,1],[141,17,141,52,1],[144,13,144,74,1],[149,17,149,52,1],[152,13,154,55,1],[155,13,155,85,1]]);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Infrastructure\FormEncoding\JsonContent.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System.Collections.Generic;
+using System.Globalization;
+using Newtonsoft.Json.Converters;
+
+namespace OpenAI.Infrastructure.FormEncoding
+{
+    using System;
+    using System.Data;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Text;
+
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
+
+    /// &lt;summary&gt;
+    /// A container for name/value tuples encoded using &lt;c&gt;application/json&lt;/c&gt;
+    /// MIME type.
+    /// &lt;/summary&gt;
+    internal class JsonContent : ByteArrayContent
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;JsonContent&quot;/&gt; class.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;nameValueCollection&quot;&gt;The collection of name/value tuples to encode.&lt;/param&gt;
+        public JsonContent(object nameValueCollection)
+            : base(CreateContentByteArray(nameValueCollection))
+        {
+            this.Headers.ContentType = new MediaTypeHeaderValue(&quot;application/json&quot;);
+        }
+
+        private static byte[] CreateContentByteArray(
+            object nameValueCollection)
+        {
+            if (nameValueCollection == null)
+            {
+                throw new ArgumentNullException(nameof(nameValueCollection));
+            }
+
+            var jsonSerializerSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+
+            };
+            return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(nameValueCollection, jsonSerializerSettings));
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[27,15,27,64,1],[29,13,29,85,1],[30,9,30,10,1],[35,13,35,45,1],[37,17,37,78,0],[40,13,44,15,1],[45,13,45,117,1]]);
+    </script>
+  </body>
+</html>

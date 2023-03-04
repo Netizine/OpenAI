@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Wholesome\NullableValueTypes.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Tests
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+    using Newtonsoft.Json;
+    using OpenAI;
+    using Xunit;
+
+    /// &lt;summary&gt;
+    /// This test checks that all properties in request parameter classes (i.e. classes that
+    /// implement &lt;see cref=&quot;OpenAI.INestedOptions&quot; /&gt;) with value types are nullable. This ensures
+    /// that only values explicitly set by users are sent to OpenAI&#39;s API.
+    /// &lt;/summary&gt;
+    public class NullableValueTypes : WholesomeTest
+    {
+        private const string AssertionMessage =
+            &quot;Found at least one non-nullable value type&quot;;
+
+        [Fact]
+        public void Check()
+        {
+            List&lt;string&gt; results = new List&lt;string&gt;();
+
+            // Get all classes that implement INestedOptions
+            var optionsClasses = GetClassesWithInterface(typeof(INestedOptions));
+
+            foreach (Type optionsClass in optionsClasses)
+            {
+                foreach (PropertyInfo property in optionsClass.GetProperties())
+                {
+                    var propType = property.PropertyType;
+
+                    // Skip properties that don&#39;t have a `JsonProperty` attribute
+                    var attribute = property.GetCustomAttribute&lt;JsonPropertyAttribute&gt;();
+                    if (attribute == null)
+                    {
+                        continue;
+                    }
+
+                    // Skip non-value types
+                    if (!propType.GetTypeInfo().IsValueType)
+                    {
+                        continue;
+                    }
+
+                    // Skip value types that are already nullable
+                    if (propType.GetTypeInfo().IsGenericType &amp;&amp;
+                        propType.GetGenericTypeDefinition() == typeof(Nullable&lt;&gt;))
+                    {
+                        continue;
+                    }
+
+                    results.Add($&quot;{optionsClass.Name}.{property.Name}&quot;);
+                }
+            }
+
+            AssertEmpty(results, AssertionMessage);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[23,13,23,55,1],[26,13,26,82,1],[28,22,28,39,1],[28,40,28,42,1],[28,43,28,57,1],[30,26,30,47,1],[30,48,30,50,1],[30,51,30,79,1],[32,21,32,58,1],[35,21,35,90,1],[36,21,36,43,1],[42,21,42,61,1],[48,21,49,83,1],[54,21,54,73,0],[58,13,58,52,1],[59,9,59,10,1]]);
+    </script>
+  </body>
+</html>

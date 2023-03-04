@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Functional\NetworkRetriesTest.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+#pragma warning disable CS0618
+namespace OpenAI.Tests
+{
+    using System;
+    using System.Net;
+    using System.Net.Http;
+    using System.Reflection;
+    using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Moq.Protected;
+    using OpenAI;
+    using Xunit;
+
+    public class NetworkRetriesTest : BaseOpenAITest
+    {
+        public NetworkRetriesTest(MockHttpClientFixture mockHttpClientFixture)
+            : base(mockHttpClientFixture)
+        {
+            var httpClient = new SystemNetHttpClient(
+                httpClient: new System.Net.Http.HttpClient(
+                    this.MockHttpClientFixture.MockHandler.Object),
+                maxNetworkRetries: 2)
+            {
+                NetworkRetriesSleep = false,
+            };
+            this.OpenAIClient = new OpenAIClient(&quot;sk-test&quot;, httpClient: httpClient);
+        }
+
+        private new IOpenAIClient OpenAIClient { get; }
+
+        /* We really should be testing the behavior when the response has a `Should-Retry`
+         * header, however .NET makes it basically impossible to test this because:
+         * 1. `HttpResponseMessage` doesn&#39;t let you set `Headers`, and
+         * 2. `HttpResponseHeaders` is a sealed class with no public constructor.
+         */
+
+        [Fact]
+        public void RetryOnConflict()
+        {
+            this.MockHttpClientFixture.MockHandler.Protected()
+                .SetupSequence&lt;Task&lt;HttpResponseMessage&gt;&gt;(
+                    &quot;SendAsync&quot;,
+                    ItExpr.IsAny&lt;HttpRequestMessage&gt;(),
+                    ItExpr.IsAny&lt;CancellationToken&gt;())
+                .Returns(Task.FromResult(
+                    new HttpResponseMessage(HttpStatusCode.Conflict)
+                    {
+                        Content = new StringContent(&quot;{}&quot;, Encoding.UTF8),
+                    }))
+                .Returns(Task.FromResult(
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(&quot;{}&quot;, Encoding.UTF8),
+                    }))
+                .Throws(new OpenAITestException(&quot;Unexpected invocation&quot;));
+
+            var service = new EngineService(this.OpenAIClient);
+            var engine = service.Get(&quot;text-davinci-003&quot;);
+
+            Assert.NotNull(engine);
+            Assert.Equal(1, engine.OpenAIResponse.NumRetries);
+        }
+
+        [Fact]
+        public void RetryOnServiceUnavailable()
+        {
+            this.MockHttpClientFixture.MockHandler.Protected()
+                .SetupSequence&lt;Task&lt;HttpResponseMessage&gt;&gt;(
+                    &quot;SendAsync&quot;,
+                    ItExpr.IsAny&lt;HttpRequestMessage&gt;(),
+                    ItExpr.IsAny&lt;CancellationToken&gt;())
+                .Returns(Task.FromResult(
+                    new HttpResponseMessage(HttpStatusCode.ServiceUnavailable)
+                    {
+                        Content = new StringContent(&quot;{}&quot;, Encoding.UTF8),
+                    }))
+                .Returns(Task.FromResult(
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(&quot;{}&quot;, Encoding.UTF8),
+                    }))
+                .Throws(new OpenAITestException(&quot;Unexpected invocation&quot;));
+
+            var service = new EngineService(this.OpenAIClient);
+            var engine = service.Get(&quot;text-davinci-003&quot;);
+
+            Assert.NotNull(engine);
+            Assert.Equal(1, engine.OpenAIResponse.NumRetries);
+        }
+
+        [Fact]
+        public void RetryOnInternalServerError()
+        {
+            this.MockHttpClientFixture.MockHandler.Protected()
+                .SetupSequence&lt;Task&lt;HttpResponseMessage&gt;&gt;(
+                    &quot;SendAsync&quot;,
+                    ItExpr.IsAny&lt;HttpRequestMessage&gt;(),
+                    ItExpr.IsAny&lt;CancellationToken&gt;())
+                .Returns(Task.FromResult(
+                    new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                    {
+                        Content = new StringContent(&quot;{}&quot;, Encoding.UTF8),
+                    }))
+                .Returns(Task.FromResult(
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(&quot;{}&quot;, Encoding.UTF8),
+                    }))
+                .Throws(new OpenAITestException(&quot;Unexpected invocation&quot;));
+
+            var service = new EngineService(this.OpenAIClient);
+            var engine = service.Get(&quot;text-davinci-003&quot;);
+
+            Assert.NotNull(engine);
+            Assert.Equal(1, engine.OpenAIResponse.NumRetries);
+        }
+
+        [Fact]
+        public void RetryOnHttpRequestException()
+        {
+            this.MockHttpClientFixture.MockHandler.Protected()
+                .SetupSequence&lt;Task&lt;HttpResponseMessage&gt;&gt;(
+                    &quot;SendAsync&quot;,
+                    ItExpr.IsAny&lt;HttpRequestMessage&gt;(),
+                    ItExpr.IsAny&lt;CancellationToken&gt;())
+                .Throws(new HttpRequestException(&quot;Connection error&quot;))
+                .Returns(Task.FromResult(
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(&quot;{}&quot;, Encoding.UTF8),
+                    }))
+                .Throws(new OpenAITestException(&quot;Unexpected invocation&quot;));
+
+            var service = new EngineService(this.OpenAIClient);
+            var engine = service.Get(&quot;text-davinci-003&quot;);
+
+            Assert.NotNull(engine);
+            Assert.Equal(1, engine.OpenAIResponse.NumRetries);
+        }
+
+        [Fact]
+        public void RethrowHttpRequestExceptionAfterAllAttempts()
+        {
+            this.MockHttpClientFixture.MockHandler.Protected()
+                .SetupSequence&lt;Task&lt;HttpResponseMessage&gt;&gt;(
+                    &quot;SendAsync&quot;,
+                    ItExpr.IsAny&lt;HttpRequestMessage&gt;(),
+                    ItExpr.IsAny&lt;CancellationToken&gt;())
+                .Throws(new HttpRequestException(&quot;Connection error 1&quot;))
+                .Throws(new HttpRequestException(&quot;Connection error 2&quot;))
+                .Throws(new HttpRequestException(&quot;Connection error 3&quot;))
+                .Throws(new OpenAITestException(&quot;Unexpected invocation&quot;));
+
+            var service = new EngineService(this.OpenAIClient);
+            var exception = Assert.Throws&lt;HttpRequestException&gt;(() =&gt; service.Get(&quot;text-davinci-003&quot;));
+
+            Assert.NotNull(exception);
+            Assert.Equal(&quot;Connection error 3&quot;, exception.Message);
+        }
+
+        [Fact]
+        public void RetryOnTimeout()
+        {
+            this.MockHttpClientFixture.MockHandler.Protected()
+                .SetupSequence&lt;Task&lt;HttpResponseMessage&gt;&gt;(
+                    &quot;SendAsync&quot;,
+                    ItExpr.IsAny&lt;HttpRequestMessage&gt;(),
+                    ItExpr.IsAny&lt;CancellationToken&gt;())
+                .Throws(new OperationCanceledException(&quot;Timeout&quot;))
+                .Returns(Task.FromResult(
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(&quot;{}&quot;, Encoding.UTF8),
+                    }))
+                .Throws(new OpenAITestException(&quot;Unexpected invocation&quot;));
+
+            var service = new EngineService(this.OpenAIClient);
+            var engine = service.Get(&quot;text-davinci-003&quot;);
+
+            Assert.NotNull(engine);
+            Assert.Equal(1, engine.OpenAIResponse.NumRetries);
+        }
+
+        [Fact]
+        public void RethrowTimeoutExceptionAfterAllAttempts()
+        {
+            this.MockHttpClientFixture.MockHandler.Protected()
+                .SetupSequence&lt;Task&lt;HttpResponseMessage&gt;&gt;(
+                    &quot;SendAsync&quot;,
+                    ItExpr.IsAny&lt;HttpRequestMessage&gt;(),
+                    ItExpr.IsAny&lt;CancellationToken&gt;())
+                .Throws(new TaskCanceledException(&quot;Timeout 1&quot;))
+                .Throws(new TaskCanceledException(&quot;Timeout 2&quot;))
+                .Throws(new TaskCanceledException(&quot;Timeout 3&quot;))
+                .Throws(new OpenAITestException(&quot;Unexpected invocation&quot;));
+
+            var service = new EngineService(this.OpenAIClient);
+            var exception = Assert.Throws&lt;TaskCanceledException&gt;(() =&gt; service.Get(&quot;text-davinci-003&quot;));
+
+            Assert.NotNull(exception);
+
+#if NET6_0
+            Assert.NotNull(exception.InnerException);
+            Assert.Equal(&quot;Timeout 3&quot;, exception.InnerException.Message);
+#else
+                Assert.Equal(&quot;Timeout 3&quot;, exception.Message);
+#endif
+        }
+
+        [Fact]
+#pragma warning disable CS1998 // Async method lacks &#39;await&#39; operators and will run synchronously
+        public async Task DoNotRetryOnCancel()
+#pragma warning restore CS1998 // Async method lacks &#39;await&#39; operators and will run synchronously
+        {
+            var requestCount = 0;
+            this.MockHttpClientFixture.MockHandler.Protected()
+                .Setup&lt;Task&lt;HttpResponseMessage&gt;&gt;(
+                    &quot;SendAsync&quot;,
+                    ItExpr.IsAny&lt;HttpRequestMessage&gt;(),
+                    ItExpr.IsAny&lt;CancellationToken&gt;())
+                .Returns&lt;HttpRequestMessage, CancellationToken&gt;(async (_, t) =&gt;
+                    {
+                        requestCount += 1;
+                        await Task.Delay(TimeSpan.FromSeconds(1), t).ConfigureAwait(false);
+                        return new HttpResponseMessage(HttpStatusCode.OK)
+                        {
+                            Content = new StringContent(&quot;{}&quot;, Encoding.UTF8),
+                        };
+                    });
+
+            var service = new EngineService(this.OpenAIClient);
+            var source = new CancellationTokenSource();
+            source.CancelAfter(TimeSpan.FromMilliseconds(10));
+            await Assert.ThrowsAsync&lt;TaskCanceledException&gt;(async () =&gt;
+                await service.GetAsync(&quot;text-davinci-003&quot;, null, null, source.Token));
+
+            Assert.Equal(1, requestCount);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[18,15,18,42,1],[20,13,26,15,1],[27,13,27,85,1],[28,9,28,10,1],[30,50,30,54,1],[41,13,56,75,1],[58,13,58,64,1],[59,13,59,58,1],[61,13,61,36,1],[62,13,62,63,1],[63,9,63,10,1],[68,13,83,75,1],[85,13,85,64,1],[86,13,86,58,1],[88,13,88,36,1],[89,13,89,63,1],[90,9,90,10,1],[95,13,110,75,1],[112,13,112,64,1],[113,13,113,58,1],[115,13,115,36,1],[116,13,116,63,1],[117,9,117,10,1],[122,13,133,75,1],[135,13,135,64,1],[136,13,136,58,1],[138,13,138,36,1],[139,13,139,63,1],[140,9,140,10,1],[145,13,153,75,1],[155,13,155,64,1],[156,13,156,71,1],[156,71,156,102,1],[156,102,156,104,1],[158,13,158,39,1],[159,13,159,67,1],[160,9,160,10,1],[165,13,176,75,1],[178,13,178,64,1],[179,13,179,58,1],[181,13,181,36,1],[182,13,182,63,1],[183,9,183,10,1],[188,13,196,75,1],[198,13,198,64,1],[199,13,199,72,1],[199,72,199,103,1],[199,103,199,105,1],[201,13,201,39,1],[207,17,207,62,1],[209,9,209,10,1],[216,13,216,34,1],[217,13,224,25,1],[224,25,224,43,1],[224,43,225,25,1],[225,25,225,92,1],[225,92,226,25,1],[226,25,229,27,0],[229,27,230,21,1],[230,21,230,22,0],[230,22,230,24,1],[232,13,232,64,1],[233,13,233,56,1],[234,13,234,63,1],[235,13,236,17,1],[236,17,236,85,1],[236,85,236,87,1],[238,13,238,43,1],[239,9,239,10,1]]);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Infrastructure\Public\OpenAIClientTest.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+#pragma warning disable CS0618
+namespace OpenAI.Tests
+{
+    using System;
+    using System.IO;
+    using System.Net;
+    using System.Net.Http;
+    using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using OpenAI;
+    using Xunit;
+
+    public class OpenAIClientTest : BaseOpenAITest
+    {
+        private readonly DummyHttpClient httpClient;
+        private readonly OpenAIClient openAIClient;
+#pragma warning disable CS0649
+        private readonly BaseOptions options;
+#pragma warning restore CS0649
+        private readonly RequestOptions requestOptions;
+
+        public OpenAIClientTest()
+        {
+            this.httpClient = new DummyHttpClient();
+            this.openAIClient = new OpenAIClient(
+                &quot;sk-test&quot;,
+                httpClient: this.httpClient);
+
+            // James
+
+            // this.options = new ChargeCreateOptions
+            // {
+            //     Amount = 123,
+            //     Currency = &quot;usd&quot;,
+            //     Source = &quot;tok_visa&quot;,
+            // };
+            this.requestOptions = new RequestOptions();
+        }
+
+        [Fact]
+        public void Ctor_DoesNotThrowsIfApiKeyIsNull()
+        {
+            var client = new OpenAIClient(null);
+            Assert.NotNull(client);
+            Assert.Null(client.ApiKey);
+        }
+
+        [Fact]
+        public void Ctor_ThrowsIfApiKeyIsEmpty()
+        {
+            var exception = Assert.Throws&lt;ArgumentException&gt;(() =&gt; new OpenAIClient(string.Empty));
+            Assert.Contains(&quot;API key cannot be the empty string.&quot;, exception.Message);
+        }
+
+        [Fact]
+        public void Ctor_ThrowsIfApiKeyContainsWhitespace()
+        {
+            var exception = Assert.Throws&lt;ArgumentException&gt;(() =&gt; new OpenAIClient(&quot;sk-test\n&quot;));
+            Assert.Contains(&quot;API key cannot contain whitespace.&quot;, exception.Message);
+        }
+
+        [Fact]
+        public async Task RequestAsync_OkResponse()
+        {
+            var response = new OpenAIResponse(HttpStatusCode.OK, null, &quot;{\n  \&quot;id\&quot;: \&quot;text-davinci-003\&quot;,\n  \&quot;object\&quot;: \&quot;engine\&quot;,\n  \&quot;owner\&quot;: \&quot;openai\&quot;,\n  \&quot;ready\&quot;: true\n}&quot;);
+            this.httpClient.Response = response;
+
+            var charge = await this.openAIClient.RequestAsync&lt;OpenAI.Engine&gt;(
+                HttpMethod.Post,
+                &quot;/v1/engines&quot;,
+                this.options,
+                this.requestOptions);
+
+            Assert.NotNull(charge);
+            Assert.Equal(&quot;text-davinci-003&quot;, charge.Id);
+            Assert.Equal(response, charge.OpenAIResponse);
+        }
+
+        [Fact]
+        public async Task RequestAsync_OkResponse_InvalidJson()
+        {
+            var response = new OpenAIResponse(HttpStatusCode.OK, null, &quot;this isn&#39;t JSON&quot;);
+            this.httpClient.Response = response;
+
+            var exception = await Assert.ThrowsAsync&lt;OpenAIException&gt;(async () =&gt;
+                await this.openAIClient.RequestAsync&lt;OpenAI.Engine&gt;(
+                    HttpMethod.Post,
+                    &quot;/v1/engines&quot;,
+                    this.options,
+                    this.requestOptions));
+
+            Assert.NotNull(exception);
+            Assert.Equal(HttpStatusCode.OK, exception.HttpStatusCode);
+            Assert.Equal(&quot;Invalid response object from API: \&quot;this isn&#39;t JSON\&quot;&quot;, exception.Message);
+            Assert.Equal(response, exception.OpenAIResponse);
+        }
+
+        [Fact]
+        public async Task RequestAsync_Error_InvalidJson()
+        {
+            var response = new OpenAIResponse(
+                HttpStatusCode.InternalServerError,
+                null,
+                &quot;this isn&#39;t JSON&quot;);
+            this.httpClient.Response = response;
+
+            var exception = await Assert.ThrowsAsync&lt;OpenAIException&gt;(async () =&gt;
+                await this.openAIClient.RequestAsync&lt;OpenAI.Engine&gt;(
+                    HttpMethod.Post,
+                    &quot;/v1/engines&quot;,
+                    this.options,
+                    this.requestOptions));
+
+            Assert.NotNull(exception);
+            Assert.Equal(HttpStatusCode.InternalServerError, exception.HttpStatusCode);
+            Assert.Equal(&quot;Invalid response object from API: \&quot;this isn&#39;t JSON\&quot;&quot;, exception.Message);
+            Assert.Equal(response, exception.OpenAIResponse);
+        }
+
+        [Fact]
+        public async Task RequestAsync_Error_InvalidErrorObject()
+        {
+            var response = new OpenAIResponse(
+                HttpStatusCode.InternalServerError,
+                null,
+                &quot;{}&quot;);
+            this.httpClient.Response = response;
+
+            var exception = await Assert.ThrowsAsync&lt;OpenAIException&gt;(async () =&gt;
+                await this.openAIClient.RequestAsync&lt;OpenAI.Engine&gt;(
+                    HttpMethod.Post,
+                    &quot;/v1/engines&quot;,
+                    this.options,
+                    this.requestOptions));
+
+            Assert.NotNull(exception);
+            Assert.Equal(HttpStatusCode.InternalServerError, exception.HttpStatusCode);
+            Assert.Equal(&quot;Invalid response object from API: \&quot;{}\&quot;&quot;, exception.Message);
+            Assert.Equal(response, exception.OpenAIResponse);
+        }
+
+        private static string StreamToString(Stream stream)
+        {
+            return new StreamReader(stream, Encoding.UTF8).ReadToEnd();
+        }
+
+        private class DummyHttpClient : IHttpClient
+        {
+            public OpenAIResponse Response { get; set; }
+
+            public Task&lt;OpenAIResponse&gt; MakeRequestAsync(
+                OpenAIRequest request)
+            {
+                if (this.Response == null)
+                {
+                    throw new OpenAITestException(&quot;Response is null&quot;);
+                }
+
+                return Task.FromResult&lt;OpenAIResponse&gt;(this.Response);
+            }
+
+            public Task&lt;OpenAIResponse&gt; MakeRequestAsync(
+                OpenAIRequest request,
+                CancellationToken cancellationToken = default)
+            {
+                if (this.Response == null)
+                {
+                    throw new OpenAITestException(&quot;Response is null&quot;);
+                }
+
+                return Task.FromResult&lt;OpenAIResponse&gt;(this.Response);
+            }
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[23,9,23,34,1],[25,13,25,53,1],[26,13,28,46,1],[38,13,38,56,1],[39,9,39,10,1],[44,13,44,49,1],[45,13,45,36,1],[46,13,46,40,1],[47,9,47,10,1],[52,13,52,68,1],[52,68,52,98,1],[52,98,52,100,1],[53,13,53,87,1],[54,9,54,10,1],[59,13,59,68,1],[59,68,59,97,1],[59,97,59,99,1],[60,13,60,86,1],[61,9,61,10,1],[66,13,66,185,1],[67,13,67,49,1],[69,13,73,38,1],[75,13,75,36,1],[76,13,76,57,1],[77,13,77,59,1],[78,9,78,10,1],[83,13,83,91,1],[84,13,84,49,1],[86,13,87,17,1],[87,17,91,41,1],[91,41,91,43,1],[93,13,93,39,1],[94,13,94,71,1],[95,13,95,102,1],[96,13,96,62,1],[97,9,97,10,1],[102,13,105,36,1],[106,13,106,49,1],[108,13,109,17,1],[109,17,113,41,1],[113,41,113,43,1],[115,13,115,39,1],[116,13,116,88,1],[117,13,117,102,1],[118,13,118,62,1],[119,9,119,10,1],[124,13,127,23,1],[128,13,128,49,1],[130,13,131,17,1],[131,17,135,41,1],[135,41,135,43,1],[137,13,137,39,1],[138,13,138,88,1],[139,13,139,89,1],[140,13,140,62,1],[141,9,141,10,1],[145,13,145,72,0],[150,46,150,50,1],[150,51,150,55,1],[155,17,155,43,0],[157,21,157,71,0],[160,17,160,71,0],[167,17,167,43,1],[169,21,169,71,0],[172,17,172,71,1]]);
+    </script>
+  </body>
+</html>

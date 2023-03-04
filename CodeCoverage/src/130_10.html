@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Infrastructure\Public\OpenAIResponse.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+// ReSharper disable once CheckNamespace
+namespace OpenAI
+{
+    using System.Net;
+    using System.Net.Http.Headers;
+
+    /// &lt;summary&gt;
+    /// Represents a buffered textual response from OpenAI&#39;s API.
+    /// &lt;/summary&gt;
+    public class OpenAIResponse : OpenAIResponseBase
+    {
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;OpenAIResponse&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;statusCode&quot;&gt;The HTTP status code.&lt;/param&gt;
+        /// &lt;param name=&quot;headers&quot;&gt;The HTTP headers of the response.&lt;/param&gt;
+        /// &lt;param name=&quot;content&quot;&gt;The body of the response.&lt;/param&gt;
+        public OpenAIResponse(HttpStatusCode statusCode, HttpResponseHeaders headers, string content)
+            : base(statusCode, headers)
+        {
+            this.Content = content;
+        }
+
+        /// &lt;summary&gt;Gets the body of the response.&lt;/summary&gt;
+        /// &lt;value&gt;The body of the response.&lt;/value&gt;
+        public string Content { get; }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[17,15,17,40,1],[19,13,19,36,1],[20,9,20,10,1],[24,33,24,37,1]]);
+    </script>
+  </body>
+</html>

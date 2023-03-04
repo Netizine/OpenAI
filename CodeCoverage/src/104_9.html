@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Entities\Moderations\Moderation.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    using System.Collections.Generic;
+    using Newtonsoft.Json;
+
+    /// &lt;summary&gt;
+    /// Given a input text, outputs if the model classifies it as violating OpenAI&#39;s content policy.
+    /// &lt;/summary&gt;
+    public class Moderation : OpenAIEntity&lt;Moderation&gt;, IHasId
+    {
+        /// &lt;summary&gt;
+        /// Unique identifier for the object.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;id&quot;)]
+        public string Id { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the model.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;model&quot;)]
+        public string Model { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the results.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;results&quot;)]
+        public List&lt;ModerationResult&gt; Results { get; set; }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[15,28,15,32,1],[15,33,15,37,1],[21,31,21,35,0],[21,36,21,40,1],[27,49,27,53,1],[27,54,27,58,1]]);
+    </script>
+  </body>
+</html>

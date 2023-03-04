@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Services\Models\ModelService.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    using System.Threading;
+    using System.Threading.Tasks;
+
+#pragma warning disable CS1584 // XML comment has syntactically incorrect cref attribute
+#pragma warning disable CS1658 // Warning is overriding an error
+    /// &lt;summary&gt;
+    /// ModelService class.
+    /// Implements the &lt;see cref=&quot;OpenAI.Service{OpenAI.Model}&quot; /&gt;.
+    /// Implements the &lt;see cref=&quot;OpenAI.IListable{OpenAI.Model, OpenAI.ModelListOptions}&quot; /&gt;.
+    /// Implements the &lt;see cref=&quot;OpenAI.IRetrievable{OpenAI.Model, OpenAI.ModelGetOptions}&quot; /&gt;.
+    /// Implements the &lt;see cref=&quot;OpenAI.IDeletable{OpenAI.Model, OpenAI.ModelDeleteOptions}&quot; /&gt;.
+    /// &lt;/summary&gt;
+    /// &lt;seealso cref=&quot;OpenAI.Service{OpenAI.Model}&quot; /&gt;
+    /// &lt;seealso cref=&quot;OpenAI.IListable{OpenAI.Model, OpenAI.ModelListOptions}&quot; /&gt;
+    /// &lt;seealso cref=&quot;OpenAI.IRetrievable{OpenAI.Model, OpenAI.ModelGetOptions}&quot; /&gt;
+    /// &lt;seealso cref=&quot;OpenAI.IDeletable{OpenAI.Model, OpenAI.ModelDeleteOptions}&quot; /&gt;
+    public class ModelService : Service&lt;Model&gt;,
+#pragma warning restore CS1658 // Warning is overriding an error
+#pragma warning restore CS1584 // XML comment has syntactically incorrect cref attribute
+        IListable&lt;Model, ModelListOptions&gt;,
+        IRetrievable&lt;Model, ModelGetOptions&gt;,
+        IDeletable&lt;Model, ModelDeleteOptions&gt;
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;ModelService&quot;/&gt; class.
+        /// &lt;/summary&gt;
+        // ReSharper disable once UnusedMember.Global
+        public ModelService()
+            : base(null)
+        {
+        }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;ModelService&quot;/&gt; class.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;client&quot;&gt;The client used by the service to send requests.&lt;/param&gt;
+        public ModelService(IOpenAIClient client)
+            : base(client)
+        {
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the base path.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;The base path.&lt;/value&gt;
+        public override string BasePath =&gt; &quot;/v1/models&quot;;
+
+        /// &lt;summary&gt;
+        /// Gets the specified model based on the identifier.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;returns&gt;Model.&lt;/returns&gt;
+        public virtual Model Get(string id)
+        {
+            return this.Get(id, null, null);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the specified model based on the identifier.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;modelGetOptions&quot;&gt;The model get options.&lt;/param&gt;
+        /// &lt;returns&gt;Model.&lt;/returns&gt;
+        public virtual Model Get(string id, ModelGetOptions modelGetOptions)
+        {
+            return this.Get(id, modelGetOptions, null);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the specified model based on the identifier.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Model.&lt;/returns&gt;
+        public virtual Model Get(string id, RequestOptions requestOptions)
+        {
+            return this.Get(id, null, requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the specified model based on the identifier.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;modelGetOptions&quot;&gt;The model get options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Model.&lt;/returns&gt;
+        public virtual Model Get(string id, ModelGetOptions modelGetOptions, RequestOptions requestOptions)
+        {
+            return this.GetEntity(id, modelGetOptions, requestOptions);
+        }
+
+        public virtual Task&lt;Model&gt; GetAsync(string id)
+        {
+            return this.GetAsync(id, null, null, default);
+        }
+
+        public virtual Task&lt;Model&gt; GetAsync(string id, CancellationToken cancellationToken)
+        {
+            return this.GetAsync(id, null, null, cancellationToken);
+        }
+
+        public virtual Task&lt;Model&gt; GetAsync(string id, ModelGetOptions modelGetOptions)
+        {
+            return this.GetAsync(id, modelGetOptions, null, default);
+        }
+
+        public virtual Task&lt;Model&gt; GetAsync(string id, ModelGetOptions modelGetOptions, CancellationToken cancellationToken)
+        {
+            return this.GetAsync(id, modelGetOptions, null, cancellationToken);
+        }
+
+        public virtual Task&lt;Model&gt; GetAsync(string id, RequestOptions requestOptions)
+        {
+            return this.GetAsync(id, null, requestOptions, default);
+        }
+
+        public virtual Task&lt;Model&gt; GetAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.GetAsync(id, null, requestOptions, cancellationToken);
+        }
+
+        public virtual Task&lt;Model&gt; GetAsync(string id, ModelGetOptions modelGetOptions, RequestOptions requestOptions)
+        {
+            return this.GetAsync(id, modelGetOptions, requestOptions, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the specified model based on the identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;modelGetOptions&quot;&gt;The model get options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Model&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;Model&gt; GetAsync(string id, ModelGetOptions modelGetOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.GetEntityAsync(id, modelGetOptions, requestOptions, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the specified model based on the identifier.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;returns&gt;The deleted entity.&lt;/returns&gt;
+        public Model Delete(string id)
+        {
+            return this.Delete(id, null, null);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the specified model based on the identifier.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;modelDeleteOptions&quot;&gt;The model delete options.&lt;/param&gt;
+        /// &lt;returns&gt;The deleted entity.&lt;/returns&gt;
+        public Model Delete(string id, ModelDeleteOptions modelDeleteOptions)
+        {
+            return this.Delete(id, modelDeleteOptions, null);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the specified model based on the identifier.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;The deleted entity.&lt;/returns&gt;
+        public Model Delete(string id, RequestOptions requestOptions)
+        {
+            return this.Delete(id, null, requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the specified model based on the identifier.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;modelDeleteOptions&quot;&gt;The model delete options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;The deleted entity.&lt;/returns&gt;
+        public Model Delete(string id, ModelDeleteOptions modelDeleteOptions, RequestOptions requestOptions)
+        {
+            return this.DeleteEntity(id, modelDeleteOptions, requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the specified model based on the identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Model&amp;gt;.&lt;/returns&gt;
+        public Task&lt;Model&gt; DeleteAsync(string id)
+        {
+            return this.DeleteAsync(id, null, null, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the specified model based on the identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Model&amp;gt;.&lt;/returns&gt;
+        public Task&lt;Model&gt; DeleteAsync(string id, CancellationToken cancellationToken)
+        {
+            return this.DeleteAsync(id, null, null, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the specified model based on the identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;modelDeleteOptions&quot;&gt;The model delete options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Model&amp;gt;.&lt;/returns&gt;
+        public Task&lt;Model&gt; DeleteAsync(string id, ModelDeleteOptions modelDeleteOptions)
+        {
+            return this.DeleteAsync(id, modelDeleteOptions, null, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the specified model based on the identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;modelDeleteOptions&quot;&gt;The model delete options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Model&amp;gt;.&lt;/returns&gt;
+        public Task&lt;Model&gt; DeleteAsync(string id, ModelDeleteOptions modelDeleteOptions, CancellationToken cancellationToken)
+        {
+            return this.DeleteAsync(id, modelDeleteOptions, null, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the specified model based on the identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Model&amp;gt;.&lt;/returns&gt;
+        public Task&lt;Model&gt; DeleteAsync(string id, RequestOptions requestOptions)
+        {
+            return this.DeleteAsync(id, null, requestOptions, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the specified model based on the identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Model&amp;gt;.&lt;/returns&gt;
+        public Task&lt;Model&gt; DeleteAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.DeleteAsync(id, null, requestOptions, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the specified model based on the identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;modelDeleteOptions&quot;&gt;The model delete options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Model&amp;gt;.&lt;/returns&gt;
+        public Task&lt;Model&gt; DeleteAsync(string id, ModelDeleteOptions modelDeleteOptions, RequestOptions requestOptions)
+        {
+            return this.DeleteAsync(id, modelDeleteOptions, requestOptions, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the specified model based on the identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;modelDeleteOptions&quot;&gt;The model delete options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Model&amp;gt;.&lt;/returns&gt;
+        public Task&lt;Model&gt; DeleteAsync(string id, ModelDeleteOptions modelDeleteOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.DeleteEntityAsync(id, modelDeleteOptions, requestOptions, cancellationToken);
+        }
+
+        public virtual OpenAIList&lt;Model&gt; List()
+        {
+            return this.List(null, null);
+        }
+
+        public virtual OpenAIList&lt;Model&gt; List(ModelListOptions modelListOptions)
+        {
+            return this.List(modelListOptions, null);
+        }
+
+        public virtual OpenAIList&lt;Model&gt; List(RequestOptions requestOptions)
+        {
+            return this.List(null, requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the specified models based on the passed options.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;modelListOptions&quot;&gt;The model list options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;OpenAIList&amp;lt;Model&amp;gt;.&lt;/returns&gt;
+        public virtual OpenAIList&lt;Model&gt; List(ModelListOptions modelListOptions, RequestOptions requestOptions)
+        {
+            return this.ListEntities(modelListOptions, requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the specified models based on the passed options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;Task&amp;lt;OpenAIList&amp;lt;Model&amp;gt;&amp;gt;.&lt;/returns&gt;
+        public Task&lt;OpenAIList&lt;Model&gt;&gt; ListAsync()
+        {
+            return this.ListAsync(null, null, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the specified models based on the passed options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;OpenAIList&amp;lt;Model&amp;gt;&amp;gt;.&lt;/returns&gt;
+        public Task&lt;OpenAIList&lt;Model&gt;&gt; ListAsync(CancellationToken cancellationToken)
+        {
+            return this.ListAsync(null, null, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the specified models based on the passed options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;modelListOptions&quot;&gt;The model list options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;OpenAIList&amp;lt;Model&amp;gt;&amp;gt;.&lt;/returns&gt;
+        public Task&lt;OpenAIList&lt;Model&gt;&gt; ListAsync(ModelListOptions modelListOptions)
+        {
+            return this.ListAsync(modelListOptions, null, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the specified models based on the passed options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;modelListOptions&quot;&gt;The model list options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;OpenAIList&amp;lt;Model&amp;gt;&amp;gt;.&lt;/returns&gt;
+        public Task&lt;OpenAIList&lt;Model&gt;&gt; ListAsync(ModelListOptions modelListOptions, CancellationToken cancellationToken)
+        {
+            return this.ListAsync(modelListOptions, null, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the specified models based on the passed options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;OpenAIList&amp;lt;Model&amp;gt;&amp;gt;.&lt;/returns&gt;
+        public Task&lt;OpenAIList&lt;Model&gt;&gt; ListAsync(RequestOptions requestOptions)
+        {
+            return this.ListAsync(null, requestOptions, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the specified models based on the passed options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;OpenAIList&amp;lt;Model&amp;gt;&amp;gt;.&lt;/returns&gt;
+        public Task&lt;OpenAIList&lt;Model&gt;&gt; ListAsync(RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.ListAsync(null, requestOptions, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the specified models based on the passed options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;modelListOptions&quot;&gt;The model list options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;OpenAIList&amp;lt;Model&amp;gt;&amp;gt;.&lt;/returns&gt;
+        public Task&lt;OpenAIList&lt;Model&gt;&gt; ListAsync(ModelListOptions modelListOptions, RequestOptions requestOptions)
+        {
+            return this.ListAsync(modelListOptions, requestOptions, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the specified models based on the passed options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;modelListOptions&quot;&gt;The model list options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;OpenAIList&amp;lt;Model&amp;gt;&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;OpenAIList&lt;Model&gt;&gt; ListAsync(ModelListOptions modelListOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.ListEntitiesAsync(modelListOptions, requestOptions, cancellationToken);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[31,15,31,25,0],[33,9,33,10,0],[40,15,40,27,1],[42,9,42,10,1],[48,44,48,56,1],[57,13,57,45,1],[68,13,68,56,0],[79,13,79,55,0],[91,13,91,72,1],[96,13,96,59,1],[101,13,101,69,0],[106,13,106,70,0],[111,13,111,80,0],[116,13,116,69,0],[121,13,121,79,0],[126,13,126,80,0],[139,13,139,96,1],[149,13,149,48,1],[160,13,160,62,0],[171,13,171,58,0],[183,13,183,78,1],[193,13,193,62,1],[204,13,204,72,0],[215,13,215,76,0],[227,13,227,86,0],[238,13,238,72,0],[250,13,250,82,0],[262,13,262,86,0],[275,13,275,102,1],[280,13,280,42,0],[285,13,285,54,1],[290,13,290,52,0],[301,13,301,72,1],[310,13,310,56,0],[320,13,320,66,0],[330,13,330,68,1],[341,13,341,78,0],[351,13,351,66,0],[362,13,362,76,0],[373,13,373,78,0],[385,13,385,96,1]]);
+    </script>
+  </body>
+</html>

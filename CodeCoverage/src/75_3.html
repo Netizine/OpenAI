@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Wholesome\PropertiesHaveJsonAttributes.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Tests
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using Newtonsoft.Json;
+    using OpenAI;
+    using Xunit;
+
+    /// &lt;summary&gt;
+    /// This wholesome test ensures that all properties in OpenAI entities and options classes are
+    /// annotated with either &lt;see cref=&quot;JsonPropertyAttribute&quot;/&gt; or
+    /// &lt;see cref=&quot;JsonIgnoreAttribute&quot;/&gt;.
+    /// &lt;/summary&gt;
+    public class PropertiesHaveJsonAttributes : WholesomeTest
+    {
+        private const string AssertionMessage =
+            &quot;Found at least one property lacking a Json*Attribute. Please add either a &quot;
+            + &quot;[JsonProperty(\&quot;name\&quot;)] or a [JsonIgnore] attribute.&quot;;
+
+        [Fact]
+        public void Check()
+        {
+            List&lt;string&gt; results = new List&lt;string&gt;();
+
+            // Get all classes that derive from OpenAIEntity or implement INestedOptions
+            var openAIClasses = GetSubclassesOf(typeof(OpenAIEntity));
+            openAIClasses.AddRange(GetClassesWithInterface(typeof(INestedOptions)));
+
+            foreach (var openAIClass in openAIClasses)
+            {
+                foreach (var property in openAIClass.GetProperties())
+                {
+                    var hasJsonAttribute = false;
+
+                    foreach (var attribute in property.GetCustomAttributes())
+                    {
+                        if (attribute.GetType() == typeof(JsonPropertyAttribute)
+                            || attribute.GetType() == typeof(JsonIgnoreAttribute)
+                            || attribute.GetType() == typeof(JsonExtensionDataAttribute))
+                        {
+                            hasJsonAttribute = true;
+                            break;
+                        }
+                    }
+
+                    if (hasJsonAttribute)
+                    {
+                        continue;
+                    }
+
+                    results.Add($&quot;{openAIClass.Name}.{property.Name}&quot;);
+                }
+            }
+
+            AssertEmpty(results, AssertionMessage);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[25,13,25,55,1],[28,13,28,71,1],[29,13,29,85,1],[31,22,31,37,1],[31,38,31,40,1],[31,41,31,54,1],[33,26,33,38,1],[33,39,33,41,1],[33,42,33,69,1],[35,21,35,50,1],[37,30,37,43,1],[37,44,37,46,1],[37,47,37,77,1],[39,25,41,90,1],[43,29,43,53,1],[44,29,44,35,1],[48,21,48,42,1],[53,21,53,72,0],[57,13,57,52,1],[58,9,58,10,1]]);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Services\Files\FileServiceTest.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Tests.Services.Files
+{
+    using System.Net.Http;
+    using System.Threading.Tasks;
+
+    using OpenAI;
+    using Xunit;
+
+    public class FileServiceTest : BaseOpenAITest
+    {
+        private const string FileId = &quot;file-GpNxfyq0WSPw0UT0Vxr4a1Bn&quot;;
+
+        private readonly FileService service;
+        private readonly FileListOptions listOptions;
+        private readonly FileCreateOptions createOptions;
+
+        public FileServiceTest(
+            OpenAIMockFixture openAIMockFixture,
+            MockHttpClientFixture mockHttpClientFixture)
+            : base(openAIMockFixture, mockHttpClientFixture)
+        {
+            this.service = new FileService(this.OpenAIClient);
+
+            this.listOptions = new FileListOptions();
+
+            this.createOptions = new FileCreateOptions
+            {
+                File = &quot;gpt3_test.jsonl&quot;,
+                FileSource = System.IO.File.ReadAllBytes(&quot;gpt3_test.jsonl&quot;),
+                Purpose = &quot;fine-tune&quot;,
+            };
+        }
+
+        [Fact]
+        public void Get()
+        {
+            var file = this.service.Get(FileId);
+            this.AssertRequest(HttpMethod.Get, &quot;/v1/files/file-GpNxfyq0WSPw0UT0Vxr4a1Bn&quot;);
+            Assert.NotNull(file);
+            Assert.Equal(&quot;file&quot;, file.Object);
+        }
+
+        [Fact]
+        public async Task GetAsync()
+        {
+            var file = await this.service.GetAsync(FileId);
+            this.AssertRequest(HttpMethod.Get, &quot;/v1/files/file-GpNxfyq0WSPw0UT0Vxr4a1Bn&quot;);
+            Assert.NotNull(file);
+            Assert.Equal(&quot;file&quot;, file.Object);
+        }
+
+        [Fact]
+        public void List()
+        {
+            var files = this.service.List(this.listOptions);
+            this.AssertRequest(HttpMethod.Get, &quot;/v1/files&quot;);
+            Assert.NotNull(files);
+            Assert.Equal(&quot;list&quot;, files.Object);
+            Assert.Equal(2, files.Data.Count);
+            Assert.Equal(&quot;file&quot;, files.Data[0].Object);
+        }
+
+        [Fact]
+        public async Task ListAsync()
+        {
+            var engines = await this.service.ListAsync(this.listOptions);
+            this.AssertRequest(HttpMethod.Get, &quot;/v1/files&quot;);
+            Assert.NotNull(engines);
+            Assert.Equal(&quot;list&quot;, engines.Object);
+            Assert.Equal(2, engines.Data.Count);
+            Assert.Equal(&quot;file&quot;, engines.Data[0].Object);
+        }
+
+        [Fact]
+        public void Create()
+        {
+            var file = this.service.Create(this.createOptions);
+            this.AssertRequest(HttpMethod.Post, &quot;/v1/files&quot;);
+            Assert.NotNull(file);
+            Assert.Equal(&quot;file&quot;, file.Object);
+        }
+
+        [Fact]
+        public async Task CreateAsync()
+        {
+            var file = await this.service.CreateAsync(this.createOptions);
+            this.AssertRequest(HttpMethod.Post, &quot;/v1/files&quot;);
+            Assert.NotNull(file);
+            Assert.Equal(&quot;file&quot;, file.Object);
+        }
+
+        [Fact]
+        public void Delete()
+        {
+            var deleted = this.service.Delete(FileId);
+            this.AssertRequest(HttpMethod.Delete, &quot;/v1/files/file-GpNxfyq0WSPw0UT0Vxr4a1Bn&quot;);
+            Assert.NotNull(deleted);
+        }
+
+        [Fact]
+        public async Task DeleteAsync()
+        {
+            var deleted = await this.service.DeleteAsync(FileId);
+            this.AssertRequest(HttpMethod.Delete, &quot;/v1/files/file-GpNxfyq0WSPw0UT0Vxr4a1Bn&quot;);
+            Assert.NotNull(deleted);
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[20,15,20,61,1],[22,13,22,63,1],[24,13,24,54,1],[26,13,31,15,1],[32,9,32,10,1],[37,13,37,49,1],[38,13,38,91,1],[39,13,39,34,1],[40,13,40,47,1],[41,9,41,10,1],[46,13,46,60,1],[47,13,47,91,1],[48,13,48,34,1],[49,13,49,47,1],[50,9,50,10,1],[55,13,55,61,1],[56,13,56,61,1],[57,13,57,35,1],[58,13,58,48,1],[59,13,59,47,1],[60,13,60,56,1],[61,9,61,10,1],[66,13,66,74,1],[67,13,67,61,1],[68,13,68,37,1],[69,13,69,50,1],[70,13,70,49,1],[71,13,71,58,1],[72,9,72,10,1],[77,13,77,64,1],[78,13,78,62,1],[79,13,79,34,1],[80,13,80,47,1],[81,9,81,10,1],[86,13,86,75,1],[87,13,87,62,1],[88,13,88,34,1],[89,13,89,47,1],[90,9,90,10,1],[95,13,95,55,1],[96,13,96,94,1],[97,13,97,37,1],[98,9,98,10,1],[103,13,103,66,1],[104,13,104,94,1],[105,13,105,37,1],[106,9,106,10,1]]);
+    </script>
+  </body>
+</html>

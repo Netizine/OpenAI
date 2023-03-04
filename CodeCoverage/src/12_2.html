@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Entities\FineTunes\FineTuneTest.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using Newtonsoft.Json;
+using Xunit;
+
+namespace OpenAI.Tests.Entities.FineTunes
+{
+    public class FineTuneTest : BaseOpenAITest
+    {
+        public FineTuneTest(OpenAIMockFixture openAIMockFixture)
+            : base(openAIMockFixture)
+        {
+        }
+
+        [Fact]
+        public void Deserialize()
+        {
+            string json = this.GetFixture(&quot;/v1/fine-tunes/ft-AF1WoRqd3aJAHsqc9NY7iL8F&quot;);
+            var fineTune = JsonConvert.DeserializeObject&lt;FineTune&gt;(json);
+            Assert.NotNull(fineTune);
+            Assert.IsType&lt;FineTune&gt;(fineTune);
+            Assert.NotNull(fineTune.Id);
+            Assert.Equal(&quot;fine-tune&quot;, fineTune.Object);
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[9,15,9,38,1],[11,9,11,10,1],[16,13,16,89,1],[17,13,17,74,1],[18,13,18,38,1],[19,13,19,47,1],[20,13,20,41,1],[21,13,21,56,1],[22,9,22,10,1]]);
+    </script>
+  </body>
+</html>

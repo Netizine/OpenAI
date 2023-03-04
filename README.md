@@ -263,7 +263,7 @@ Then in your pipeline, add a step to install the openai-mock server before runni
 
 ```yaml
     - name: Install OpenAI.Mock
-      run: dotnet tool install OpenAI.Mock --global
+      run: dotnet tool install --global OpenAI.Mock
 ```
 
 The library uses [`dotnet-format`][dotnet-format] for code formatting. Code

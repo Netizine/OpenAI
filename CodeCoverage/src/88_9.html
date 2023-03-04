@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Entities\EmbeddingData.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    using System.Collections.Generic;
+    using Newtonsoft.Json;
+
+    /// &lt;summary&gt;
+    /// The embedding data.
+    /// &lt;/summary&gt;
+    public class EmbeddingData : IHasObject
+    {
+        /// &lt;summary&gt;
+        /// String representing the object&#39;s type. Objects of the same type share the same value.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;object&quot;)]
+        public string Object { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the index.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;index&quot;)]
+        public int? Index { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the embedding values.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;embedding&quot;)]
+        public List&lt;float&gt; Embedding { get; set; }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[15,32,15,36,1],[15,37,15,41,1],[21,29,21,33,0],[21,34,21,38,1],[27,40,27,44,1],[27,45,27,49,1]]);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Entities\Categories.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+// ReSharper disable StringLiteralTypo
+namespace OpenAI
+{
+    using Newtonsoft.Json;
+
+    /// &lt;summary&gt;
+    ///   The OpenAI moderation categories.
+    /// &lt;/summary&gt;
+    public class Categories
+    {
+        /// &lt;summary&gt;Gets or sets a value indicating whether this &lt;see cref=&quot;Categories&quot; /&gt; is hate.&lt;/summary&gt;
+        /// &lt;value&gt;
+        ///   &lt;c&gt;true&lt;/c&gt; if hate; otherwise, &lt;c&gt;false&lt;/c&gt;.&lt;/value&gt;
+        [JsonProperty(&quot;hate&quot;)]
+        public bool Hate { get; set; }
+
+        /// &lt;summary&gt;Gets or sets a value indicating whether the content contains hate or threatening content.&lt;/summary&gt;
+        /// &lt;value&gt;
+        ///   &lt;c&gt;true&lt;/c&gt; if the content contains hate or threatening content; otherwise, &lt;c&gt;false&lt;/c&gt;.&lt;/value&gt;
+        [JsonProperty(&quot;hatethreatening&quot;)]
+        public bool HateThreatening { get; set; }
+
+        /// &lt;summary&gt;Gets or sets a value indicating whether the content contains self harm content.&lt;/summary&gt;
+        /// &lt;value&gt;
+        ///   &lt;c&gt;true&lt;/c&gt; if the content contains self harm; otherwise, &lt;c&gt;false&lt;/c&gt;.&lt;/value&gt;
+        [JsonProperty(&quot;selfharm&quot;)]
+        public bool SelfHarm { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets a value indicating whether this &lt;see cref=&quot;Categories&quot;/&gt; is sexual.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;
+        ///   &lt;c&gt;true&lt;/c&gt; if sexual; otherwise, &lt;c&gt;false&lt;/c&gt;.
+        /// &lt;/value&gt;
+        [JsonProperty(&quot;sexual&quot;)]
+        public bool Sexual { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets a value indicating whether this content contains sexual content involving minors.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;
+        ///   &lt;c&gt;true&lt;/c&gt; if the content contains sexual minors; otherwise, &lt;c&gt;false&lt;/c&gt;.
+        /// &lt;/value&gt;
+        [JsonProperty(&quot;sexualminors&quot;)]
+        public bool SexualMinors { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets a value indicating whether this &lt;see cref=&quot;Categories&quot;/&gt; is violence.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;
+        ///   &lt;c&gt;true&lt;/c&gt; if violence; otherwise, &lt;c&gt;false&lt;/c&gt;.
+        /// &lt;/value&gt;
+        [JsonProperty(&quot;violence&quot;)]
+        public bool Violence { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets a value indicating whether this content contains violence or graphic content.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;
+        ///   &lt;c&gt;true&lt;/c&gt; if contents contains violence or graphic content; otherwise, &lt;c&gt;false&lt;/c&gt;.
+        /// &lt;/value&gt;
+        [JsonProperty(&quot;violencegraphic&quot;)]
+        public bool ViolenceGraphic { get; set; }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[15,28,15,32,0],[15,33,15,37,1],[21,39,21,43,0],[21,44,21,48,1],[27,32,27,36,0],[27,37,27,41,1],[36,30,36,34,0],[36,35,36,39,1],[45,36,45,40,0],[45,41,45,45,1],[54,32,54,36,0],[54,37,54,41,1],[63,39,63,43,0],[63,44,63,48,1]]);
+    </script>
+  </body>
+</html>

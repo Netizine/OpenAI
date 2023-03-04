@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Services\Embeddings\EmbeddingCreateOptions.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    using Newtonsoft.Json;
+
+    /// &lt;summary&gt;
+    /// The embedding create options.
+    /// Implements the &lt;see cref=&quot;OpenAI.BaseOptions&quot; /&gt;.
+    /// &lt;/summary&gt;
+    /// &lt;seealso cref=&quot;OpenAI.BaseOptions&quot; /&gt;
+    public class EmbeddingCreateOptions : BaseOptions
+    {
+        /// &lt;summary&gt;
+        /// ID of the model to use.
+        /// You can use the &lt;see href=&quot;https://beta.openai.com/docs/api-reference/models/list&quot;&gt;List models&lt;/see&gt; API to see all of your available models, or see the OpenAI &lt;see href=&quot;https://beta.openai.com/docs/models/overview&quot;&gt;Model overview&lt;/see&gt; for descriptions of them.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;The model.&lt;/value&gt;
+        [JsonProperty(&quot;model&quot;)]
+        public string Model { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the input.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;The input.&lt;/value&gt;
+        [JsonProperty(&quot;input&quot;)]
+        public string Input { get; set; }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[18,31,18,35,1],[18,36,18,40,1],[25,31,25,35,1],[25,36,25,40,1]]);
+    </script>
+  </body>
+</html>

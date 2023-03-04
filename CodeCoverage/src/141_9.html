@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Services\Base\Service.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    using System;
+    using System.Net;
+    using System.Net.Http;
+    using System.Reflection;
+    using System.Threading;
+    using System.Threading.Tasks;
+
+    /// &lt;summary&gt;Abstract base class for all services.&lt;/summary&gt;
+    /// &lt;typeparam name=&quot;TEntityReturned&quot;&gt;
+    /// The type of &lt;see cref=&quot;IOpenAIEntity&quot;/&gt; that this service returns.
+    /// &lt;/typeparam&gt;
+    public abstract class Service&lt;TEntityReturned&gt;
+        where TEntityReturned : IOpenAIEntity
+    {
+        private IOpenAIClient client;
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;Service{EntityReturned}&quot;/&gt; class.
+        /// &lt;/summary&gt;
+        protected Service()
+        {
+        }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;Service{EntityReturned}&quot;/&gt; class with a
+        /// custom &lt;see cref=&quot;IOpenAIClient&quot;/&gt;.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;client&quot;&gt;The client used by the service to send requests.&lt;/param&gt;
+        protected Service(IOpenAIClient client)
+        {
+            this.client = client;
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the base path.
+        /// &lt;/summary&gt;
+        public abstract string BasePath { get; }
+
+        /// &lt;summary&gt;
+        /// Gets the base URL.
+        /// &lt;/summary&gt;
+        public virtual string BaseUrl =&gt; this.Client.ApiBase;
+
+        /// &lt;summary&gt;
+        /// Gets or sets the client used by this service to send requests. If no client was set when the
+        /// service instance was created, then the default client in
+        /// &lt;see cref=&quot;OpenAIConfiguration.OpenAIClient&quot;/&gt; is used instead.
+        /// &lt;/summary&gt;
+        /// &lt;remarks&gt;
+        /// Setting the client at runtime may not be thread-safe.
+        /// If you wish to use a custom client, it is recommended that you pass it to the service&#39;s constructor and not change it during the service&#39;s lifetime.
+        /// &lt;/remarks&gt;
+        public IOpenAIClient Client
+        {
+            get =&gt; this.client ?? OpenAIConfiguration.OpenAIClient;
+            set =&gt; this.client = value;
+        }
+
+        /// &lt;summary&gt;
+        /// Creates the entity.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;The type of &lt;see cref=&quot;IOpenAIEntity&quot;/&gt; that this service returns.&lt;/returns&gt;
+        protected TEntityReturned CreateEntity(BaseOptions options, RequestOptions requestOptions)
+        {
+            return this.Request(
+                HttpMethod.Post,
+                this.ClassUrl(),
+                options,
+                requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Creates the entity asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token.&lt;/param&gt;
+        /// &lt;returns&gt;The type of &lt;see cref=&quot;IOpenAIEntity&quot;/&gt; that this service returns.&lt;/returns&gt;
+        protected Task&lt;TEntityReturned&gt; CreateEntityAsync(
+            BaseOptions options,
+            RequestOptions requestOptions,
+            CancellationToken cancellationToken)
+        {
+            return this.RequestAsync(
+                HttpMethod.Post,
+                this.ClassUrl(),
+                options,
+                requestOptions,
+                cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the entity.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;The type of &lt;see cref=&quot;IOpenAIEntity&quot;/&gt; that this service returns.&lt;/returns&gt;
+        protected TEntityReturned DeleteEntity(
+            string id,
+            BaseOptions options,
+            RequestOptions requestOptions)
+        {
+            return this.Request(
+                HttpMethod.Delete,
+                this.InstanceUrl(id),
+                options,
+                requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the entity asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token.&lt;/param&gt;
+        /// &lt;returns&gt;The type of &lt;see cref=&quot;IOpenAIEntity&quot;/&gt; that this service returns.&lt;/returns&gt;
+        protected Task&lt;TEntityReturned&gt; DeleteEntityAsync(
+            string id,
+            BaseOptions options,
+            RequestOptions requestOptions,
+            CancellationToken cancellationToken)
+        {
+            return this.RequestAsync(
+                HttpMethod.Delete,
+                this.InstanceUrl(id),
+                options,
+                requestOptions,
+                cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the entity.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;The type of &lt;see cref=&quot;IOpenAIEntity&quot;/&gt; that this service returns.&lt;/returns&gt;
+        protected TEntityReturned GetEntity(
+            string id,
+            BaseOptions options,
+            RequestOptions requestOptions)
+        {
+            return this.Request(
+                HttpMethod.Get,
+                this.InstanceUrl(id),
+                options,
+                requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the entity asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token.&lt;/param&gt;
+        /// &lt;returns&gt;The type of &lt;see cref=&quot;IOpenAIEntity&quot;/&gt; that this service returns.&lt;/returns&gt;
+        protected Task&lt;TEntityReturned&gt; GetEntityAsync(
+            string id,
+            BaseOptions options,
+            RequestOptions requestOptions,
+            CancellationToken cancellationToken)
+        {
+            return this.RequestAsync(
+                HttpMethod.Get,
+                this.InstanceUrl(id),
+                options,
+                requestOptions,
+                cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the entities.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;The type of &lt;see cref=&quot;IOpenAIEntity&quot;/&gt; that this service returns.&lt;/returns&gt;
+        protected OpenAIList&lt;TEntityReturned&gt; ListEntities(
+            ListOptions options,
+            RequestOptions requestOptions)
+        {
+            return this.Request&lt;OpenAIList&lt;TEntityReturned&gt;&gt;(
+                HttpMethod.Get,
+                this.ClassUrl(),
+                options,
+                requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the entities asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token.&lt;/param&gt;
+        /// &lt;returns&gt;The type of &lt;see cref=&quot;IOpenAIEntity&quot;/&gt; that this service returns.&lt;/returns&gt;
+        protected Task&lt;OpenAIList&lt;TEntityReturned&gt;&gt; ListEntitiesAsync(
+            ListOptions options,
+            RequestOptions requestOptions,
+            CancellationToken cancellationToken)
+        {
+            return this.RequestAsync&lt;OpenAIList&lt;TEntityReturned&gt;&gt;(
+                HttpMethod.Get,
+                this.ClassUrl(),
+                options,
+                requestOptions,
+                cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Updates the entity.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;The type of &lt;see cref=&quot;IOpenAIEntity&quot;/&gt; that this service returns.&lt;/returns&gt;
+        protected TEntityReturned UpdateEntity(
+            string id,
+            BaseOptions options,
+            RequestOptions requestOptions)
+        {
+            return this.Request(
+                HttpMethod.Post,
+                this.InstanceUrl(id),
+                options,
+                requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Updates the entity asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token.&lt;/param&gt;
+        /// &lt;returns&gt;The type of &lt;see cref=&quot;IOpenAIEntity&quot;/&gt; that this service returns.&lt;/returns&gt;
+        protected Task&lt;TEntityReturned&gt; UpdateEntityAsync(
+            string id,
+            BaseOptions options,
+            RequestOptions requestOptions,
+            CancellationToken cancellationToken)
+        {
+            return this.RequestAsync(
+                HttpMethod.Post,
+                this.InstanceUrl(id),
+                options,
+                requestOptions,
+                cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Requests the specified method.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;method&quot;&gt;The method.&lt;/param&gt;
+        /// &lt;param name=&quot;path&quot;&gt;The path.&lt;/param&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;The type of &lt;see cref=&quot;IOpenAIEntity&quot;/&gt; that this service returns.&lt;/returns&gt;
+        protected TEntityReturned Request(
+            HttpMethod method,
+            string path,
+            BaseOptions options,
+            RequestOptions requestOptions)
+        {
+            return this.Request&lt;TEntityReturned&gt;(
+                method,
+                path,
+                options,
+                requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Requests the specified method asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;method&quot;&gt;The HTTP method.&lt;/param&gt;
+        /// &lt;param name=&quot;path&quot;&gt;The path.&lt;/param&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;The type of &lt;see cref=&quot;IOpenAIEntity&quot;/&gt; that this service returns.&lt;/returns&gt;
+        protected Task&lt;TEntityReturned&gt; RequestAsync(
+            HttpMethod method,
+            string path,
+            BaseOptions options,
+            RequestOptions requestOptions)
+        {
+            return this.RequestAsync&lt;TEntityReturned&gt;(
+                method,
+                path,
+                options,
+                requestOptions,
+                default);
+        }
+
+        /// &lt;summary&gt;
+        /// Requests the specified method asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;method&quot;&gt;The HTTP method.&lt;/param&gt;
+        /// &lt;param name=&quot;path&quot;&gt;The path.&lt;/param&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token.&lt;/param&gt;
+        /// &lt;returns&gt;The type of &lt;see cref=&quot;IOpenAIEntity&quot;/&gt; that this service returns.&lt;/returns&gt;
+        protected Task&lt;TEntityReturned&gt; RequestAsync(
+            HttpMethod method,
+            string path,
+            BaseOptions options,
+            RequestOptions requestOptions,
+            CancellationToken cancellationToken)
+        {
+            return this.RequestAsync&lt;TEntityReturned&gt;(
+                method,
+                path,
+                options,
+                requestOptions,
+                cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Requests the specified method.
+        /// &lt;/summary&gt;
+        /// &lt;typeparam name=&quot;T&quot;&gt;T.&lt;/typeparam&gt;
+        /// &lt;param name=&quot;method&quot;&gt;The method.&lt;/param&gt;
+        /// &lt;param name=&quot;path&quot;&gt;The path.&lt;/param&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;The type of &lt;see cref=&quot;IOpenAIEntity&quot;/&gt; that this service returns.&lt;/returns&gt;
+        protected T Request&lt;T&gt;(
+            HttpMethod method,
+            string path,
+            BaseOptions options,
+            RequestOptions requestOptions)
+            where T : IOpenAIEntity
+        {
+            return this.RequestAsync&lt;T&gt;(method, path, options, requestOptions)
+                .ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        /// &lt;summary&gt;
+        /// Requests the HTTP call asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;typeparam name=&quot;T&quot;&gt;T.&lt;/typeparam&gt;
+        /// &lt;param name=&quot;method&quot;&gt;The method.&lt;/param&gt;
+        /// &lt;param name=&quot;path&quot;&gt;The path.&lt;/param&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;The type of &lt;see cref=&quot;IOpenAIEntity&quot;/&gt; that this service returns.&lt;/returns&gt;
+        protected async Task&lt;T&gt; RequestAsync&lt;T&gt;(
+            HttpMethod method,
+            string path,
+            BaseOptions options,
+            RequestOptions requestOptions)
+            where T : IOpenAIEntity
+        {
+            requestOptions = this.SetupRequestOptions(requestOptions);
+            return await this.Client.RequestAsync&lt;T&gt;(
+                method,
+                path,
+                options,
+                requestOptions,
+                default).ConfigureAwait(false);
+        }
+
+        /// &lt;summary&gt;
+        /// Requests the HTTP call asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;typeparam name=&quot;T&quot;&gt;T.&lt;/typeparam&gt;
+        /// &lt;param name=&quot;method&quot;&gt;The method.&lt;/param&gt;
+        /// &lt;param name=&quot;path&quot;&gt;The path.&lt;/param&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token.&lt;/param&gt;
+        /// &lt;returns&gt;The type of &lt;see cref=&quot;IOpenAIEntity&quot;/&gt; that this service returns.&lt;/returns&gt;
+        protected async Task&lt;T&gt; RequestAsync&lt;T&gt;(
+            HttpMethod method,
+            string path,
+            BaseOptions options,
+            RequestOptions requestOptions,
+            CancellationToken cancellationToken)
+            where T : IOpenAIEntity
+        {
+            requestOptions = this.SetupRequestOptions(requestOptions);
+            return await this.Client.RequestAsync&lt;T&gt;(
+                method,
+                path,
+                options,
+                requestOptions,
+                cancellationToken).ConfigureAwait(false);
+        }
+
+        /// &lt;summary&gt;
+        /// Sets up the request options.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Request options.&lt;/returns&gt;
+        protected RequestOptions SetupRequestOptions(RequestOptions requestOptions)
+        {
+            if (requestOptions == null)
+            {
+                requestOptions = new RequestOptions();
+                if (!string.IsNullOrEmpty(OpenAIConfiguration.OrganizationId))
+                {
+                    requestOptions.OrganizationId = OpenAIConfiguration.OrganizationId;
+                }
+            }
+
+            requestOptions.BaseUrl ??= this.BaseUrl;
+
+            return requestOptions;
+        }
+
+        /// &lt;summary&gt;
+        /// The class URL.
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;The class url.&lt;/returns&gt;
+        protected virtual string ClassUrl()
+        {
+            return this.BasePath;
+        }
+
+        /// &lt;summary&gt;
+        /// The encoded URL Instance.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;returns&gt;The encoded URL instance.&lt;/returns&gt;
+        /// &lt;exception cref=&quot;System.ArgumentException&quot;&gt;The resource ID cannot be null or whitespace. - id.&lt;/exception&gt;
+        protected virtual string InstanceUrl(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                throw new ArgumentException(
+                    &quot;The resource ID cannot be null or whitespace.&quot;,
+                    nameof(id));
+            }
+
+            return $&quot;{this.ClassUrl()}/{WebUtility.UrlEncode(id)}&quot;;
+        }
+
+        private static bool IsOpenAIList&lt;T&gt;()
+        {
+            var typeInfo = typeof(T).GetTypeInfo();
+            return typeInfo.IsGenericType
+                &amp;&amp; typeInfo.GetGenericTypeDefinition() == typeof(OpenAIList&lt;&gt;);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[22,9,22,28,0],[24,9,24,10,0],[31,9,31,48,1],[33,13,33,34,1],[34,9,34,10,1],[44,42,44,61,1],[57,20,57,67,1],[58,20,58,39,0],[69,13,73,33,1],[88,13,93,36,1],[108,13,112,33,1],[129,13,134,36,1],[149,13,153,33,1],[170,13,175,36,1],[188,13,192,33,1],[207,13,212,36,1],[227,13,231,33,0],[248,13,253,36,0],[270,13,274,33,1],[291,13,296,26,0],[315,13,320,36,1],[339,13,340,65,1],[359,13,359,71,1],[360,13,365,48,1],[366,9,366,10,1],[386,13,386,71,1],[387,13,392,58,1],[393,9,393,10,1],[402,13,402,40,1],[404,17,404,55,1],[405,17,405,79,1],[407,21,407,88,0],[411,13,411,53,1],[413,13,413,35,1],[422,13,422,34,1],[433,13,433,47,1],[435,17,437,33,1],[440,13,440,68,1],[445,13,445,52,0],[446,13,447,80,0]]);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Entities\Images\ImageTest.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Tests.Entities.Images
+{
+    using Newtonsoft.Json;
+    using OpenAI;
+    using System.Security.Principal;
+    using Xunit;
+
+    public class ImageTest : BaseOpenAITest
+    {
+        public ImageTest(OpenAIMockFixture openAIMockFixture)
+            : base(openAIMockFixture)
+        {
+        }
+
+        [Fact]
+        public void Deserialize()
+        {
+            string json = &quot;{\r\n  \&quot;created\&quot;: 1589478378,\r\n  \&quot;data\&quot;: [\r\n    {\r\n      \&quot;url\&quot;: \&quot;https://...\&quot;\r\n    },\r\n    {\r\n      \&quot;url\&quot;: \&quot;https://...\&quot;\r\n    }\r\n  ]\r\n}&quot;;
+            var image = JsonConvert.DeserializeObject&lt;Image&gt;(json);
+            Assert.NotNull(image);
+            Assert.IsType&lt;Image&gt;(image);
+            Assert.NotEmpty(image.Data);
+            Assert.StartsWith(&quot;https&quot;, image.Data[0].Url);
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[11,15,11,38,1],[13,9,13,10,1],[18,13,18,195,1],[19,13,19,68,1],[20,13,20,35,1],[21,13,21,41,1],[22,13,22,41,1],[23,13,23,59,1],[24,9,24,10,1]]);
+    </script>
+  </body>
+</html>

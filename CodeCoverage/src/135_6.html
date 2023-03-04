@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Infrastructure\RuntimeInformation.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Infrastructure
+{
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Runtime.Versioning;
+    using static System.Runtime.InteropServices.RuntimeInformation;
+
+    /// &lt;summary&gt;
+    /// This class is used to gather information about the runtime environment. This is actually a
+    /// non-trivial task. The code below is largely borrowed from the
+    /// &lt;a href=&quot;https://github.com/dotnet/BenchmarkDotNet&quot;&gt;BenchmarkDotNet&lt;/a&gt; project.
+    /// &lt;/summary&gt;
+    internal static class RuntimeInformation
+    {
+        internal const string Unknown = &quot;?&quot;;
+
+        internal static bool IsMono { get; } = Type.GetType(&quot;Mono.Runtime&quot;) != null;
+
+        internal static bool IsFullFramework =&gt; FrameworkDescription.StartsWith(&quot;.NET Framework&quot;, StringComparison.OrdinalIgnoreCase);
+
+        internal static bool IsNetCore
+            =&gt; ((Environment.Version.Major &gt;= 5) || FrameworkDescription.StartsWith(&quot;.NET Core&quot;, StringComparison.OrdinalIgnoreCase))
+                &amp;&amp; !string.IsNullOrEmpty(typeof(object).Assembly.Location);
+
+        /// &lt;summary&gt;
+        /// &quot;The north star for CoreRT is to be a flavor of .NET Core&quot; -&gt; CoreRT reports .NET Core everywhere.
+        /// &lt;/summary&gt;
+        internal static bool IsCoreRT
+            =&gt; ((Environment.Version.Major &gt;= 5) || FrameworkDescription.StartsWith(&quot;.NET Core&quot;, StringComparison.OrdinalIgnoreCase))
+               &amp;&amp; string.IsNullOrEmpty(typeof(object).Assembly.Location); // but it&#39;s merged to a single .exe and .Location returns null here ;)
+
+        internal static bool IsRunningInContainer =&gt; string.Equals(Environment.GetEnvironmentVariable(&quot;DOTNET_RUNNING_IN_CONTAINER&quot;), &quot;true&quot;);
+
+        /// &lt;summary&gt;Returns a string that describes the operating system on which the app is running.&lt;/summary&gt;
+        /// &lt;returns&gt;A string that describes the operating system on which the app is running.&lt;/returns&gt;
+        public static string GetOSVersion()
+        {
+            return OSDescription;
+        }
+
+        /// &lt;summary&gt;Returns a string that indicates the name of the .NET installation on which an app is running.&lt;/summary&gt;
+        /// &lt;returns&gt;A string that indicates the name of the .NET installation on which an app is running.&lt;/returns&gt;
+        public static string GetRuntimeVersion()
+        {
+            if (IsMono)
+            {
+                return GetMonoVersion();
+            }
+            else if (IsFullFramework)
+            {
+                return GetFullFrameworkVersion();
+            }
+            else if (IsNetCore)
+            {
+                return GetNetCoreVersion();
+            }
+            else if (IsCoreRT)
+            {
+                return FrameworkDescription.Replace(&quot;Core &quot;, &quot;CoreRT &quot;);
+            }
+
+            return Unknown;
+        }
+
+        /// &lt;summary&gt;Returns a string with the Newtonsoft.Json assembly version number.&lt;/summary&gt;
+        /// &lt;returns&gt;A string with the Newtonsoft.Json assembly version number.&lt;/returns&gt;
+        public static string GetNewtonsoftJsonVersion()
+        {
+            var assembly = Assembly.GetAssembly(typeof(Newtonsoft.Json.JsonConvert));
+            var fileVersion = FileVersionInfo.GetVersionInfo(assembly.Location);
+            return fileVersion.FileVersion;
+        }
+
+        internal static string GetMonoVersion()
+        {
+            var monoRuntimeType = Type.GetType(&quot;Mono.Runtime&quot;);
+            var monoDisplayName = monoRuntimeType?.GetMethod(&quot;GetDisplayName&quot;, BindingFlags.NonPublic | BindingFlags.Static);
+            if (monoDisplayName != null)
+            {
+                string version = monoDisplayName.Invoke(null, null)?.ToString();
+                if (version != null)
+                {
+                    int bracket1 = version.IndexOf(&#39;(&#39;), bracket2 = version.IndexOf(&#39;)&#39;);
+                    if (bracket1 != -1 &amp;&amp; bracket2 != -1)
+                    {
+                        string comment = version.Substring(bracket1 + 1, bracket2 - bracket1 - 1);
+                        var commentParts = comment.Split(new[] { &#39; &#39; }, StringSplitOptions.RemoveEmptyEntries);
+                        if (commentParts.Length &gt; 2)
+                        {
+                            version = version.Substring(0, bracket1) + &quot;(&quot; + commentParts[0] + &quot; &quot; + commentParts[1] + &quot;)&quot;;
+                        }
+                    }
+                }
+
+                return &quot;Mono &quot; + version;
+            }
+
+            return Unknown;
+        }
+
+        internal static string GetFullFrameworkVersion()
+        {
+            var fullName = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription; // sth like .NET Framework 4.7.3324.0
+            var servicingVersion = new string(fullName.SkipWhile(c =&gt; !char.IsDigit(c)).ToArray());
+            var releaseVersion = MapToReleaseVersion(servicingVersion);
+
+            return $&quot;.NET Framework {releaseVersion}&quot;;
+        }
+
+        internal static string MapToReleaseVersion(string servicingVersion)
+        {
+            // the following code assumes that .NET 4.6.2 is the oldest supported version
+            if (string.CompareOrdinal(servicingVersion, &quot;4.6.2&quot;) &lt; 0)
+            {
+                return &quot;4.6.2&quot;;
+            }
+
+            if (string.CompareOrdinal(servicingVersion, &quot;4.7&quot;) &lt; 0)
+            {
+                return &quot;4.6.2&quot;;
+            }
+
+            if (string.CompareOrdinal(servicingVersion, &quot;4.7.1&quot;) &lt; 0)
+            {
+                return &quot;4.7&quot;;
+            }
+
+            if (string.CompareOrdinal(servicingVersion, &quot;4.7.2&quot;) &lt; 0)
+            {
+                return &quot;4.7.1&quot;;
+            }
+
+            return string.CompareOrdinal(servicingVersion, &quot;4.8&quot;) &lt; 0 ? &quot;4.7.2&quot; : &quot;4.8&quot;;
+        }
+
+        internal static string GetNetCoreVersion()
+        {
+            if (TryGetCoreRuntimeVersion(out var version) &amp;&amp; version &gt;= new Version(5, 0))
+            {
+                return $&quot;.NET {version}&quot;;
+            }
+            else
+            {
+                string runtimeVersion = version != default ? version.ToString() : &quot;?&quot;;
+
+                return $&quot;.NET Core {runtimeVersion}&quot;;
+            }
+        }
+
+        internal static bool TryGetCoreRuntimeVersion(out Version version)
+        {
+            // we can&#39;t just use System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription
+            // because it can be null and it reports versions like 4.6.* for .NET Core 2.*
+
+            // for .NET 5+ we can use Environment.Version
+            if (Environment.Version.Major &gt;= 5)
+            {
+                version = Environment.Version;
+                return true;
+            }
+
+            string runtimeDirectory = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory();
+            if (TryGetVersionFromRuntimeDirectory(runtimeDirectory, out version))
+            {
+                return true;
+            }
+
+            // systemPrivateCoreLib.Product*Part properties return 0 so we have to implement some ugly parsing...
+            var systemPrivateCoreLib = FileVersionInfo.GetVersionInfo(typeof(object).Assembly.Location);
+            if (TryGetVersionFromProductInfo(systemPrivateCoreLib.ProductVersion, systemPrivateCoreLib.ProductName, out version))
+            {
+                return true;
+            }
+
+            string frameworkName = Assembly.GetEntryAssembly()?.GetCustomAttribute&lt;TargetFrameworkAttribute&gt;()?.FrameworkName;
+            if (TryGetVersionFromFrameworkName(frameworkName, out version))
+            {
+                return true;
+            }
+
+            if (IsRunningInContainer)
+            {
+                return Version.TryParse(Environment.GetEnvironmentVariable(&quot;DOTNET_VERSION&quot;) ?? string.Empty, out version)
+                    || Version.TryParse(Environment.GetEnvironmentVariable(&quot;ASPNETCORE_VERSION&quot;) ?? string.Empty, out version);
+            }
+
+            version = null;
+            return false;
+        }
+
+        // sample input:
+        // for dotnet run: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.12\
+        // for dotnet publish: C:\Users\James\source\repos\ConsoleApp25\ConsoleApp25\bin\Release\netcoreapp2.0\win-x64\publish\
+        internal static bool TryGetVersionFromRuntimeDirectory(string runtimeDirectory, out Version version)
+        {
+            if (!string.IsNullOrEmpty(runtimeDirectory) &amp;&amp; Version.TryParse(GetParsableVersionPart(new DirectoryInfo(runtimeDirectory).Name), out version))
+            {
+                return true;
+            }
+
+            version = null;
+            return false;
+        }
+
+        // sample input:
+        // 2.0: 4.6.26614.01 @BuiltBy: dlab14-DDVSOWINAGE018 @Commit: a536e7eec55c538c94639cefe295aa672996bf9b, Microsoft .NET Framework
+        // 2.1: 4.6.27817.01 @BuiltBy: dlab14-DDVSOWINAGE101 @Branch: release/2.1 @SrcCode: https://github.com/dotnet/coreclr/tree/6f78fbb3f964b4f407a2efb713a186384a167e5c, Microsoft .NET Framework
+        // 2.2: 4.6.27817.03 @BuiltBy: dlab14-DDVSOWINAGE101 @Branch: release/2.2 @SrcCode: https://github.com/dotnet/coreclr/tree/ce1d090d33b400a25620c0145046471495067cc7, Microsoft .NET Framework
+        // 3.0: 3.0.0-preview8.19379.2+ac25be694a5385a6a1496db40de932df0689b742, Microsoft .NET Core
+        // 5.0: 5.0.0-alpha1.19413.7+0ecefa44c9d66adb8a997d5778dc6c246ad393a7, Microsoft .NET Core
+        internal static bool TryGetVersionFromProductInfo(string productVersion, string productName, out Version version)
+        {
+            if (!string.IsNullOrEmpty(productVersion) &amp;&amp; !string.IsNullOrEmpty(productName))
+            {
+                if (productName.IndexOf(&quot;.NET Core&quot;, StringComparison.OrdinalIgnoreCase) &gt;= 0)
+                {
+                    string parsableVersion = GetParsableVersionPart(productVersion);
+                    if (Version.TryParse(productVersion, out version) || Version.TryParse(parsableVersion, out version))
+                    {
+                        return true;
+                    }
+                }
+
+                // yes, .NET Core 2.X has a product name == .NET Framework...
+                if (productName.IndexOf(&quot;.NET Framework&quot;, StringComparison.OrdinalIgnoreCase) &gt;= 0)
+                {
+                    const string releaseVersionPrefix = &quot;release/&quot;;
+                    int releaseVersionIndex = productVersion.IndexOf(releaseVersionPrefix, StringComparison.Ordinal);
+                    if (releaseVersionIndex &gt; 0)
+                    {
+                        string releaseVersion = GetParsableVersionPart(productVersion.Substring(releaseVersionIndex + releaseVersionPrefix.Length));
+
+                        return Version.TryParse(releaseVersion, out version);
+                    }
+                }
+            }
+
+            version = null;
+            return false;
+        }
+
+        // sample input:
+        // .NETCoreApp,Version=v2.0
+        // .NETCoreApp,Version=v2.1
+        internal static bool TryGetVersionFromFrameworkName(string frameworkName, out Version version)
+        {
+            const string versionPrefix = &quot;.NETCoreApp,Version=v&quot;;
+            if (!string.IsNullOrEmpty(frameworkName) &amp;&amp; frameworkName.StartsWith(versionPrefix))
+            {
+                string frameworkVersion = GetParsableVersionPart(frameworkName.Substring(versionPrefix.Length));
+
+                return Version.TryParse(frameworkVersion, out version);
+            }
+
+            version = null;
+            return false;
+        }
+
+        // Version.TryParse does not handle thing like 3.0.0-WORD
+        private static string GetParsableVersionPart(string fullVersionName) =&gt; new string(fullVersionName.TakeWhile(c =&gt; char.IsDigit(c) || c == &#39;.&#39;).ToArray());
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[20,39,20,43,1],[20,48,20,84,1],[22,49,22,134,1],[25,16,26,75,1],[32,16,33,73,0],[35,54,35,142,0],[41,13,41,34,1],[48,13,48,24,1],[50,17,50,41,0],[52,18,52,38,1],[54,17,54,50,0],[56,18,56,32,1],[58,17,58,44,1],[60,18,60,31,0],[62,17,62,73,0],[65,13,65,28,0],[72,13,72,86,0],[73,13,73,81,0],[74,13,74,44,0],[79,13,79,64,0],[80,13,80,126,0],[81,13,81,41,0],[83,17,83,81,0],[84,17,84,37,0],[86,21,86,56,0],[86,58,86,89,0],[87,21,87,58,0],[89,25,89,99,0],[90,25,90,112,0],[91,25,91,53,0],[93,29,93,124,0],[98,17,98,42,0],[101,13,101,28,0],[106,13,106,99,0],[107,13,107,71,0],[107,71,107,87,0],[107,87,107,100,0],[108,13,108,72,0],[110,13,110,55,0],[116,13,116,70,0],[118,17,118,32,0],[121,13,121,68,0],[123,17,123,32,0],[126,13,126,70,0],[128,17,128,30,0],[131,13,131,70,0],[133,17,133,32,0],[136,13,136,89,0],[141,13,141,91,1],[143,17,143,42,1],[147,17,147,87,0],[149,17,149,54,0],[159,13,159,48,1],[161,17,161,47,1],[162,17,162,29,1],[165,13,165,111,0],[166,13,166,82,0],[168,17,168,29,0],[172,13,172,105,0],[173,13,173,130,0],[175,17,175,29,0],[178,13,178,127,0],[179,13,179,76,0],[181,17,181,29,0],[184,13,184,38,0],[186,17,187,128,0],[190,13,190,28,0],[191,13,191,26,0],[199,13,199,156,0],[201,17,201,29,0],[204,13,204,28,0],[205,13,205,26,0],[216,13,216,93,0],[218,17,218,95,0],[220,21,220,85,0],[221,21,221,121,0],[223,25,223,37,0],[228,17,228,100,0],[231,21,231,118,0],[232,21,232,49,0],[234,25,234,149,0],[236,25,236,78,0],[241,13,241,28,0],[242,13,242,26,0],[251,13,251,97,0],[253,17,253,113,0],[255,17,255,72,0],[258,13,258,28,0],[259,13,259,26,0],[263,81,263,123,0],[263,123,263,150,0],[263,150,263,162,0]]);
+    </script>
+  </body>
+</html>

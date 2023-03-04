@@ -38,7 +38,7 @@ jobs:
     - name: Build Netizine.OpenAI
       run: dotnet build --no-restore
     - name: Install OpenAI.Mock
-      run: dotnet tool install OpenAI.Mock --global
+      run: dotnet tool install --global OpenAI.Mock 
     - name: Run Tests
       run: dotnet test --configuration Release
     - name: Pack Nuget

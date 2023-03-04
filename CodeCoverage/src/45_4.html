@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Entities\Edits\EditTest.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Tests.Entities.Edits
+{
+    using Newtonsoft.Json;
+    using Xunit;
+
+    public class EditTest : BaseOpenAITest
+    {
+        public EditTest(OpenAIMockFixture openAIMockFixture)
+            : base(openAIMockFixture)
+        {
+        }
+
+        [Fact]
+        public void Deserialize()
+        {
+            string json = &quot;{\&quot;object\&quot;:\&quot;edit\&quot;,\&quot;created\&quot;:1673268388,\&quot;choices\&quot;:[{\&quot;text\&quot;:\&quot;What day of the week is it?\\n\&quot;,\&quot;index\&quot;:0}],\&quot;usage\&quot;:{\&quot;prompt_tokens\&quot;:26,\&quot;completion_tokens\&quot;:28,\&quot;total_tokens\&quot;:54}}&quot;;
+            var edit = JsonConvert.DeserializeObject&lt;Edit&gt;(json);
+            Assert.NotNull(edit);
+            Assert.IsType&lt;Edit&gt;(edit);
+            Assert.Equal(&quot;edit&quot;, edit.Object);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[9,15,9,38,1],[11,9,11,10,1],[16,13,16,224,1],[17,13,17,66,1],[18,13,18,34,1],[19,13,19,39,1],[20,13,20,47,1],[21,9,21,10,1]]);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Entities\Completions\ChatCompletion.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    using System;
+    using System.Collections.Generic;
+
+    using Newtonsoft.Json;
+    using OpenAI.Infrastructure;
+
+    /// &lt;summary&gt;
+    /// The chat completion model will return one or more predicted chat completions, and can also return the probabilities of alternative tokens at each position.
+    /// &lt;/summary&gt;
+    public class ChatCompletion : OpenAIEntity&lt;ChatCompletion&gt;, IHasId, IHasObject
+    {
+        /// &lt;summary&gt;
+        /// Unique identifier for the object.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;id&quot;)]
+        public string Id { get; set; }
+
+        /// &lt;summary&gt;
+        /// String representing the object&#39;s type. Objects of the same type share the same value.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;object&quot;)]
+        public string Object { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the created date and time.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;created&quot;)]
+        [JsonConverter(typeof(UnixDateTimeConverter))]
+        public DateTime? Created { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the model.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;model&quot;)]
+        public string Model { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the choices.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;choices&quot;)]
+        public List&lt;ChatChoice&gt; Choices { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the usage.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;usage&quot;)]
+        public Usage Usage { get; set; }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[18,28,18,32,0],[18,33,18,37,1],[24,32,24,36,1],[24,37,24,41,1],[31,36,31,40,1],[31,41,31,45,1],[37,31,37,35,0],[37,36,37,40,1],[43,43,43,47,1],[43,48,43,52,1],[49,30,49,34,1],[49,35,49,39,1]]);
+    </script>
+  </body>
+</html>

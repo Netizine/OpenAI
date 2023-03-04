@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Wholesome\CorrectJsonConvertersForTypes.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Tests
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Text;
+    using Newtonsoft.Json;
+    using OpenAI;
+    using OpenAI.Infrastructure;
+    using Xunit;
+
+    /// &lt;summary&gt;
+    /// This wholesome test ensures that properties with types that require custom converters to
+    /// use the correct custom converter.
+    /// &lt;/summary&gt;
+    public class CorrectJsonConvertersForTypes : WholesomeTest
+    {
+        private const string AssertionMessage =
+            &quot;Found at least one property with a missing or incorrect [JsonConverter] attribute.&quot;;
+
+        [Fact]
+        public void Check()
+        {
+            var results = new List&lt;string&gt;();
+
+            // Get all classes that derive from OpenAIEntity or implement INestedOptions
+            var openAIClasses = GetSubclassesOf(typeof(OpenAIEntity));
+            openAIClasses.AddRange(GetClassesWithInterface(typeof(INestedOptions)));
+
+            foreach (var openAIClass in openAIClasses)
+            {
+                foreach (var property in openAIClass.GetProperties())
+                {
+                    var propType = property.PropertyType;
+                    if (Nullable.GetUnderlyingType(propType) != null)
+                    {
+                        propType = Nullable.GetUnderlyingType(propType);
+                    }
+
+                    // Skip properties that don&#39;t have a `JsonProperty` attribute
+                    var jsonPropertyAttribute = property.GetCustomAttribute&lt;JsonPropertyAttribute&gt;();
+                    if (jsonPropertyAttribute == null)
+                    {
+                        continue;
+                    }
+
+                    Type expectedConverterType = null;
+                    Type[] expectedGenericTypeArguments = null;
+                    if (propType == typeof(DateTime))
+                    {
+                        expectedConverterType = typeof(UnixDateTimeConverter);
+                    }
+                    else if (typeof(IAnyOf).GetTypeInfo().IsAssignableFrom(propType.GetTypeInfo()))
+                    {
+                        expectedConverterType = typeof(AnyOfConverter);
+                    }
+                    else if (propType.GetTypeInfo().IsInterface)
+                    {
+                        expectedConverterType = typeof(OpenAIObjectConverter);
+                    }
+
+                    var expectedConverterName = GetConverterName(
+                        expectedConverterType,
+                        expectedGenericTypeArguments);
+
+                    Type actualConverterType = null;
+                    Type[] actualGenericTypeArguments = null;
+                    var jsonConverterAttribute = property.GetCustomAttribute&lt;JsonConverterAttribute&gt;();
+                    if (jsonConverterAttribute != null)
+                    {
+                        actualConverterType = jsonConverterAttribute.ConverterType;
+                        actualGenericTypeArguments = actualConverterType.GenericTypeArguments;
+                    }
+
+                    var actualConverterName = GetConverterName(
+                        actualConverterType,
+                        actualGenericTypeArguments);
+
+                    if (expectedConverterName == actualConverterName)
+                    {
+                        continue;
+                    }
+
+                    results.Add(
+                        $&quot;{openAIClass.Name}.{property.Name}, expected = {expectedConverterName}, &quot;
+                            + $&quot;actual = {actualConverterName}&quot;);
+                }
+            }
+
+            AssertEmpty(results, AssertionMessage);
+        }
+
+        private static string GetConverterName(Type type, Type[] genericTypeArguments)
+        {
+            if (type == null)
+            {
+                return &quot;null&quot;;
+            }
+
+            var sb = new StringBuilder();
+            sb.Append(type.Name);
+
+            if (genericTypeArguments != null &amp;&amp; genericTypeArguments.Length &gt; 0)
+            {
+                sb.Append(&quot;&lt;&quot;);
+                sb.Append(string.Join(&quot;, &quot;, genericTypeArguments.Select(t =&gt; t.Name)));
+                sb.Append(&quot;&gt;&quot;);
+            }
+
+            return sb.ToString();
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[25,13,25,46,1],[28,13,28,71,1],[29,13,29,85,1],[31,22,31,37,1],[31,38,31,40,1],[31,41,31,54,1],[33,26,33,38,1],[33,39,33,41,1],[33,42,33,69,1],[35,21,35,58,1],[36,21,36,70,1],[38,25,38,73,1],[42,21,42,102,1],[43,21,43,55,1],[48,21,48,55,1],[49,21,49,64,1],[50,21,50,54,1],[52,25,52,79,1],[54,26,54,100,1],[56,25,56,72,1],[58,26,58,65,1],[60,25,60,79,0],[63,21,65,55,1],[67,21,67,53,1],[68,21,68,62,1],[69,21,69,104,1],[70,21,70,56,1],[72,25,72,84,1],[73,25,73,95,1],[76,21,78,53,1],[80,21,80,70,1],[85,21,87,66,0],[91,13,91,52,1],[92,9,92,10,1],[96,13,96,30,1],[98,17,98,31,1],[101,13,101,42,1],[102,13,102,34,1],[104,13,104,81,1],[106,17,106,32,0],[107,17,107,78,0],[107,78,107,84,0],[107,84,107,88,0],[108,17,108,32,0],[111,13,111,34,1]]);
+    </script>
+  </body>
+</html>

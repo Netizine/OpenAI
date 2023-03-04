@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Entities\OpenAIList.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    using System.Collections;
+    using System.Collections.Generic;
+    using Newtonsoft.Json;
+    using OpenAI.Infrastructure;
+
+    /// &lt;summary&gt;
+    /// The OpenAI list.
+    /// &lt;/summary&gt;
+    /// &lt;typeparam name=&quot;T&quot;&gt;The type parameter.&lt;/typeparam&gt;
+    [JsonObject]
+    public class OpenAIList&lt;T&gt; : OpenAIEntity&lt;OpenAIList&lt;T&gt;&gt;, IHasObject, IEnumerable&lt;T&gt;
+    {
+        /// &lt;summary&gt;
+        /// A string describing the object type returned.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;object&quot;)]
+        public string Object { get; set; }
+
+        /// &lt;summary&gt;
+        /// A list containing the actual response elements, paginated by any request parameters.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;data&quot;, ItemConverterType = typeof(OpenAIObjectConverter))]
+        public List&lt;T&gt; Data { get; set; }
+
+        /// &lt;summary&gt;
+        /// Returns an enumerator that iterates through the collection.
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;
+        /// An enumerator that can be used to iterate through the collection.
+        /// &lt;/returns&gt;
+        public IEnumerator&lt;T&gt; GetEnumerator()
+        {
+            return this.Data.GetEnumerator();
+        }
+
+        /// &lt;summary&gt;
+        /// Returns an enumerator that iterates through a collection.
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;
+        /// An &lt;see cref=&quot;T:System.Collections.IEnumerator&quot; /&gt; object that can be used to iterate through the collection.
+        /// &lt;/returns&gt;
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.Data.GetEnumerator();
+        }
+
+        /// &lt;summary&gt;
+        /// Reverse the order of the items in Data to support backward iteration.
+        /// &lt;/summary&gt;
+        public void Reverse()
+        {
+            this.Data.Reverse();
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[19,32,19,36,1],[19,37,19,41,1],[25,31,25,35,1],[25,36,25,40,1],[35,13,35,46,0],[46,13,46,46,0],[54,13,54,33,0],[55,9,55,10,0]]);
+    </script>
+  </body>
+</html>

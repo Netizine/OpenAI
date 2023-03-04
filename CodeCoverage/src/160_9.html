@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Services\Files\FileService.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    using System.Threading;
+    using System.Threading.Tasks;
+
+#pragma warning disable CS1584 // XML comment has syntactically incorrect cref attribute
+#pragma warning disable CS1658 // Warning is overriding an error
+    /// &lt;summary&gt;
+    /// Files are used to upload documents that can be used with features like &lt;see href=&quot;https://beta.openai.com/docs/api-reference/fine-tunes&quot;&gt;Fine-tuning&lt;/see&gt;Fine-tuning.
+    /// Implements the &lt;see cref=&quot;OpenAI.Service{OpenAI.File}&quot; /&gt;.
+    /// Implements the &lt;see cref=&quot;OpenAI.IListable{OpenAI.File, OpenAI.FileListOptions}&quot; /&gt;.
+    /// Implements the &lt;see cref=&quot;OpenAI.IRetrievable{OpenAI.File, OpenAI.FileGetOptions}&quot; /&gt;.
+    /// Implements the &lt;see cref=&quot;OpenAI.ICreatable{OpenAI.File, OpenAI.FileCreateOptions}&quot; /&gt;.
+    /// Implements the &lt;see cref=&quot;OpenAI.IDeletable{OpenAI.File, OpenAI.FileDeleteOptions}&quot; /&gt;.
+    /// &lt;/summary&gt;
+    /// &lt;seealso cref=&quot;OpenAI.Service{OpenAI.File}&quot; /&gt;
+    /// &lt;seealso cref=&quot;OpenAI.IListable{OpenAI.File, OpenAI.FileListOptions}&quot; /&gt;
+    /// &lt;seealso cref=&quot;OpenAI.IRetrievable{OpenAI.File, OpenAI.FileGetOptions}&quot; /&gt;
+    /// &lt;seealso cref=&quot;OpenAI.ICreatable{OpenAI.File, OpenAI.FileCreateOptions}&quot; /&gt;
+    /// &lt;seealso cref=&quot;OpenAI.IDeletable{OpenAI.File, OpenAI.FileDeleteOptions}&quot; /&gt;
+    public class FileService : Service&lt;File&gt;,
+#pragma warning restore CS1658 // Warning is overriding an error
+#pragma warning restore CS1584 // XML comment has syntactically incorrect cref attribute
+        IListable&lt;File, FileListOptions&gt;,
+        IRetrievable&lt;File, FileGetOptions&gt;,
+        ICreatable&lt;File, FileCreateOptions&gt;,
+        IDeletable&lt;File, FileDeleteOptions&gt;
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;FileService&quot;/&gt; class.
+        /// &lt;/summary&gt;
+        // ReSharper disable once UnusedMember.Global
+        public FileService()
+            : base(null)
+        {
+        }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;FileService&quot;/&gt; class.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;client&quot;&gt;The client used by the service to send requests.&lt;/param&gt;
+        public FileService(IOpenAIClient client)
+            : base(client)
+        {
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the base path.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;The base path.&lt;/value&gt;
+        public override string BasePath =&gt; &quot;/v1/files&quot;;
+
+        /// &lt;summary&gt;
+        /// Gets the file by the specified identifier.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;returns&gt;File.&lt;/returns&gt;
+        public virtual File Get(string id)
+        {
+            return this.Get(id, null, null);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the file by the specified identifier.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;fileGetOptions&quot;&gt;The file get options.&lt;/param&gt;
+        /// &lt;returns&gt;File.&lt;/returns&gt;
+        public virtual File Get(string id, FileGetOptions fileGetOptions)
+        {
+            return this.Get(id, fileGetOptions, null);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the file by the specified identifier.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;File.&lt;/returns&gt;
+        public virtual File Get(string id, RequestOptions requestOptions)
+        {
+            return this.Get(id, null, requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the file by the specified identifier.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;fileGetOptions&quot;&gt;The file get options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;File.&lt;/returns&gt;
+        public virtual File Get(string id, FileGetOptions fileGetOptions, RequestOptions requestOptions)
+        {
+            return this.GetEntity(id, fileGetOptions, requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the file by the specified identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;File&gt; GetAsync(string id)
+        {
+            return this.GetAsync(id, null, null, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the file by the specified identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;File&gt; GetAsync(string id, CancellationToken cancellationToken)
+        {
+            return this.GetAsync(id, null, null, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the file by the specified identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;fileGetOptions&quot;&gt;The file get options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;File&gt; GetAsync(string id, FileGetOptions fileGetOptions)
+        {
+            return this.GetAsync(id, fileGetOptions, null, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the file by the specified identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;fileGetOptions&quot;&gt;The file get options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;File&gt; GetAsync(string id, FileGetOptions fileGetOptions, CancellationToken cancellationToken)
+        {
+            return this.GetAsync(id, fileGetOptions, null, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the file by the specified identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;File&gt; GetAsync(string id, RequestOptions requestOptions)
+        {
+            return this.GetAsync(id, null, requestOptions, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the file by the specified identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;File&gt; GetAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.GetAsync(id, null, requestOptions, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the file by the specified identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;fileGetOptions&quot;&gt;The file get options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;File&gt; GetAsync(string id, FileGetOptions fileGetOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.GetEntityAsync(id, fileGetOptions, requestOptions, cancellationToken);
+        }
+
+        public virtual OpenAIList&lt;File&gt; List()
+        {
+            return this.List(null, null);
+        }
+
+        public virtual OpenAIList&lt;File&gt; List(FileListOptions fileListOptions)
+        {
+            return this.List(fileListOptions, null);
+        }
+
+        public virtual OpenAIList&lt;File&gt; List(RequestOptions requestOptions)
+        {
+            return this.List(null, requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the specified options.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;fileListOptions&quot;&gt;The file list options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;OpenAIList&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public virtual OpenAIList&lt;File&gt; List(FileListOptions fileListOptions, RequestOptions requestOptions)
+        {
+            return this.ListEntities(fileListOptions, requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the files by the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;Task&amp;lt;OpenAIList&amp;lt;File&amp;gt;&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;OpenAIList&lt;File&gt;&gt; ListAsync()
+        {
+            return this.ListAsync(null, null, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the files by the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;OpenAIList&amp;lt;File&amp;gt;&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;OpenAIList&lt;File&gt;&gt; ListAsync(CancellationToken cancellationToken)
+        {
+            return this.ListAsync(null, null, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the files by the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;fileListOptions&quot;&gt;The file list options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;OpenAIList&amp;lt;File&amp;gt;&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;OpenAIList&lt;File&gt;&gt; ListAsync(FileListOptions fileListOptions)
+        {
+            return this.ListAsync(fileListOptions, null, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the files by the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;fileListOptions&quot;&gt;The file list options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;OpenAIList&amp;lt;File&amp;gt;&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;OpenAIList&lt;File&gt;&gt; ListAsync(FileListOptions fileListOptions, CancellationToken cancellationToken)
+        {
+            return this.ListAsync(fileListOptions, null, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the files by the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;OpenAIList&amp;lt;File&amp;gt;&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;OpenAIList&lt;File&gt;&gt; ListAsync(RequestOptions requestOptions)
+        {
+            return this.ListAsync(null, requestOptions, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the files by the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;OpenAIList&amp;lt;File&amp;gt;&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;OpenAIList&lt;File&gt;&gt; ListAsync(RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.ListAsync(null, requestOptions, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the files by the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;fileListOptions&quot;&gt;The file list options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;OpenAIList&amp;lt;File&amp;gt;&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;OpenAIList&lt;File&gt;&gt; ListAsync(FileListOptions fileListOptions, RequestOptions requestOptions)
+        {
+            return this.ListAsync(fileListOptions, requestOptions, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Lists the files by the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;fileListOptions&quot;&gt;The file list options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;OpenAIList&amp;lt;File&amp;gt;&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;OpenAIList&lt;File&gt;&gt; ListAsync(FileListOptions fileListOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.ListEntitiesAsync(fileListOptions, requestOptions, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Creates a entity with the specified options.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;createOptions&quot;&gt;The create options.&lt;/param&gt;
+        /// &lt;returns&gt;The created entity.&lt;/returns&gt;
+        public File Create(FileCreateOptions createOptions)
+        {
+            return this.Create(createOptions, null);
+        }
+
+        /// &lt;summary&gt;
+        /// Creates a entity with the specified options.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;createOptions&quot;&gt;The create options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;The created entity.&lt;/returns&gt;
+        public virtual File Create(FileCreateOptions createOptions, RequestOptions requestOptions)
+        {
+            return this.CreateEntity(createOptions, requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Creates a entity with the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;fileCreateOptions&quot;&gt;The file create options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public Task&lt;File&gt; CreateAsync(FileCreateOptions fileCreateOptions)
+        {
+            return this.CreateAsync(fileCreateOptions, null, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Creates a entity with the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;fileCreateOptions&quot;&gt;The file create options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public Task&lt;File&gt; CreateAsync(FileCreateOptions fileCreateOptions, CancellationToken cancellationToken)
+        {
+            return this.CreateAsync(fileCreateOptions, null, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Creates a entity with the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;fileCreateOptions&quot;&gt;The file create options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public Task&lt;File&gt; CreateAsync(FileCreateOptions fileCreateOptions, RequestOptions requestOptions)
+        {
+            return this.CreateAsync(fileCreateOptions, requestOptions, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Creates a entity with the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;fileCreateOptions&quot;&gt;The file create options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;File&gt; CreateAsync(FileCreateOptions fileCreateOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.CreateEntityAsync(fileCreateOptions, requestOptions, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the file by the specified identifier.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;returns&gt;File.&lt;/returns&gt;
+        public File Delete(string id)
+        {
+            return this.DeleteEntity(id, null, null);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the file by the specified identifier.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;fileDeleteOptions&quot;&gt;The file delete options.&lt;/param&gt;
+        /// &lt;returns&gt;File.&lt;/returns&gt;
+        public File Delete(string id, FileDeleteOptions fileDeleteOptions)
+        {
+            return this.DeleteEntity(id, fileDeleteOptions, null);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the file by the specified identifier.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;File.&lt;/returns&gt;
+        public File Delete(string id, RequestOptions requestOptions)
+        {
+            return this.DeleteEntity(id, null, requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the file by the specified identifier.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;fileDeleteOptions&quot;&gt;The file delete options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;File.&lt;/returns&gt;
+        public virtual File Delete(string id, FileDeleteOptions fileDeleteOptions, RequestOptions requestOptions)
+        {
+            return this.DeleteEntity(id, fileDeleteOptions, requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the file by the specified identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public Task&lt;File&gt; DeleteAsync(string id)
+        {
+            return this.DeleteAsync(id, null, null, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the file by the specified identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public Task&lt;File&gt; DeleteAsync(string id, CancellationToken cancellationToken)
+        {
+            return this.DeleteAsync(id, null, null, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the file by the specified identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;fileDeleteOptions&quot;&gt;The file delete options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public Task&lt;File&gt; DeleteAsync(string id, FileDeleteOptions fileDeleteOptions)
+        {
+            return this.DeleteAsync(id, fileDeleteOptions, null, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the file by the specified identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;fileDeleteOptions&quot;&gt;The file delete options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public Task&lt;File&gt; DeleteAsync(string id, FileDeleteOptions fileDeleteOptions, CancellationToken cancellationToken)
+        {
+            return this.DeleteAsync(id, fileDeleteOptions, null, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the file by the specified identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public Task&lt;File&gt; DeleteAsync(string id, RequestOptions requestOptions)
+        {
+            return this.DeleteAsync(id, null, requestOptions, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the file by the specified identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public Task&lt;File&gt; DeleteAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.DeleteAsync(id, null, requestOptions, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the file by the specified identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;fileDeleteOptions&quot;&gt;The file delete options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public Task&lt;File&gt; DeleteAsync(string id, FileDeleteOptions fileDeleteOptions, RequestOptions requestOptions)
+        {
+            return this.DeleteAsync(id, fileDeleteOptions, requestOptions, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Deletes the file by the specified identifier asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;The identifier.&lt;/param&gt;
+        /// &lt;param name=&quot;fileDeleteOptions&quot;&gt;The file delete options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;File&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;File&gt; DeleteAsync(string id, FileDeleteOptions fileDeleteOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.DeleteEntityAsync(id, fileDeleteOptions, requestOptions, cancellationToken);
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[34,15,34,25,0],[36,9,36,10,0],[43,15,43,27,1],[45,9,45,10,1],[51,44,51,55,1],[60,13,60,45,1],[71,13,71,55,0],[82,13,82,55,0],[94,13,94,71,1],[104,13,104,59,1],[115,13,115,69,0],[126,13,126,69,0],[138,13,138,79,0],[149,13,149,69,0],[161,13,161,79,0],[174,13,174,95,1],[179,13,179,42,0],[184,13,184,53,1],[189,13,189,52,0],[200,13,200,71,1],[209,13,209,56,0],[219,13,219,66,0],[229,13,229,67,1],[240,13,240,77,0],[250,13,250,66,0],[261,13,261,76,0],[272,13,272,77,0],[284,13,284,95,1],[294,13,294,53,1],[305,13,305,69,1],[315,13,315,71,1],[326,13,326,81,0],[337,13,337,81,0],[349,13,349,97,1],[359,13,359,54,1],[370,13,370,67,0],[381,13,381,64,0],[393,13,393,77,0],[403,13,403,62,1],[414,13,414,72,0],[425,13,425,75,0],[437,13,437,85,0],[448,13,448,72,0],[460,13,460,82,0],[472,13,472,85,0],[485,13,485,101,1]]);
+    </script>
+  </body>
+</html>

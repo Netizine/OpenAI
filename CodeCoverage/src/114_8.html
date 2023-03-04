@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Infrastructure\FormEncoding\FormEncoder.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Infrastructure.FormEncoding
+{
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Reflection;
+    using Newtonsoft.Json;
+
+    /// &lt;summary&gt;
+    /// This class provides methods to serialize various objects with
+    /// &lt;c&gt;application/x-www-form-urlencoded&lt;/c&gt; encoding. This is used to encode request
+    /// parameters to be sent to OpenAI&#39;s API.
+    /// &lt;/summary&gt;
+    internal static class FormEncoder
+    {
+        /// &lt;summary&gt;Creates an &lt;see cref=&quot;HttpContent&quot;/&gt; for a given options class.&lt;/summary&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options class.&lt;/param&gt;
+        /// &lt;returns&gt;The &lt;see cref=&quot;HttpContent&quot;/&gt;.&lt;/returns&gt;
+        public static HttpContent CreateHttpContent(BaseOptions options)
+        {
+            // If options is null, we create an empty FormUrlEncodedContent because we still
+            // want to send the Content-Type header.
+            if (options == null)
+            {
+                return new FormUrlEncodedContent(new List&lt;KeyValuePair&lt;string, string&gt;&gt;());
+            }
+
+            var optionsType = options.GetType();
+            if (optionsType == typeof(CompletionCreateOptions) || optionsType == typeof(ChatGPT3CompletionCreateOptions) || optionsType == typeof(EditCreateOptions) || optionsType == typeof(ImageCreateOptions) || optionsType == typeof(EmbeddingCreateOptions) || optionsType == typeof(FineTuneCreateOptions) || optionsType == typeof(ModerationGetOptions))
+            {
+                return new JsonContent(options);
+            }
+
+            if (optionsType == typeof(EditImageCreateOptions))
+            {
+                return EditImage(options);
+            }
+
+            if (optionsType == typeof(ImageVariationCreateOption))
+            {
+                return CreateImageVariant(options);
+            }
+
+            if (optionsType == typeof(FileCreateOptions))
+            {
+                return CreateFile(options);
+            }
+
+            // Fall back if we don&#39;t have a special case for this type.
+            var flatParams = FlattenParamsValue(options, null);
+
+            // If all parameters have been encoded as strings, then the content can be represented
+            // with application/x-www-form-url-encoded encoding. Otherwise, use
+            // multipart/form-data encoding.
+            if (flatParams.All(kvp =&gt; kvp.Value is string))
+            {
+                var flatParamsString = flatParams
+                    .Select(kvp =&gt; new KeyValuePair&lt;string, string&gt;(kvp.Key, kvp.Value as string));
+                return new FormUrlEncodedContent(flatParamsString);
+            }
+
+            return new MultipartFormDataContent(flatParams);
+        }
+
+        /// &lt;summary&gt;Creates the HTTP query string for a given options class.&lt;/summary&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options class.&lt;/param&gt;
+        /// &lt;returns&gt;The query string.&lt;/returns&gt;
+        public static string CreateQueryString(BaseOptions options)
+        {
+            var flatParams = FlattenParamsValue(options, null)
+                .Where(kvp =&gt; kvp.Value is string)
+                .Select(kvp =&gt; new KeyValuePair&lt;string, string&gt;(
+                    kvp.Key,
+                    kvp.Value as string));
+            return CreateQueryString(flatParams);
+        }
+
+        /// &lt;summary&gt;Creates the HTTP query string for a collection of name/value tuples.&lt;/summary&gt;
+        /// &lt;param name=&quot;nameValueCollection&quot;&gt;The collection of name/value tuples.&lt;/param&gt;
+        /// &lt;returns&gt;The query string.&lt;/returns&gt;
+        public static string CreateQueryString(IEnumerable&lt;KeyValuePair&lt;string, string&gt;&gt; nameValueCollection)
+        {
+            return string.Join(
+                &quot;&amp;&quot;,
+                nameValueCollection.Select(kvp =&gt; $&quot;{UrlEncode(kvp.Key)}={UrlEncode(kvp.Value)}&quot;));
+        }
+
+        /// &lt;summary&gt;URL-encodes a string.&lt;/summary&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The string to URL-encode.&lt;/param&gt;
+        /// &lt;returns&gt;The URL-encoded string.&lt;/returns&gt;
+        private static string UrlEncode(string value)
+        {
+            if (value == null)
+            {
+                return null;
+            }
+
+            // Don&#39;t use strict form encoding by changing the square bracket control
+            // characters back to their literals. This is fine by the server, and
+            // makes these parameter strings easier to read.
+            return WebUtility.UrlEncode(value)
+                ?.Replace(&quot;%5B&quot;, &quot;[&quot;)
+                .Replace(&quot;%5D&quot;, &quot;]&quot;);
+        }
+
+        /// &lt;summary&gt;
+        /// Returns a list of parameters for a given value. The value can be basically anything, as
+        /// long as it can be encoded in some way.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The value for which to create the list of parameters.&lt;/param&gt;
+        /// &lt;param name=&quot;keyPrefix&quot;&gt;The key under which new keys should be nested, if any.&lt;/param&gt;
+        /// &lt;returns&gt;The list of parameters.&lt;/returns&gt;
+        private static List&lt;KeyValuePair&lt;string, object&gt;&gt; FlattenParamsValue(object value, string keyPrefix)
+        {
+            List&lt;KeyValuePair&lt;string, object&gt;&gt; flatParams;
+
+#pragma warning disable IDE0066 // Convert switch statement to expression
+            switch (value)
+            {
+                case null:
+                    flatParams = SingleParam(keyPrefix, string.Empty);
+                    break;
+
+                case IAnyOf anyOf:
+                    flatParams = FlattenParamsAnyOf(anyOf, keyPrefix);
+                    break;
+
+                case INestedOptions options:
+                    flatParams = FlattenParamsOptions(options, keyPrefix);
+                    break;
+
+                case IDictionary dictionary:
+                    flatParams = FlattenParamsDictionary(dictionary, keyPrefix);
+                    break;
+
+                case string s:
+                    flatParams = SingleParam(keyPrefix, s);
+                    break;
+
+                case Stream s:
+                    flatParams = SingleParam(keyPrefix, s);
+                    break;
+
+                case IEnumerable enumerable:
+                    flatParams = FlattenParamsList(enumerable, keyPrefix);
+                    break;
+
+                case DateTime dateTime:
+                    flatParams = SingleParam(
+                        keyPrefix,
+                        ((DateTimeOffset)dateTime).ToUnixTimeSeconds().ToString(CultureInfo.InvariantCulture));
+                    break;
+
+                case Enum e:
+                    flatParams = SingleParam(keyPrefix, JsonUtils.SerializeObject(e).Trim(&#39;&quot;&#39;));
+                    break;
+
+                default:
+                    flatParams = SingleParam(
+                        keyPrefix,
+                        string.Format(CultureInfo.InvariantCulture, &quot;{0}&quot;, value));
+                    break;
+            }
+#pragma warning restore IDE0066 // Convert switch statement to expression
+
+            return flatParams;
+        }
+
+        /// &lt;summary&gt;
+        /// Returns a list of parameters for a given &lt;see cref=&quot;IAnyOf&quot;/&gt; instance.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;anyOf&quot;&gt;The instance for which to create the list of parameters.&lt;/param&gt;
+        /// &lt;param name=&quot;keyPrefix&quot;&gt;The key under which new keys should be nested, if any.&lt;/param&gt;
+        /// &lt;returns&gt;The list of parameters.&lt;/returns&gt;
+        private static List&lt;KeyValuePair&lt;string, object&gt;&gt; FlattenParamsAnyOf(
+            IAnyOf anyOf,
+            string keyPrefix)
+        {
+            List&lt;KeyValuePair&lt;string, object&gt;&gt; flatParams = new List&lt;KeyValuePair&lt;string, object&gt;&gt;();
+
+            // If the value contained within the `AnyOf` instance is null, we don&#39;t encode it in the
+            // request. We do this to mimic the behavior of regular (non-`AnyOf`) properties in
+            // options classes, which are skipped by the encoder when they have a null value
+            // because it&#39;s the default value (cf. FlattenParamsOptions).
+            if (anyOf.Value == null)
+            {
+                return flatParams;
+            }
+
+            flatParams.AddRange(FlattenParamsValue(anyOf.Value, keyPrefix));
+
+            return flatParams;
+        }
+
+        /// &lt;summary&gt;
+        /// Returns a list of parameters for a given options class. If a key prefix is provided, the
+        /// keys for the new parameters will be nested under the key prefix. E.g. if the key prefix
+        /// `foo` is passed and the options class contains a parameter `bar`, then a parameter
+        /// with key `foo[bar]` will be returned.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The options class for which to create the list of parameters.&lt;/param&gt;
+        /// &lt;param name=&quot;keyPrefix&quot;&gt;The key under which new keys should be nested, if any.&lt;/param&gt;
+        /// &lt;returns&gt;The list of parameters.&lt;/returns&gt;
+        private static List&lt;KeyValuePair&lt;string, object&gt;&gt; FlattenParamsOptions(
+            INestedOptions options,
+            string keyPrefix)
+        {
+            List&lt;KeyValuePair&lt;string, object&gt;&gt; flatParams = new List&lt;KeyValuePair&lt;string, object&gt;&gt;();
+            if (options == null)
+            {
+                return flatParams;
+            }
+
+            foreach (var property in options.GetType().GetRuntimeProperties())
+            {
+                // `[JsonExtensionData]` tells the serializer to write the values contained in
+                // the collection as if they were class properties.
+                var extensionAttribute = property.GetCustomAttribute&lt;JsonExtensionDataAttribute&gt;();
+                if (extensionAttribute != null)
+                {
+                    var extensionValue = property.GetValue(options, null) as IDictionary;
+
+                    flatParams.AddRange(FlattenParamsDictionary(extensionValue, keyPrefix));
+                    continue;
+                }
+
+                // Skip properties not annotated with `[JsonProperty]`
+                var attribute = property.GetCustomAttribute&lt;JsonPropertyAttribute&gt;();
+                if (attribute == null)
+                {
+                    continue;
+                }
+
+                var value = property.GetValue(options, null);
+
+                // Fields on a class which are never set by the user will contain null values (for
+                // reference types), so skip those to avoid encoding them in the request.
+                if (value == null)
+                {
+                    continue;
+                }
+
+                string key = attribute.PropertyName;
+                string newPrefix = NewPrefix(key, keyPrefix);
+
+                flatParams.AddRange(FlattenParamsValue(value, newPrefix));
+            }
+
+            return flatParams;
+        }
+
+        /// &lt;summary&gt;
+        /// Returns a list of parameters for a given dictionary. If a key prefix is provided, the
+        /// keys for the new parameters will be nested under the key prefix. E.g. if the key prefix
+        /// `foo` is passed and the dictionary contains a key `bar`, then a parameter with key
+        /// `foo[bar]` will be returned.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;dictionary&quot;&gt;The dictionary for which to create the list of parameters.&lt;/param&gt;
+        /// &lt;param name=&quot;keyPrefix&quot;&gt;The key under which new keys should be nested, if any.&lt;/param&gt;
+        /// &lt;returns&gt;The list of parameters.&lt;/returns&gt;
+        private static List&lt;KeyValuePair&lt;string, object&gt;&gt; FlattenParamsDictionary(
+            IDictionary dictionary,
+            string keyPrefix)
+        {
+            List&lt;KeyValuePair&lt;string, object&gt;&gt; flatParams = new List&lt;KeyValuePair&lt;string, object&gt;&gt;();
+            if (dictionary == null)
+            {
+                return flatParams;
+            }
+
+            foreach (DictionaryEntry entry in dictionary)
+            {
+                string key = string.Format(CultureInfo.InvariantCulture, &quot;{0}&quot;, entry.Key);
+                object value = entry.Value;
+
+                string newPrefix = NewPrefix(key, keyPrefix);
+
+                flatParams.AddRange(FlattenParamsValue(value, newPrefix));
+            }
+
+            return flatParams;
+        }
+
+        /// &lt;summary&gt;
+        /// Returns a list of parameters for a given list of objects. The parameter keys will be
+        /// indexed under the `keyPrefix` parameter. E.g. if the `keyPrefix` is `foo`, then the
+        /// key for the first element&#39;s will be `foo[0]`, etc.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;list&quot;&gt;The list for which to create the list of parameters.&lt;/param&gt;
+        /// &lt;param name=&quot;keyPrefix&quot;&gt;The key under which new keys should be nested.&lt;/param&gt;
+        /// &lt;returns&gt;The list of parameters.&lt;/returns&gt;
+        private static List&lt;KeyValuePair&lt;string, object&gt;&gt; FlattenParamsList(
+            IEnumerable list,
+            string keyPrefix)
+        {
+            List&lt;KeyValuePair&lt;string, object&gt;&gt; flatParams = new List&lt;KeyValuePair&lt;string, object&gt;&gt;();
+            if (list == null)
+            {
+                return flatParams;
+            }
+
+            int index = 0;
+            foreach (object value in list)
+            {
+                string newPrefix = $&quot;{keyPrefix}[{index}]&quot;;
+                flatParams.AddRange(FlattenParamsValue(value, newPrefix));
+                index += 1;
+            }
+
+            // Because application/x-www-form-urlencoded cannot represent an empty list, convention
+            // is to take the list parameter and just set it to an empty string. (E.g. A regular
+            // list might look like `a[0]=1&amp;b[1]=2`. Emptying it would look like `a=`.)
+            if (!flatParams.Any())
+            {
+                flatParams.Add(new KeyValuePair&lt;string, object&gt;(keyPrefix, string.Empty));
+            }
+
+            return flatParams;
+        }
+
+        /// &lt;summary&gt;Creates a list containing a single parameter.&lt;/summary&gt;
+        /// &lt;param name=&quot;key&quot;&gt;The parameter&#39;s key.&lt;/param&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The parameter&#39;s value.&lt;/param&gt;
+        /// &lt;returns&gt;A list containing the single parameter.&lt;/returns&gt;
+        private static List&lt;KeyValuePair&lt;string, object&gt;&gt; SingleParam(string key, object value)
+        {
+            List&lt;KeyValuePair&lt;string, object&gt;&gt; flatParams = new List&lt;KeyValuePair&lt;string, object&gt;&gt;
+            {
+                new KeyValuePair&lt;string, object&gt;(key, value),
+            };
+            return flatParams;
+        }
+
+        /// &lt;summary&gt;
+        /// Computes the new key prefix, given a key and an existing prefix (if any).
+        /// E.g. if the key is `bar` and the existing prefix is `foo`, then `foo[bar]` is returned.
+        /// If a key already contains nested values, then only the non-nested part is nested under
+        /// the prefix, e.g. if the key is `bar[baz]` and the prefix is `foo`, then `foo[bar][baz]`
+        /// is returned.
+        /// If no prefix is provided, the key is returned unchanged.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;key&quot;&gt;The key.&lt;/param&gt;
+        /// &lt;param name=&quot;keyPrefix&quot;&gt;The existing key prefix, if any.&lt;/param&gt;
+        /// &lt;returns&gt;The new key prefix.&lt;/returns&gt;
+        private static string NewPrefix(string key, string keyPrefix)
+        {
+            if (string.IsNullOrEmpty(keyPrefix))
+            {
+                return key;
+            }
+
+            int i = key.IndexOf(&quot;[&quot;, StringComparison.Ordinal);
+            return i == -1 ? $&quot;{keyPrefix}[{key}]&quot; : $&quot;{keyPrefix}[{key.Substring(0, i)}]{key.Substring(i)}&quot;;
+        }
+
+        private static System.Net.Http.MultipartFormDataContent EditImage(BaseOptions options)
+        {
+            var multipartContent = new System.Net.Http.MultipartFormDataContent();
+            var editImageCreateOptions = (EditImageCreateOptions)options;
+            multipartContent.Add(new ByteArrayContent(editImageCreateOptions.ImageSource), &quot;image&quot;, editImageCreateOptions.Image);
+
+            if (!string.IsNullOrEmpty(editImageCreateOptions.Mask))
+            {
+                multipartContent.Add(new ByteArrayContent(editImageCreateOptions.MaskSource), &quot;mask&quot;, editImageCreateOptions.Mask);
+            }
+
+            multipartContent.Add(new StringContent(editImageCreateOptions.Prompt), &quot;prompt&quot;);
+
+            if (editImageCreateOptions.N != null &amp;&amp; editImageCreateOptions.N &gt; 0)
+            {
+                multipartContent.Add(new StringContent(editImageCreateOptions.N.ToString()), &quot;n&quot;);
+            }
+
+            if (!string.IsNullOrEmpty(editImageCreateOptions.Size))
+            {
+                multipartContent.Add(new StringContent(editImageCreateOptions.Size), &quot;size&quot;);
+            }
+
+            if (!string.IsNullOrEmpty(editImageCreateOptions.ResponseFormat))
+            {
+                multipartContent.Add(new StringContent(editImageCreateOptions.ResponseFormat), &quot;response_format&quot;);
+            }
+
+            if (!string.IsNullOrEmpty(editImageCreateOptions.User))
+            {
+                multipartContent.Add(new StringContent(editImageCreateOptions.User), &quot;user&quot;);
+            }
+
+            return multipartContent;
+        }
+
+        private static System.Net.Http.MultipartFormDataContent CreateImageVariant(BaseOptions options)
+        {
+            var multipartContent = new System.Net.Http.MultipartFormDataContent();
+            var imageVariationCreateOption = (ImageVariationCreateOption)options;
+            multipartContent.Add(new ByteArrayContent(imageVariationCreateOption.ImageSource), &quot;image&quot;, imageVariationCreateOption.Image);
+
+            if (imageVariationCreateOption.N != null &amp;&amp; imageVariationCreateOption.N &gt; 0)
+            {
+                multipartContent.Add(new StringContent(imageVariationCreateOption.N.ToString()), &quot;n&quot;);
+            }
+
+            if (!string.IsNullOrEmpty(imageVariationCreateOption.Size))
+            {
+                multipartContent.Add(new StringContent(imageVariationCreateOption.Size), &quot;size&quot;);
+            }
+
+            if (!string.IsNullOrEmpty(imageVariationCreateOption.ResponseFormat))
+            {
+                multipartContent.Add(new StringContent(imageVariationCreateOption.ResponseFormat), &quot;response_format&quot;);
+            }
+
+            if (!string.IsNullOrEmpty(imageVariationCreateOption.User))
+            {
+                multipartContent.Add(new StringContent(imageVariationCreateOption.User), &quot;user&quot;);
+            }
+
+            return multipartContent;
+        }
+
+        private static System.Net.Http.MultipartFormDataContent CreateFile(BaseOptions options)
+        {
+            var multipartContent = new System.Net.Http.MultipartFormDataContent();
+            var fileCreateOptions = (FileCreateOptions)options;
+            multipartContent.Add(new ByteArrayContent(fileCreateOptions.FileSource), &quot;file&quot;, fileCreateOptions.File);
+
+            if (!string.IsNullOrEmpty(fileCreateOptions.Purpose))
+            {
+                multipartContent.Add(new StringContent(fileCreateOptions.Purpose), &quot;purpose&quot;);
+            }
+
+            return multipartContent;
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[28,13,28,33,1],[30,17,30,92,1],[33,13,33,49,1],[34,13,34,355,1],[36,17,36,49,1],[39,13,39,63,1],[41,17,41,43,1],[44,13,44,67,1],[46,17,46,52,1],[49,13,49,58,1],[51,17,51,44,1],[55,13,55,64,1],[60,13,60,39,1],[60,39,60,58,1],[60,58,60,60,1],[62,17,63,36,1],[63,36,63,98,1],[63,98,63,100,1],[64,17,64,68,1],[67,13,67,61,1],[75,13,76,31,1],[76,31,76,50,1],[76,50,77,32,1],[77,32,79,41,1],[79,41,79,43,1],[80,13,80,50,1],[88,13,90,51,1],[90,51,90,97,1],[90,97,90,100,1],[98,13,98,31,1],[100,17,100,29,0],[106,13,108,38,1],[126,21,126,71,1],[127,21,127,27,1],[130,21,130,71,1],[131,21,131,27,1],[134,21,134,75,1],[135,21,135,27,1],[138,21,138,81,1],[139,21,139,27,1],[142,21,142,60,1],[143,21,143,27,1],[146,21,146,60,1],[147,21,147,27,1],[150,21,150,75,1],[151,21,151,27,1],[154,21,156,112,1],[157,21,157,27,1],[160,21,160,97,1],[161,21,161,27,1],[164,21,166,84,1],[171,13,171,31,1],[184,13,184,102,1],[190,13,190,37,1],[192,17,192,35,0],[195,13,195,77,1],[197,13,197,31,1],[213,13,213,102,1],[214,13,214,33,1],[216,17,216,35,0],[219,22,219,34,1],[219,35,219,37,1],[219,38,219,78,1],[223,17,223,100,1],[224,17,224,48,1],[226,21,226,90,1],[228,21,228,93,1],[229,21,229,30,1],[233,17,233,86,1],[234,17,234,39,1],[239,17,239,62,1],[243,17,243,35,1],[248,17,248,53,1],[249,17,249,62,1],[251,17,251,75,1],[254,13,254,31,1],[270,13,270,102,1],[271,13,271,36,1],[273,17,273,35,0],[276,22,276,43,1],[276,44,276,46,1],[276,47,276,57,1],[278,17,278,92,1],[279,17,279,44,1],[281,17,281,62,1],[283,17,283,75,1],[286,13,286,31,1],[301,13,301,102,1],[302,13,302,30,1],[304,17,304,35,0],[307,13,307,27,1],[308,22,308,34,1],[308,35,308,37,1],[308,38,308,42,1],[310,17,310,60,1],[311,17,311,75,1],[312,17,312,28,1],[318,13,318,35,1],[320,17,320,91,1],[323,13,323,31,1],[332,13,335,15,1],[336,13,336,31,1],[352,13,352,49,1],[354,17,354,28,1],[357,13,357,64,1],[358,13,358,110,1],[363,13,363,83,1],[364,13,364,74,1],[365,13,365,131,1],[367,13,367,68,1],[369,17,369,132,1],[372,13,372,94,1],[374,13,374,82,1],[376,17,376,99,1],[379,13,379,68,1],[381,17,381,94,1],[384,13,384,78,1],[386,17,386,115,0],[389,13,389,68,1],[391,17,391,94,0],[394,13,394,37,1],[399,13,399,83,1],[400,13,400,82,1],[401,13,401,139,1],[403,13,403,90,1],[405,17,405,103,1],[408,13,408,72,1],[410,17,410,98,1],[413,13,413,82,1],[415,17,415,119,0],[418,13,418,72,1],[420,17,420,98,0],[423,13,423,37,1],[428,13,428,83,1],[429,13,429,64,1],[430,13,430,118,1],[432,13,432,66,1],[434,17,434,95,1],[437,13,437,37,1]]);
+    </script>
+  </body>
+</html>

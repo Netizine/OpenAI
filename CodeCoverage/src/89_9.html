@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Entities\Embeddings\Embedding.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    using System.Collections.Generic;
+    using Newtonsoft.Json;
+
+    /// &lt;summary&gt;
+    /// A vector representation of a given input that can be easily consumed by machine learning models and algorithms.
+    /// &lt;/summary&gt;
+    public class Embedding : OpenAIEntity&lt;Embedding&gt;, IHasObject
+    {
+        /// &lt;summary&gt;
+        /// String representing the object&#39;s type. Objects of the same type share the same value.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;object&quot;)]
+        public string Object { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the data.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;data&quot;)]
+        public List&lt;EmbeddingData&gt; Data { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the model.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;model&quot;)]
+        public string Model { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the usage.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;usage&quot;)]
+        public Usage Usage { get; set; }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[15,32,15,36,1],[15,37,15,41,1],[21,43,21,47,1],[21,48,21,52,1],[27,31,27,35,1],[27,36,27,40,1],[33,30,33,34,1],[33,35,33,39,1]]);
+    </script>
+  </body>
+</html>

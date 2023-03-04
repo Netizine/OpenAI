@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Entities\Permission.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    using System;
+    using Newtonsoft.Json;
+    using OpenAI.Infrastructure;
+
+    /// &lt;summary&gt;
+    /// The OpenAI permission.
+    /// &lt;/summary&gt;
+    public class Permission : IHasId, IHasObject
+    {
+        /// &lt;summary&gt;
+        /// Unique identifier for the object.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;id&quot;)]
+        public string Id { get; set; }
+
+        /// &lt;summary&gt;
+        /// String representing the object&#39;s type. Objects of the same type share the same value.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;object&quot;)]
+        public string Object { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the created date and time.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;created&quot;)]
+        [JsonConverter(typeof(UnixDateTimeConverter))]
+        public DateTime? Created { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets a value indicating whether to allow creating a engine.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;
+        ///   &lt;c&gt;true&lt;/c&gt; if a user is allowed to create a engine; otherwise, &lt;c&gt;false&lt;/c&gt;.
+        /// &lt;/value&gt;
+        [JsonProperty(&quot;allow_create_engine&quot;)]
+        public bool AllowCreateEngine { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets a value indicating whether to allow sampling.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;
+        ///   &lt;c&gt;true&lt;/c&gt; if allowing sampling; otherwise, &lt;c&gt;false&lt;/c&gt;.
+        /// &lt;/value&gt;
+        [JsonProperty(&quot;allow_sampling&quot;)]
+        public bool AllowSampling { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets a value indicating whether to allow logprobs.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;
+        ///   &lt;c&gt;true&lt;/c&gt; if allowing logprobs; otherwise, &lt;c&gt;false&lt;/c&gt;.
+        /// &lt;/value&gt;
+        [JsonProperty(&quot;allow_logprobs&quot;)]
+        public bool AllowLogprobs { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets a value indicating whether to allow search indices.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;
+        ///   &lt;c&gt;true&lt;/c&gt; if allowing search indices; otherwise, &lt;c&gt;false&lt;/c&gt;.
+        /// &lt;/value&gt;
+        [JsonProperty(&quot;allow_search_indices&quot;)]
+        public bool AllowSearchIndices { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets a value indicating whether to allow view.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;
+        ///   &lt;c&gt;true&lt;/c&gt; if allowing view; otherwise, &lt;c&gt;false&lt;/c&gt;.
+        /// &lt;/value&gt;
+        [JsonProperty(&quot;allow_view&quot;)]
+        public bool AllowView { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets a value indicating whether to allow fine tuning.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;
+        ///   &lt;c&gt;true&lt;/c&gt; if allowing fine tuning; otherwise, &lt;c&gt;false&lt;/c&gt;.
+        /// &lt;/value&gt;
+        [JsonProperty(&quot;allow_fine_tuning&quot;)]
+        public bool AllowFineTuning { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the organization.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;organization&quot;)]
+        public string Organization { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the group.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;group&quot;)]
+        public object Group { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets a value indicating whether this instance is blocking.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;
+        ///   &lt;c&gt;true&lt;/c&gt; if this instance is blocking; otherwise, &lt;c&gt;false&lt;/c&gt;.
+        /// &lt;/value&gt;
+        [JsonProperty(&quot;is_blocking&quot;)]
+        public bool IsBlocking { get; set; }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[16,28,16,32,0],[16,33,16,37,1],[22,32,22,36,0],[22,37,22,41,1],[29,36,29,40,1],[29,41,29,45,1],[38,41,38,45,0],[38,46,38,50,1],[47,37,47,41,0],[47,42,47,46,1],[56,37,56,41,0],[56,42,56,46,1],[65,42,65,46,0],[65,47,65,51,1],[74,33,74,37,0],[74,38,74,42,1],[83,39,83,43,0],[83,44,83,48,1],[89,38,89,42,0],[89,43,89,47,1],[95,31,95,35,0],[95,36,95,40,1],[104,34,104,38,0],[104,39,104,43,1]]);
+    </script>
+  </body>
+</html>

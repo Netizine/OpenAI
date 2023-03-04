@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Entities\Models\ModelTest.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Tests.Entities.Models
+{
+    using Newtonsoft.Json;
+    using OpenAI;
+    using System.Security.Principal;
+    using Xunit;
+
+    public class ModelTest : BaseOpenAITest
+    {
+        public ModelTest(OpenAIMockFixture openAIMockFixture)
+            : base(openAIMockFixture)
+        {
+        }
+
+        [Fact]
+        public void Deserialize()
+        {
+            string json = this.GetFixture(&quot;/v1/models/davinci&quot;);
+            var model = JsonConvert.DeserializeObject&lt;Model&gt;(json);
+            Assert.NotNull(model);
+            Assert.IsType&lt;Model&gt;(model);
+            Assert.NotNull(model.Id);
+            Assert.Equal(&quot;model&quot;, model.Object);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[11,15,11,38,1],[13,9,13,10,1],[18,13,18,65,1],[19,13,19,68,1],[20,13,20,35,1],[21,13,21,41,1],[22,13,22,38,1],[23,13,23,49,1],[24,9,24,10,1]]);
+    </script>
+  </body>
+</html>

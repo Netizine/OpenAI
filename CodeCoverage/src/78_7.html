@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Entities\Base\OpenAIEntity.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Reflection;
+    using System.Runtime.CompilerServices;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+    using OpenAI.Infrastructure;
+
+    /// &lt;summary&gt;
+    /// OpenAI Entity.
+    /// &lt;/summary&gt;
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(OpenAIEntityConverter))]
+    public abstract class OpenAIEntity : IOpenAIEntity
+    {
+        /// &lt;summary&gt;
+        /// Gets the raw &lt;see cref=&quot;JObject&quot;&gt;JObject&lt;/see&gt; exposed by the Newtonsoft.Json library.
+        /// This can be used to access properties that are not directly exposed by OpenAI&#39;s .NET
+        /// library.
+        /// &lt;/summary&gt;
+        /// &lt;remarks&gt;
+        /// You should always prefer using the standard property accessors whenever possible. This
+        /// accessor is not considered fully stable and might change or be removed in future
+        /// versions.
+        /// &lt;/remarks&gt;
+        /// &lt;returns&gt;The raw &lt;see cref=&quot;JObject&quot;&gt;JObject&lt;/see&gt;.&lt;/returns&gt;
+        [JsonIgnore]
+        public JObject RawJObject { get; protected set; }
+
+        /// &lt;summary&gt;Gets or sets the open ai response.&lt;/summary&gt;
+        /// &lt;value&gt;The OpenAI response.&lt;/value&gt;
+        [JsonIgnore]
+        public OpenAIResponse OpenAIResponse { get; set; }
+
+        /// &lt;summary&gt;
+        /// Deserializes the JSON to a OpenAI object type. The type is automatically deduced from
+        ///  the &lt;c&gt;object&lt;/c&gt; key in the JSON string.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The object to deserialize.&lt;/param&gt;
+        /// &lt;returns&gt;The deserialized OpenAI object from the JSON string.&lt;/returns&gt;
+        public static IHasObject FromJson(string value)
+        {
+            return JsonUtils.DeserializeObject&lt;IHasObject&gt;(value, OpenAIConfiguration.SerializerSettings);
+        }
+
+        /// &lt;summary&gt;Deserializes the JSON to the specified OpenAI object type.&lt;/summary&gt;
+        /// &lt;typeparam name=&quot;T&quot;&gt;The type of the OpenAI object to deserialize to.&lt;/typeparam&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The object to deserialize.&lt;/param&gt;
+        /// &lt;returns&gt;The deserialized OpenAI object from the JSON string.&lt;/returns&gt;
+        public static T FromJson&lt;T&gt;(string value)
+            where T : IOpenAIEntity
+        {
+            return JsonUtils.DeserializeObject&lt;T&gt;(value, OpenAIConfiguration.SerializerSettings);
+        }
+
+        internal void SetRawJObject(JObject rawJObject)
+        {
+            this.RawJObject = rawJObject;
+        }
+
+        /// &lt;summary&gt;Reports a OpenAI object as a string.&lt;/summary&gt;
+        /// &lt;returns&gt;
+        /// A string representing the OpenAI object, including its JSON serialization.
+        /// &lt;/returns&gt;
+        /// &lt;seealso cref=&quot;ToJson&quot;/&gt;
+        public override string ToString()
+        {
+            return
+                $&quot;&lt;{this.GetType().FullName}@{RuntimeHelpers.GetHashCode(this)} id={this.GetIdString()}&gt; JSON: {this.ToJson()}&quot;;
+        }
+
+        /// &lt;summary&gt;Serializes the OpenAI object as a JSON string.&lt;/summary&gt;
+        /// &lt;returns&gt;An indented JSON string representation of the object.&lt;/returns&gt;
+        public string ToJson()
+        {
+            return JsonUtils.SerializeObject(
+                this,
+                Formatting.Indented,
+                OpenAIConfiguration.SerializerSettings);
+        }
+
+        private object GetIdString()
+        {
+            return (from property in this.GetType().GetTypeInfo().DeclaredProperties where property.Name == &quot;Id&quot; select property.GetValue(this)).FirstOrDefault();
+        }
+    }
+
+    /// &lt;summary&gt;
+    ///   OpenAI Entity.
+    /// &lt;/summary&gt;
+    /// &lt;typeparam name=&quot;T&quot;&gt;T.&lt;/typeparam&gt;
+    [SuppressMessage(&quot;StyleCop.CSharp.MaintainabilityRules&quot;, &quot;SA1402:FileMayOnlyContainASingleType&quot;, Justification = &quot;Generic variant&quot;)]
+    public abstract class OpenAIEntity&lt;T&gt; : OpenAIEntity
+        where T : OpenAIEntity&lt;T&gt;
+    {
+        /// &lt;summary&gt;Deserializes the JSON to a OpenAI object type.&lt;/summary&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The object to deserialize.&lt;/param&gt;
+        /// &lt;returns&gt;The deserialized OpenAI object from the JSON string.&lt;/returns&gt;
+        // ReSharper disable once ArrangeModifiersOrder
+        public static new T FromJson(string value)
+        {
+            return OpenAIEntity.FromJson&lt;T&gt;(value);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[30,37,30,41,1],[30,42,30,56,1],[35,48,35,52,1],[35,53,35,57,1],[45,13,45,107,1],[55,13,55,98,1],[60,13,60,42,1],[61,9,61,10,1],[70,13,71,129,0],[78,13,81,57,1],[86,13,86,92,0],[86,92,86,113,0],[86,113,86,121,0],[86,121,86,144,0],[86,144,86,163,0],[104,13,104,52,1]]);
+    </script>
+  </body>
+</html>

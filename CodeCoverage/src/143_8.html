@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Services\Common\RequestOptions.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    /// &lt;summary&gt;
+    /// The HTTP request options.
+    /// &lt;/summary&gt;
+    public class RequestOptions
+    {
+        /// &lt;summary&gt;
+        /// Gets or sets the &lt;a href=&quot;https://beta.openai.com/docs/api-reference/authentication&quot;&gt;API
+        /// key&lt;/a&gt; to use for the request.
+        /// &lt;/summary&gt;
+        public string ApiKey { get; set; }
+
+        /// &lt;summary&gt;
+        /// Get or sets the
+        /// &lt;a href=&quot;https://beta.openai.com/account/org-settings&quot;&gt;Organization Id
+        /// of the connected account&lt;/a&gt; to use for the request.
+        /// &lt;/summary&gt;
+        public string OrganizationId { get; set; }
+
+        /// &lt;summary&gt;Gets or sets the base URL for the request.&lt;/summary&gt;
+        /// &lt;remarks&gt;
+        /// This is an internal property. It is set by services or individual request methods.
+        /// &lt;/remarks&gt;
+        internal string BaseUrl { get; set; }
+
+        /// &lt;summary&gt;
+        /// Clones this instance.
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;The cloned instance.&lt;/returns&gt;
+        internal RequestOptions Clone()
+        {
+            return (RequestOptions)this.MemberwiseClone();
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[12,32,12,36,1],[12,37,12,41,1],[19,40,19,44,1],[19,45,19,49,1],[25,35,25,39,1],[25,40,25,44,1],[33,13,33,59,0]]);
+    </script>
+  </body>
+</html>

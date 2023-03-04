@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Entities\CategoryScores.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+// ReSharper disable StringLiteralTypo
+namespace OpenAI
+{
+    using Newtonsoft.Json;
+
+    /// &lt;summary&gt;
+    ///  The OpenAI moderation category scores.
+    /// &lt;/summary&gt;
+    public class CategoryScores
+    {
+        /// &lt;summary&gt;
+        /// Gets the hate content score.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;hate&quot;)]
+        public float Hate { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets the hate threatining content score.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;hatethreatening&quot;)]
+        public float HateThreatening { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets the self harm content score.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;selfharm&quot;)]
+        public float SelfHarm { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets the sexual content score.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;sexual&quot;)]
+        public float Sexual { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets the sexual content involving minors score.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;sexualminors&quot;)]
+        public float SexualMinors { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets the violence content score.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;violence&quot;)]
+        public float Violence { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets the violence or graphic content score.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;violencegraphic&quot;)]
+        public float ViolenceGraphic { get; set; }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[15,29,15,33,0],[15,34,15,38,1],[21,40,21,44,0],[21,45,21,49,1],[27,33,27,37,0],[27,38,27,42,1],[33,31,33,35,0],[33,36,33,40,1],[39,37,39,41,0],[39,42,39,46,1],[45,33,45,37,0],[45,38,45,42,1],[51,40,51,44,0],[51,45,51,49,1]]);
+    </script>
+  </body>
+</html>

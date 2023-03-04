@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Infrastructure\JsonUtils.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Infrastructure
+{
+    using System;
+    using System.Globalization;
+    using System.IO;
+    using System.Text;
+    using Newtonsoft.Json;
+
+    internal static class JsonUtils
+    {
+        private static readonly JsonSerializerSettings DefaultSerializerSettings = new JsonSerializerSettings
+        {
+            MaxDepth = 128,
+        };
+
+        /// &lt;summary&gt;
+        /// Deserializes the JSON to the specified .NET type using
+        /// &lt;see cref=&quot;JsonSerializerSettings&quot;/&gt;.
+        /// &lt;/summary&gt;
+        /// &lt;typeparam name=&quot;T&quot;&gt;The type of the object to deserialize to.&lt;/typeparam&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The JSON to deserialize.&lt;/param&gt;
+        /// &lt;param name=&quot;settings&quot;&gt;
+        /// The &lt;see cref=&quot;JsonSerializerSettings&quot;/&gt; used to deserialize the object.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;The deserialized object from the JSON string.&lt;/returns&gt;
+        public static T DeserializeObject&lt;T&gt;(
+            string value,
+            JsonSerializerSettings settings = null)
+        {
+            return (T)DeserializeObject(value, typeof(T), settings);
+        }
+
+        /// &lt;summary&gt;
+        /// Deserializes the JSON to the specified .NET type using
+        /// &lt;see cref=&quot;JsonSerializerSettings&quot;/&gt;.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The JSON to deserialize.&lt;/param&gt;
+        /// &lt;param name=&quot;type&quot;&gt;The type of the object to deserialize to.&lt;/param&gt;
+        /// &lt;param name=&quot;settings&quot;&gt;
+        /// The &lt;see cref=&quot;JsonSerializerSettings&quot;/&gt; used to deserialize the object.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;The deserialized object from the JSON string.&lt;/returns&gt;
+        public static object DeserializeObject(
+            string value,
+            Type type,
+            JsonSerializerSettings settings = null)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            JsonSerializer jsonSerializer = JsonSerializer.Create(settings ?? DefaultSerializerSettings);
+
+            using JsonTextReader reader = new JsonTextReader(new StringReader(value));
+            return jsonSerializer.Deserialize(reader, type);
+        }
+
+        /// &lt;summary&gt;
+        /// Serializes the specified object to a JSON string without using any default settings.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The object to serialize.&lt;/param&gt;
+        /// &lt;param name=&quot;formatting&quot;&gt;Indicates how the output should be formatted.&lt;/param&gt;
+        /// &lt;param name=&quot;settings&quot;&gt;
+        /// The &lt;see cref=&quot;JsonSerializerSettings&quot;/&gt; used to serialize the object.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;A JSON string representation of the object.&lt;/returns&gt;
+        public static string SerializeObject(
+            object value,
+            Formatting formatting = Formatting.None,
+            JsonSerializerSettings settings = null)
+        {
+            JsonSerializer jsonSerializer = JsonSerializer.Create(settings);
+            jsonSerializer.Formatting = formatting;
+
+            StringBuilder sb = new StringBuilder(256);
+            StringWriter sw = new StringWriter(sb, CultureInfo.InvariantCulture);
+            using (JsonTextWriter jsonWriter = new JsonTextWriter(sw))
+            {
+                jsonWriter.Formatting = jsonSerializer.Formatting;
+
+                jsonSerializer.Serialize(jsonWriter, value);
+            }
+
+            return sw.ToString();
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[11,9,14,11,1],[30,13,30,69,1],[48,13,48,31,1],[50,17,50,64,0],[53,13,53,106,1],[55,13,55,87,1],[56,13,56,61,1],[57,9,57,10,1],[73,13,73,77,1],[74,13,74,52,1],[76,13,76,55,1],[77,13,77,82,1],[78,20,78,70,1],[80,17,80,67,1],[82,17,82,61,1],[83,13,83,14,1],[85,13,85,34,1]]);
+    </script>
+  </body>
+</html>

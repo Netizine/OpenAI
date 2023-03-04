@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Infrastructure\Public\OpenAIClient.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+// ReSharper disable once CheckNamespace
+namespace OpenAI
+{
+    using System;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Newtonsoft.Json.Linq;
+    using OpenAI.Infrastructure;
+
+    /// &lt;summary&gt;
+    /// A OpenAI client, used to issue requests to OpenAI&#39;s API and deserialize responses.
+    /// &lt;/summary&gt;
+    public class OpenAIClient : IOpenAIClient
+    {
+        public OpenAIClient(string apiKey)
+        {
+            if (apiKey is { Length: 0 })
+            {
+                throw new ArgumentException(&quot;API key cannot be the empty string.&quot;, nameof(apiKey));
+            }
+
+            if (apiKey != null &amp;&amp; StringUtils.ContainsWhitespace(apiKey))
+            {
+                throw new ArgumentException(&quot;API key cannot contain whitespace.&quot;, nameof(apiKey));
+            }
+
+            this.ApiKey = apiKey;
+            this.OrganizationId = null;
+            this.HttpClient = BuildDefaultHttpClient();
+            this.ApiBase = DefaultApiBase;
+        }
+
+        public OpenAIClient(string apiKey, IHttpClient httpClient)
+        {
+            if (apiKey is { Length: 0 })
+            {
+                throw new ArgumentException(&quot;API key cannot be the empty string.&quot;, nameof(apiKey));
+            }
+
+            if (apiKey != null &amp;&amp; StringUtils.ContainsWhitespace(apiKey))
+            {
+                throw new ArgumentException(&quot;API key cannot contain whitespace.&quot;, nameof(apiKey));
+            }
+
+            this.ApiKey = apiKey;
+            this.OrganizationId = null;
+            this.HttpClient = httpClient ?? BuildDefaultHttpClient();
+            this.ApiBase = DefaultApiBase;
+        }
+
+        public OpenAIClient(string apiKey, IHttpClient httpClient, string apiBase)
+        {
+            if (apiKey is { Length: 0 })
+            {
+                throw new ArgumentException(&quot;API key cannot be the empty string.&quot;, nameof(apiKey));
+            }
+
+            if (apiKey != null &amp;&amp; StringUtils.ContainsWhitespace(apiKey))
+            {
+                throw new ArgumentException(&quot;API key cannot contain whitespace.&quot;, nameof(apiKey));
+            }
+
+            this.ApiKey = apiKey;
+            this.OrganizationId = null;
+            this.HttpClient = httpClient ?? BuildDefaultHttpClient();
+            this.ApiBase = apiBase ?? DefaultApiBase;
+        }
+
+        public OpenAIClient(string apiKey, string organizationId)
+        {
+            if (apiKey is { Length: 0 })
+            {
+                throw new ArgumentException(&quot;API key cannot be the empty string.&quot;, nameof(apiKey));
+            }
+
+            if (apiKey != null &amp;&amp; StringUtils.ContainsWhitespace(apiKey))
+            {
+                throw new ArgumentException(&quot;API key cannot contain whitespace.&quot;, nameof(apiKey));
+            }
+
+            this.ApiKey = apiKey;
+            this.OrganizationId = organizationId;
+            this.HttpClient = BuildDefaultHttpClient();
+            this.ApiBase = DefaultApiBase;
+        }
+
+        public OpenAIClient(string apiKey, string organizationId, IHttpClient httpClient)
+        {
+            if (apiKey is { Length: 0 })
+            {
+                throw new ArgumentException(&quot;API key cannot be the empty string.&quot;, nameof(apiKey));
+            }
+
+            if (apiKey != null &amp;&amp; StringUtils.ContainsWhitespace(apiKey))
+            {
+                throw new ArgumentException(&quot;API key cannot contain whitespace.&quot;, nameof(apiKey));
+            }
+
+            this.ApiKey = apiKey;
+            this.OrganizationId = organizationId;
+            this.HttpClient = httpClient ?? BuildDefaultHttpClient();
+            this.ApiBase = DefaultApiBase;
+        }
+
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;OpenAIClient&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;apiKey&quot;&gt;The API key used by the client to make requests.&lt;/param&gt;
+        /// &lt;param name=&quot;organizationId&quot;&gt;The organization ID used by the client.&lt;/param&gt;
+        /// &lt;param name=&quot;httpClient&quot;&gt;
+        /// The &lt;see cref=&quot;IHttpClient&quot;/&gt; client to use. If &lt;c&gt;null&lt;/c&gt;, an HTTP client will be
+        /// created with default parameters.
+        /// &lt;/param&gt;
+        /// &lt;param name=&quot;apiBase&quot;&gt;
+        /// The base URL for OpenAI&#39;s API. Defaults to &lt;see cref=&quot;DefaultApiBase&quot;/&gt;.
+        /// &lt;/param&gt;
+        /// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;if &lt;c&gt;apiKey&lt;/c&gt; is &lt;c&gt;null&lt;/c&gt;.&lt;/exception&gt;
+        /// &lt;exception cref=&quot;ArgumentException&quot;&gt;
+        /// if &lt;c&gt;apiKey&lt;/c&gt; is empty or contains whitespace.
+        /// &lt;/exception&gt;
+        public OpenAIClient(string apiKey, string organizationId, IHttpClient httpClient, string apiBase)
+        {
+            if (apiKey is { Length: 0 })
+            {
+                throw new ArgumentException(&quot;API key cannot be the empty string.&quot;, nameof(apiKey));
+            }
+
+            if (apiKey != null &amp;&amp; StringUtils.ContainsWhitespace(apiKey))
+            {
+                throw new ArgumentException(&quot;API key cannot contain whitespace.&quot;, nameof(apiKey));
+            }
+
+            this.ApiKey = apiKey;
+            this.OrganizationId = organizationId;
+            this.HttpClient = httpClient ?? BuildDefaultHttpClient();
+            this.ApiBase = apiBase ?? DefaultApiBase;
+        }
+
+        /// &lt;summary&gt;Default base URL for OpenAI&#39;s API.&lt;/summary&gt;
+        public static string DefaultApiBase =&gt; &quot;https://api.openai.com&quot;;
+
+        /// &lt;summary&gt;Gets the base URL for OpenAI&#39;s API.&lt;/summary&gt;
+        /// &lt;value&gt;The base URL for OpenAI&#39;s API.&lt;/value&gt;
+        public string ApiBase { get; }
+
+        /// &lt;summary&gt;Gets the API key used by the client to send requests.&lt;/summary&gt;
+        /// &lt;value&gt;The API key used by the client to send requests.&lt;/value&gt;
+        public string ApiKey { get; }
+
+        /// &lt;summary&gt;Gets the client ID used by the client in OAuth requests.&lt;/summary&gt;
+        /// &lt;value&gt;The client ID used by the client in OAuth requests.&lt;/value&gt;
+        public string OrganizationId { get; }
+
+        /// &lt;summary&gt;Gets the &lt;see cref=&quot;IHttpClient&quot;/&gt; used to send HTTP requests.&lt;/summary&gt;
+        /// &lt;value&gt;The &lt;see cref=&quot;IHttpClient&quot;/&gt; used to send HTTP requests.&lt;/value&gt;
+        public IHttpClient HttpClient { get; }
+
+        /// &lt;summary&gt;Sends a request to OpenAI&#39;s API as an asynchronous operation.&lt;/summary&gt;
+        /// &lt;typeparam name=&quot;T&quot;&gt;Type of the OpenAI entity returned by the API.&lt;/typeparam&gt;
+        /// &lt;param name=&quot;method&quot;&gt;The HTTP method.&lt;/param&gt;
+        /// &lt;param name=&quot;path&quot;&gt;The path of the request.&lt;/param&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The parameters of the request.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The special modifiers of the request.&lt;/param&gt;
+        /// &lt;returns&gt;The task object representing the asynchronous operation.&lt;/returns&gt;
+        /// &lt;exception cref=&quot;OpenAIException&quot;&gt;Thrown if the request fails.&lt;/exception&gt;
+        public Task&lt;T&gt; RequestAsync&lt;T&gt;(
+            HttpMethod method,
+            string path,
+            BaseOptions options,
+            RequestOptions requestOptions)
+            where T : IOpenAIEntity
+        {
+            return this.RequestAsync&lt;T&gt;(method, path, options, requestOptions, default);
+        }
+
+        /// &lt;summary&gt;Sends a request to OpenAI&#39;s API as an asynchronous operation.&lt;/summary&gt;
+        /// &lt;typeparam name=&quot;T&quot;&gt;Type of the OpenAI entity returned by the API.&lt;/typeparam&gt;
+        /// &lt;param name=&quot;method&quot;&gt;The HTTP method.&lt;/param&gt;
+        /// &lt;param name=&quot;path&quot;&gt;The path of the request.&lt;/param&gt;
+        /// &lt;param name=&quot;options&quot;&gt;The parameters of the request.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The special modifiers of the request.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token to cancel operation.&lt;/param&gt;
+        /// &lt;returns&gt;The task object representing the asynchronous operation.&lt;/returns&gt;
+        /// &lt;exception cref=&quot;OpenAIException&quot;&gt;Thrown if the request fails.&lt;/exception&gt;
+        public async Task&lt;T&gt; RequestAsync&lt;T&gt;(
+            HttpMethod method,
+            string path,
+            BaseOptions options,
+            RequestOptions requestOptions,
+            CancellationToken cancellationToken)
+            where T : IOpenAIEntity
+        {
+            var request = new OpenAIRequest(this, method, path, options, requestOptions);
+
+            var response = await this.HttpClient.MakeRequestAsync(request, cancellationToken)
+                .ConfigureAwait(false);
+
+            if (request.Method == HttpMethod.Get &amp;&amp; request.Uri.AbsoluteUri.Contains(&quot;/v1/files/&quot;) &amp;&amp; request.Uri.AbsoluteUri.EndsWith(&quot;/content&quot;))
+            {
+                return (T)(IOpenAIEntity)new FileContent
+                {
+                    Content = response.Content,
+                };
+            }
+
+            return ProcessResponse&lt;T&gt;(response);
+        }
+
+        private static IHttpClient BuildDefaultHttpClient()
+        {
+            return new SystemNetHttpClient(OpenAIConfiguration.MaxNetworkRetries);
+        }
+
+        private static T ProcessResponse&lt;T&gt;(OpenAIResponse response)
+            where T : IOpenAIEntity
+        {
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                throw BuildOpenAIException(response);
+            }
+
+            T obj;
+            try
+            {
+                obj = OpenAIEntity.FromJson&lt;T&gt;(response.Content);
+            }
+            catch (Newtonsoft.Json.JsonException)
+            {
+                throw BuildInvalidResponseException(response);
+            }
+
+            obj.OpenAIResponse = response;
+
+            return obj;
+        }
+
+        private static OpenAIException BuildOpenAIException(OpenAIResponse response)
+        {
+            JObject jObject;
+
+            try
+            {
+                jObject = JObject.Parse(response.Content);
+            }
+            catch (Newtonsoft.Json.JsonException)
+            {
+                return BuildInvalidResponseException(response);
+            }
+
+            // If the value of the `error` key is a string, then the error is an OAuth error
+            // and we instantiate the OpenAIError object with the entire JSON.
+            // Otherwise, it&#39;s a regular API error and we instantiate the OpenAIError object
+            // with just the nested hash contained in the `error` key.
+            var errorToken = jObject[&quot;error&quot;];
+            if (errorToken == null)
+            {
+                return BuildInvalidResponseException(response);
+            }
+
+            var openAIError = errorToken.Type == JTokenType.String
+                ? OpenAIError.FromJson(response.Content)
+                : OpenAIError.FromJson(errorToken.ToString());
+
+            openAIError.OpenAIResponse = response;
+
+            return new OpenAIException(
+                response.StatusCode,
+                openAIError,
+                openAIError.Message)
+            {
+                OpenAIResponse = response,
+            };
+        }
+
+        private static OpenAIException BuildInvalidResponseException(OpenAIResponse response)
+        {
+            return new OpenAIException(
+                response.StatusCode,
+                null,
+                $&quot;Invalid response object from API: \&quot;{response.Content}\&quot;&quot;)
+            {
+                OpenAIResponse = response,
+            };
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[17,9,17,43,1],[19,13,19,41,1],[21,17,21,100,1],[24,13,24,74,1],[26,17,26,99,1],[29,13,29,34,1],[30,13,30,40,1],[31,13,31,56,1],[32,13,32,43,1],[33,9,33,10,1],[35,9,35,67,1],[37,13,37,41,1],[39,17,39,100,0],[42,13,42,74,1],[44,17,44,99,0],[47,13,47,34,1],[48,13,48,40,1],[49,13,49,70,1],[50,13,50,43,1],[51,9,51,10,1],[53,9,53,83,1],[55,13,55,41,1],[57,17,57,100,0],[60,13,60,74,1],[62,17,62,99,0],[65,13,65,34,1],[66,13,66,40,1],[67,13,67,70,1],[68,13,68,54,1],[69,9,69,10,1],[71,9,71,66,0],[73,13,73,41,0],[75,17,75,100,0],[78,13,78,74,0],[80,17,80,99,0],[83,13,83,34,0],[84,13,84,50,0],[85,13,85,56,0],[86,13,86,43,0],[87,9,87,10,0],[89,9,89,90,1],[91,13,91,41,1],[93,17,93,100,0],[96,13,96,74,1],[98,17,98,99,0],[101,13,101,34,1],[102,13,102,50,1],[103,13,103,70,1],[104,13,104,43,1],[105,9,105,10,1],[121,9,121,106,1],[123,13,123,41,1],[125,17,125,100,0],[128,13,128,74,1],[130,17,130,99,0],[133,13,133,34,1],[134,13,134,50,1],[135,13,135,70,1],[136,13,136,54,1],[137,9,137,10,1],[140,48,140,72,1],[144,33,144,37,1],[148,32,148,36,1],[152,40,152,44,1],[156,41,156,45,1],[173,13,173,89,1],[193,13,193,90,1],[195,13,196,40,1],[198,13,198,148,1],[200,17,203,19,1],[206,13,206,49,1],[207,9,207,10,1],[211,13,211,83,1],[217,13,217,58,1],[219,17,219,54,1],[225,17,225,66,1],[226,13,226,14,1],[227,13,227,50,1],[229,17,229,63,1],[232,13,232,43,1],[234,13,234,24,1],[243,17,243,59,1],[244,13,244,14,1],[245,13,245,50,1],[247,17,247,64,1],[254,13,254,47,1],[255,13,255,36,1],[257,17,257,64,1],[260,13,262,63,0],[264,13,264,51,0],[266,13,272,15,0],[273,9,273,10,1],[277,13,283,15,1]]);
+    </script>
+  </body>
+</html>

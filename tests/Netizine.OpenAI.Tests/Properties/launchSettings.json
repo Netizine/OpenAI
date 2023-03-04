@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Netizine.OpenAI.Tests": {
+      "commandName": "Project",
+      "commandLineArgs": "--collect \"Code Coverage\""
+    }
+  }
+}

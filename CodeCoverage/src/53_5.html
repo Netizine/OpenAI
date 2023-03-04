@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Services\_base\ServiceTest.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Tests
+{
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Newtonsoft.Json;
+    using OpenAI;
+    using Xunit;
+
+    public class ServiceTest : BaseOpenAITest
+    {
+        public ServiceTest(MockHttpClientFixture mockHttpClientFixture)
+            : base(mockHttpClientFixture)
+        {
+        }
+
+        [Fact]
+        public void Get_ThrowsIfIdIsNull()
+        {
+            var client = new TestClient();
+            var service = new TestService(client);
+
+            Assert.Throws&lt;ArgumentException&gt;(() =&gt; service.Get(null));
+        }
+
+        [Fact]
+        public void Get_ThrowsIfIdIsEmpty()
+        {
+            var client = new TestClient();
+            var service = new TestService(client);
+
+            Assert.Throws&lt;ArgumentException&gt;(() =&gt; service.Get(string.Empty));
+        }
+
+        [Fact]
+        public void Get_ThrowsIfIdIsWhitespace()
+        {
+            var client = new TestClient();
+            var service = new TestService(client);
+
+            Assert.Throws&lt;ArgumentException&gt;(() =&gt; service.Get(&quot; &quot;));
+        }
+
+        private class TestClient : IOpenAIClient
+        {
+            public string ApiBase { get; }
+
+            public string ApiKey { get; }
+
+            public string OrganizationId { get; }
+
+            public BaseOptions LastOptions { get; protected set; }
+
+            public Task&lt;T&gt; RequestAsync&lt;T&gt;(HttpMethod method, string path,
+                BaseOptions options, RequestOptions requestOptions)
+                where T : IOpenAIEntity
+            {
+                this.LastOptions = options;
+                return Task.FromResult(default(T));
+            }
+
+            public Task&lt;T&gt; RequestAsync&lt;T&gt;(HttpMethod method, string path,
+                BaseOptions options, RequestOptions requestOptions,
+                CancellationToken cancellationToken)
+                where T : IOpenAIEntity
+            {
+                this.LastOptions = options;
+                return Task.FromResult(default(T));
+            }
+        }
+
+        private class TestEntity : OpenAIEntity, IHasId
+        {
+            [JsonProperty(&quot;id&quot;)]
+            public string Id { get; set; }
+        }
+
+        private class TestService : Service&lt;TestEntity&gt;,
+            IListable&lt;TestEntity, ListOptions&gt;,
+            IRetrievable&lt;TestEntity, BaseOptions&gt;
+        {
+            public TestService(IOpenAIClient client)
+                : base(client)
+            {
+            }
+
+            public override string BasePath =&gt; &quot;/v1/test_entities&quot;;
+
+            public virtual TestEntity Get(string id)
+            {
+                return this.Get(id, null, null);
+            }
+
+            public virtual TestEntity Get(string id, BaseOptions options)
+            {
+                return this.Get(id, options, null);
+            }
+
+            public virtual TestEntity Get(string id, RequestOptions requestOptions)
+            {
+                return this.Get(id, null, requestOptions);
+            }
+
+            public virtual TestEntity Get(string id, BaseOptions options, RequestOptions requestOptions)
+            {
+                return this.GetEntity(id, options, requestOptions);
+            }
+
+            public virtual Task&lt;TestEntity&gt; GetAsync(string id)
+            {
+                return this.GetAsync(id, null, null, default);
+            }
+
+            public virtual Task&lt;TestEntity&gt; GetAsync(string id, CancellationToken cancellationToken)
+            {
+                return this.GetAsync(id, null, null, cancellationToken);
+            }
+
+            public virtual Task&lt;TestEntity&gt; GetAsync(string id, BaseOptions options)
+            {
+                return this.GetAsync(id, options, null, default);
+            }
+
+            public virtual Task&lt;TestEntity&gt; GetAsync(string id, BaseOptions options, CancellationToken cancellationToken)
+            {
+                return this.GetAsync(id, options, null, cancellationToken);
+            }
+
+            public virtual Task&lt;TestEntity&gt; GetAsync(string id, RequestOptions requestOptions)
+            {
+                return this.GetAsync(id, null, requestOptions, default);
+            }
+
+            public virtual Task&lt;TestEntity&gt; GetAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
+            {
+                return this.GetAsync(id, null, requestOptions, cancellationToken);
+            }
+
+            public virtual Task&lt;TestEntity&gt; GetAsync(string id, BaseOptions options, RequestOptions requestOptions)
+            {
+                return this.GetAsync(id, null, requestOptions, default);
+            }
+
+            public virtual Task&lt;TestEntity&gt; GetAsync(string id, BaseOptions options, RequestOptions requestOptions, CancellationToken cancellationToken)
+            {
+                return this.GetEntityAsync(id, options, requestOptions, cancellationToken);
+            }
+
+            public virtual OpenAIList&lt;TestEntity&gt; List()
+            {
+                return this.List(null, null);
+            }
+
+            public virtual OpenAIList&lt;TestEntity&gt; List(ListOptions options)
+            {
+                return this.List(options, null);
+            }
+
+            public virtual OpenAIList&lt;TestEntity&gt; List(RequestOptions requestOptions)
+            {
+                return this.List(null, requestOptions);
+            }
+
+            public virtual OpenAIList&lt;TestEntity&gt; List(ListOptions options, RequestOptions requestOptions)
+            {
+                return this.ListEntities(options, requestOptions);
+            }
+
+            public Task&lt;OpenAIList&lt;TestEntity&gt;&gt; ListAsync()
+            {
+                return this.ListAsync(null, null, default);
+            }
+
+            public Task&lt;OpenAIList&lt;TestEntity&gt;&gt; ListAsync(CancellationToken cancellationToken)
+            {
+                return this.ListAsync(null, null, cancellationToken);
+            }
+
+            public Task&lt;OpenAIList&lt;TestEntity&gt;&gt; ListAsync(ListOptions listOptions)
+            {
+                return this.ListAsync(listOptions, null, default);
+            }
+
+            public Task&lt;OpenAIList&lt;TestEntity&gt;&gt; ListAsync(ListOptions listOptions, CancellationToken cancellationToken)
+            {
+                return this.ListAsync(listOptions, null, cancellationToken);
+            }
+
+            public Task&lt;OpenAIList&lt;TestEntity&gt;&gt; ListAsync(RequestOptions requestOptions)
+            {
+                return this.ListAsync(null, requestOptions, default);
+            }
+
+            public Task&lt;OpenAIList&lt;TestEntity&gt;&gt; ListAsync(RequestOptions requestOptions, CancellationToken cancellationToken)
+            {
+                return this.ListAsync(null, requestOptions, cancellationToken);
+            }
+
+            public Task&lt;OpenAIList&lt;TestEntity&gt;&gt; ListAsync(ListOptions listOptions, RequestOptions requestOptions)
+            {
+                return this.ListAsync(listOptions, requestOptions, default);
+            }
+
+            public virtual Task&lt;OpenAIList&lt;TestEntity&gt;&gt; ListAsync(ListOptions listOptions = null, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
+            {
+                return this.ListEntitiesAsync(listOptions, requestOptions, cancellationToken);
+            }
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[17,15,17,42,1],[19,9,19,10,1],[24,13,24,43,1],[25,13,25,51,1],[27,13,27,52,1],[27,52,27,69,1],[27,69,27,71,1],[28,9,28,10,1],[33,13,33,43,1],[34,13,34,51,1],[36,13,36,52,1],[36,52,36,77,1],[36,77,36,79,1],[37,9,37,10,1],[42,13,42,43,1],[43,13,43,51,1],[45,13,45,52,1],[45,52,45,68,1],[45,68,45,70,1],[46,9,46,10,1],[50,37,50,41,0],[52,36,52,40,0],[54,44,54,48,0],[56,46,56,50,0],[56,51,56,65,0],[62,17,62,44,0],[63,17,63,52,0],[71,17,71,44,0],[72,17,72,52,0],[79,32,79,36,0],[79,37,79,41,0],[87,19,87,31,1],[89,13,89,14,1],[91,48,91,67,0],[95,17,95,49,1],[100,17,100,52,0],[105,17,105,59,0],[110,17,110,68,1],[115,17,115,63,0],[120,17,120,73,0],[125,17,125,66,0],[130,17,130,76,0],[135,17,135,73,0],[140,17,140,83,0],[145,17,145,73,0],[150,17,150,92,0],[155,17,155,46,0],[160,17,160,49,0],[165,17,165,56,0],[170,17,170,67,0],[175,17,175,60,0],[180,17,180,70,0],[185,17,185,67,0],[190,17,190,77,0],[195,17,195,70,0],[200,17,200,80,0],[205,17,205,77,0],[210,17,210,95,0]]);
+    </script>
+  </body>
+</html>

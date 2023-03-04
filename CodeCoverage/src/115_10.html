@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Infrastructure\FormEncoding\FormUrlEncodedContent.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Infrastructure.FormEncoding
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Text;
+
+    /// &lt;summary&gt;
+    /// A container for name/value tuples encoded using &lt;c&gt;application/x-www-form-urlencoded&lt;/c&gt;
+    /// MIME type.
+    /// &lt;/summary&gt;
+    internal class FormUrlEncodedContent : ByteArrayContent
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;FormUrlEncodedContent&quot;/&gt; class.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;nameValueCollection&quot;&gt;The collection of name/value tuples to encode.&lt;/param&gt;
+        public FormUrlEncodedContent(IEnumerable&lt;KeyValuePair&lt;string, string&gt;&gt; nameValueCollection)
+            : base(CreateContentByteArray(nameValueCollection))
+        {
+            this.Headers.ContentType = new MediaTypeHeaderValue(&quot;application/x-www-form-urlencoded&quot;)
+            {
+                CharSet = &quot;utf-8&quot;,
+            };
+        }
+
+        private static byte[] CreateContentByteArray(
+            IEnumerable&lt;KeyValuePair&lt;string, string&gt;&gt; nameValueCollection)
+        {
+            if (nameValueCollection == null)
+            {
+                throw new ArgumentNullException(nameof(nameValueCollection));
+            }
+
+            return Encoding.UTF8.GetBytes(FormEncoder.CreateQueryString(nameValueCollection));
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[20,15,20,64,1],[22,13,25,15,1],[26,9,26,10,1],[31,13,31,45,1],[33,17,33,78,1],[36,13,36,95,1]]);
+    </script>
+  </body>
+</html>

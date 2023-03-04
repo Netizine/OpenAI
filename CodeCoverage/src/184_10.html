@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Services\Moderations\ModerationGetOptions.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+// ReSharper disable once CheckNamespace
+namespace OpenAI
+{
+    using System.Collections.Generic;
+    using Newtonsoft.Json;
+    using OpenAI.Infrastructure;
+
+    /// &lt;summary&gt;
+    /// Moderation get options class.
+    /// Implements the &lt;see cref=&quot;OpenAI.BaseOptions&quot; /&gt;.
+    /// &lt;/summary&gt;
+    /// &lt;seealso cref=&quot;OpenAI.BaseOptions&quot; /&gt;
+    public class ModerationGetOptions : BaseOptions
+    {
+        /// &lt;summary&gt;
+        /// The input text to classify.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;input&quot;)]
+        [JsonConverter(typeof(AnyOfConverter))]
+        public AnyOf&lt;string, List&lt;string&gt;&gt; Input { get; set; }
+
+        /// &lt;summary&gt;
+        /// Two content moderations models are available: text-moderation-stable and text-moderation-latest.
+        /// The default is text-moderation-latest which will be automatically upgraded over time.
+        /// This ensures you are always using our most accurate model.
+        /// If you use text-moderation-stable, we will provide advanced notice before updating the model.
+        /// Accuracy of text-moderation-stable may be slightly lower than for text-moderation-latest.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;model&quot;, NullValueHandling = NullValueHandling.Ignore)]
+        public string Model { get; set; }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[20,52,20,56,1],[20,57,20,61,1],[30,31,30,35,1],[30,36,30,40,0]]);
+    </script>
+  </body>
+</html>

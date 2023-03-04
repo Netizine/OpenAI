@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Infrastructure\FormEncoding\MultipartFormDataContent.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Infrastructure.FormEncoding
+{
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+
+    /// &lt;summary&gt;
+    /// A container for content encoded using &lt;c&gt;multipart/form-data&lt;/c&gt; MIME type.
+    /// &lt;/summary&gt;
+    internal class MultipartFormDataContent : System.Net.Http.MultipartFormDataContent
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;MultipartFormDataContent&quot;/&gt; class.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;nameValueCollection&quot;&gt;The collection of name/value tuples to encode.&lt;/param&gt;
+        public MultipartFormDataContent(IEnumerable&lt;KeyValuePair&lt;string, object&gt;&gt; nameValueCollection)
+            : this(nameValueCollection, Guid.NewGuid().ToString())
+        {
+        }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;MultipartFormDataContent&quot;/&gt; class.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;nameValueCollection&quot;&gt;The collection of name/value tuples to encode.&lt;/param&gt;
+        /// &lt;param name=&quot;boundary&quot;&gt;The boundary string for the multipart form data content.&lt;/param&gt;
+        public MultipartFormDataContent(
+            IEnumerable&lt;KeyValuePair&lt;string, object&gt;&gt; nameValueCollection,
+            string boundary)
+            : base(boundary)
+        {
+            if (nameValueCollection == null)
+            {
+                throw new ArgumentNullException(nameof(nameValueCollection));
+            }
+
+            this.ProcessParameters(nameValueCollection);
+        }
+
+        private static StringContent CreateStringContent(string value)
+            =&gt; new StringContent(value, System.Text.Encoding.UTF8);
+
+        private static StreamContent CreateStreamContent(Stream value, string name)
+        {
+            var fileName = &quot;blob&quot;;
+            var extension = string.Empty;
+
+            if ((value is FileStream fileStream) &amp;&amp; (!string.IsNullOrEmpty(fileStream.Name)))
+            {
+                fileName = fileStream.Name;
+                extension = Path.GetExtension(fileName);
+            }
+
+            var content = new StreamContent(value);
+            content.Headers.ContentDisposition = new ContentDispositionHeaderValue(&quot;form-data&quot;)
+            {
+                Name = name,
+                FileName = fileName,
+                FileNameStar = fileName,
+            };
+            content.Headers.ContentType = new MediaTypeHeaderValue(MimeTypes.GetMimeType(extension));
+            return content;
+        }
+
+        private static string QuoteString(string value)
+        {
+            return &quot;\&quot;&quot; + value + &quot;\&quot;&quot;;
+        }
+
+        private void ProcessParameters(IEnumerable&lt;KeyValuePair&lt;string, object&gt;&gt; nameValueCollection)
+        {
+            foreach (var kvp in nameValueCollection)
+            {
+                switch (kvp.Value)
+                {
+                    case string s:
+                        this.Add(CreateStringContent(s), QuoteString(kvp.Key));
+                        break;
+
+                    case Stream s:
+                        this.Add(CreateStreamContent(s, QuoteString(kvp.Key)));
+                        break;
+
+                    default:
+                        var message =
+                            &quot;Unexpected type in collection. Expected System.String or &quot; +
+                            $&quot;System.IO.Stream, got {kvp.GetType().FullName}.&quot;;
+                        throw new ArgumentException(message, nameof(nameValueCollection));
+                }
+            }
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[19,15,19,67,1],[21,9,21,10,1],[31,15,31,29,1],[33,13,33,45,1],[35,17,35,78,1],[38,13,38,57,1],[39,9,39,10,1],[42,16,42,67,1],[46,13,46,35,1],[47,13,47,42,1],[49,13,49,94,1],[51,17,51,44,0],[52,17,52,57,0],[55,13,55,52,1],[56,13,61,15,1],[62,13,62,102,1],[63,13,63,28,1],[68,13,68,40,1],[73,22,73,29,1],[73,30,73,32,1],[73,33,73,52,1],[75,17,75,35,1],[78,25,78,80,1],[79,25,79,31,1],[82,25,82,80,1],[83,25,83,31,1],[86,25,88,80,1],[89,25,89,91,1],[92,9,92,10,1]]);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Wholesome\JsonNamesMatchPropertyNames.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Tests
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Text.RegularExpressions;
+    using Newtonsoft.Json;
+    using OpenAI;
+    using OpenAI.Infrastructure;
+    using Xunit;
+
+    /// &lt;summary&gt;
+    /// This wholesome test ensures that `JsonProperty` attributes in entity and options classes
+    /// have names that match their property&#39;s name. E.g. if the property&#39;s name is `FooBar`, then
+    /// the JSON name should be `foo_bar`.
+    /// &lt;/summary&gt;
+    /// &lt;remarks&gt;
+    /// At the moment this test only checks `public` properties. `internal` properties are ignored.
+    /// &lt;/remarks&gt;
+    public class JsonNamesMatchPropertyNames : WholesomeTest
+    {
+        private const string AssertionMessage =
+            &quot;Found at least one JsonProperty name mismatched with its property name.&quot;;
+
+        // Map of words that have a non-standard snake_case -&gt; PascalCase transformation. This is
+        // mostly useful for two-letter acronyms, which should stay capitalized per Microsoft&#39;s
+        // recommendations: https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/capitalization-conventions#capitalization-rules-for-identifiers.
+        private static Dictionary&lt;string, string&gt; overrides = new Dictionary&lt;string, string&gt;
+        {
+            // Commented out as we prefer to standardize on `Ip` for the moment to minimize breaking changes.
+            // { &quot;ip&quot;, &quot;IP&quot; },
+        };
+
+        [Fact]
+        public void Check()
+        {
+            List&lt;string&gt; results = new List&lt;string&gt;();
+
+            // Get all classes that derive from OpenAIEntity or implement INestedOptions
+            var openAIClasses = GetSubclassesOf(typeof(OpenAIEntity));
+            openAIClasses.AddRange(GetClassesWithInterface(typeof(INestedOptions)));
+
+            foreach (Type openAIClass in openAIClasses)
+            {
+                foreach (PropertyInfo property in openAIClass.GetProperties())
+                {
+                    var propType = property.PropertyType;
+
+                    // Skip properties that don&#39;t have a `JsonProperty` attribute
+                    var jsonPropertyAttribute = property.GetCustomAttribute&lt;JsonPropertyAttribute&gt;();
+                    if (jsonPropertyAttribute == null)
+                    {
+                        continue;
+                    }
+
+                    var pascalCasedJsonName = ToPascalCase(jsonPropertyAttribute.PropertyName);
+
+                    // Skip properties when the property name matches the JSON name
+                    if (property.Name == pascalCasedJsonName)
+                    {
+                        continue;
+                    }
+
+                    // Skip properties that have a `AllowNameMismatch` attribute
+                    var allowMismatchAttribute = property.GetCustomAttribute&lt;AllowNameMismatch&gt;();
+                    if (allowMismatchAttribute != null)
+                    {
+                        continue;
+                    }
+
+                    results.Add($&quot;{openAIClass.Name}.{property.Name}: {property.Name} != {pascalCasedJsonName}&quot;);
+                }
+            }
+
+            AssertEmpty(results, AssertionMessage);
+        }
+
+        private static string ToPascalCase(string snakeCase)
+        {
+            return snakeCase.Split(&#39;_&#39;)
+                .Select(s =&gt;
+                    overrides.ContainsKey(s)
+                        ? overrides[s]
+                        : char.ToUpperInvariant(s[0]) + s.Substring(1, s.Length - 1))
+                .Aggregate(string.Empty, (s1, s2) =&gt; s1 + s2);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[29,9,33,11,1],[38,13,38,55,1],[41,13,41,71,1],[42,13,42,85,1],[44,22,44,38,1],[44,39,44,41,1],[44,42,44,55,1],[46,26,46,47,1],[46,48,46,50,1],[46,51,46,78,1],[48,21,48,58,1],[51,21,51,102,1],[52,21,52,55,1],[57,21,57,96,1],[60,21,60,62,1],[66,21,66,99,1],[67,21,67,56,1],[72,21,72,114,0],[76,13,76,52,1],[77,9,77,10,1],[81,13,83,21,1],[83,21,85,85,1],[85,85,86,54,1],[86,54,86,61,1],[86,61,86,63,1]]);
+    </script>
+  </body>
+</html>

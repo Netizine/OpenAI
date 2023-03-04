@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Wholesome\DontForgetIHasInterfaces.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Tests
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using OpenAI;
+    using Xunit;
+
+    /// &lt;summary&gt;
+    /// This wholesome test ensures that all OpenAI entity and options classes implement the
+    /// &lt;c&gt;IHasX&lt;/c&gt; interfaces when they have matching properties.
+    /// &lt;/summary&gt;
+    public class DontForgetIHasInterfaces : WholesomeTest
+    {
+        private const string AssertionMessage =
+            &quot;Found at least one missing interface.&quot;;
+
+        [Fact]
+        public void Check()
+        {
+            List&lt;string&gt; results = new List&lt;string&gt;();
+
+            // Get all classes that derive from OpenAIEntity or implement INestedOptions
+            var openAIClasses = GetSubclassesOf(typeof(OpenAIEntity));
+            openAIClasses.AddRange(GetClassesWithInterface(typeof(INestedOptions)));
+
+            foreach (Type openAIClass in openAIClasses)
+            {
+                var interfaces = openAIClass.GetInterfaces();
+
+                foreach (PropertyInfo property in openAIClass.GetProperties())
+                {
+                    // Check for IHasId
+                    if ((property.Name == &quot;Id&quot;) &amp;&amp; (property.PropertyType == typeof(string)))
+                    {
+                        if (!interfaces.Contains(typeof(IHasId)))
+                        {
+                            results.Add($&quot;{openAIClass.Name} is missing IHasId&quot;);
+                        }
+                    }
+
+                    // Check for IHasObject
+                    if ((property.Name == &quot;Object&quot;) &amp;&amp; (property.PropertyType == typeof(string)))
+                    {
+                        if (!interfaces.Contains(typeof(IHasObject)))
+                        {
+                            results.Add($&quot;{openAIClass.Name} is missing IHasObject&quot;);
+                        }
+                    }
+                }
+            }
+
+            AssertEmpty(results, AssertionMessage);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[22,13,22,55,1],[25,13,25,71,1],[26,13,26,85,1],[28,22,28,38,1],[28,39,28,41,1],[28,42,28,55,1],[30,17,30,62,1],[32,26,32,47,1],[32,48,32,50,1],[32,51,32,78,1],[35,21,35,94,1],[37,25,37,66,1],[39,29,39,82,0],[44,21,44,98,1],[46,25,46,70,1],[48,29,48,86,0],[54,13,54,52,1],[55,9,55,10,1]]);
+    </script>
+  </body>
+</html>

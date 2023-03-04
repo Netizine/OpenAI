@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\BaseOpenAITest.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Tests
+{
+    using System.IO;
+    using System.Net;
+    using System.Net.Http;
+    using System.Reflection;
+    using System.Text;
+    using OpenAI;
+    using Xunit;
+
+    [Collection(&quot;openai-mock tests&quot;)]
+    public class BaseOpenAITest
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;BaseOpenAITest&quot;/&gt; class with no fixtures.
+        /// &lt;/summary&gt;
+        public BaseOpenAITest()
+            : this(null, null)
+        {
+        }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;BaseOpenAITest&quot;/&gt; class with the
+        /// &lt;see cref=&quot;OpenAIMockFixture&quot;/&gt; fixture. Use this constructor for tests that need to
+        /// send requests to openai-mock, but don&#39;t need mocking capabilities (i.e. don&#39;t need to
+        /// assert or stub HTTP requests).
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;openAIMockFixture&quot;&gt;
+        /// The &lt;see cref=&quot;OpenAIMockFixture&quot;/&gt; fixture.
+        /// &lt;/param&gt;
+        public BaseOpenAITest(OpenAIMockFixture openAIMockFixture)
+            : this(openAIMockFixture, null)
+        {
+        }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;BaseOpenAITest&quot;/&gt; class with the
+        /// &lt;see cref=&quot;MockHttpClientFixture&quot;/&gt; fixture. Use this constructor for tests that need
+        /// mocking capabilities (i.e. need to assert or stub HTTP requests) but don&#39;t need to send
+        /// requests to openai-mock.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;mockHttpClientFixture&quot;&gt;
+        /// The &lt;see cref=&quot;MockHttpClientFixture&quot;/&gt; fixture.
+        /// &lt;/param&gt;
+        public BaseOpenAITest(MockHttpClientFixture mockHttpClientFixture)
+            : this(null, mockHttpClientFixture)
+        {
+        }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;BaseOpenAITest&quot;/&gt; class with both the
+        /// &lt;see cref=&quot;OpenAIMockFixture&quot;/&gt; and the &lt;see cref=&quot;MockHttpClientFixture&quot;/&gt; fixtures.
+        /// Use this constructor for tests that need to send requests to openai-mock and also need
+        /// mocking capabilities (i.e. need to assert or stub HTTP requests).
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;openAIMockFixture&quot;&gt;
+        /// The &lt;see cref=&quot;OpenAIMockFixture&quot;/&gt; fixture.
+        /// &lt;/param&gt;
+        /// &lt;param name=&quot;mockHttpClientFixture&quot;&gt;
+        /// The &lt;see cref=&quot;MockHttpClientFixture&quot;/&gt; fixture.
+        /// &lt;/param&gt;
+        public BaseOpenAITest(
+            OpenAIMockFixture openAIMockFixture,
+            MockHttpClientFixture mockHttpClientFixture)
+        {
+            this.OpenAIMockFixture = openAIMockFixture;
+            this.MockHttpClientFixture = mockHttpClientFixture;
+
+            if ((this.OpenAIMockFixture != null) &amp;&amp; (this.MockHttpClientFixture != null))
+            {
+                // Set up OpenAIClient to use openai-mock with the mock HTTP client
+                var httpClient = new SystemNetHttpClient(
+                    new HttpClient(this.MockHttpClientFixture.MockHandler.Object));
+                this.OpenAIClient = this.OpenAIMockFixture.BuildOpenAIClient(
+                    httpClient: httpClient);
+
+                // Reset the mock before each test
+                this.MockHttpClientFixture.Reset();
+            }
+            else if (this.OpenAIMockFixture != null)
+            {
+                // Set up OpenAIClient to use openai-mock
+                this.OpenAIClient = this.OpenAIMockFixture.BuildOpenAIClient();
+            }
+            else if (this.MockHttpClientFixture != null)
+            {
+                // Set up OpenAIClient with the mock HTTP client
+                var httpClient = new SystemNetHttpClient(
+                    new HttpClient(this.MockHttpClientFixture.MockHandler.Object));
+                this.OpenAIClient = new OpenAIClient(
+                    &quot;sk-test&quot;,
+                    httpClient: httpClient);
+
+                // Reset the mock before each test
+                this.MockHttpClientFixture.Reset();
+            }
+            else
+            {
+                // Use the default OpenAIClient
+                this.OpenAIClient = new OpenAIClient(&quot;sk-test&quot;);
+            }
+        }
+
+        protected IOpenAIClient OpenAIClient { get; }
+
+        protected MockHttpClientFixture MockHttpClientFixture { get; }
+
+        protected OpenAIMockFixture OpenAIMockFixture { get; }
+
+        /// &lt;summary&gt;
+        /// Gets a resource file and returns its contents in a string.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;path&quot;&gt;Path to the resource file.&lt;/param&gt;
+        /// &lt;returns&gt;The file contents.&lt;/returns&gt;
+        protected static string GetResourceAsString(string path)
+        {
+            var fullpath = &quot;Netizine.OpenAI.Tests.Resources.&quot; + path;
+            var contents = new StreamReader(
+                typeof(BaseOpenAITest).GetTypeInfo().Assembly.GetManifestResourceStream(fullpath),
+                Encoding.UTF8).ReadToEnd();
+
+            return contents;
+        }
+
+        /// &lt;summary&gt;
+        /// Asserts that a single HTTP request was made with the specified method and path.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;method&quot;&gt;The HTTP method.&lt;/param&gt;
+        /// &lt;param name=&quot;path&quot;&gt;The HTTP path.&lt;/param&gt;
+        protected void AssertRequest(HttpMethod method, string path)
+        {
+            if (this.MockHttpClientFixture == null)
+            {
+                throw new OpenAITestException(
+                    &quot;AssertRequest called from a test class that doesn&#39;t have access to &quot;
+                    + &quot;MockHttpClientFixture. Make sure that the constructor for &quot;
+                    + $&quot;{this.GetType().Name} receives MockHttpClientFixture and calls the &quot;
+                    + &quot;base constructor.&quot;);
+            }
+
+            this.MockHttpClientFixture.AssertRequest(method, path);
+        }
+
+        /// &lt;summary&gt;
+        /// Stubs an HTTP request with the specified method and path to return the specified status
+        /// code and response body.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;method&quot;&gt;The HTTP method.&lt;/param&gt;
+        /// &lt;param name=&quot;path&quot;&gt;The HTTP path.&lt;/param&gt;
+        /// &lt;param name=&quot;status&quot;&gt;The status code to return.&lt;/param&gt;
+        /// &lt;param name=&quot;response&quot;&gt;The response body to return.&lt;/param&gt;
+        /// &lt;param name=&quot;query&quot;&gt;The HTTP query.&lt;/param&gt;
+        protected void StubRequest(HttpMethod method, string path, HttpStatusCode status, string response, string query = null)
+        {
+            if (this.MockHttpClientFixture == null)
+            {
+                throw new OpenAITestException(
+                    &quot;StubRequest called from a test class that doesn&#39;t have access to &quot;
+                    + &quot;MockHttpClientFixture. Make sure that the constructor for &quot;
+                    + $&quot;{this.GetType().Name} receives MockHttpClientFixture and calls the &quot;
+                    + &quot;base constructor.&quot;);
+            }
+
+            this.MockHttpClientFixture.StubRequest(method, path, status, response, query);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets fixture data with expansions specified. Expansions are specified the same way as
+        /// they are in the normal API like &lt;c&gt;customer&lt;/c&gt; or &lt;c&gt;data.customer&lt;/c&gt;.
+        /// Use the special &lt;c&gt;*&lt;/c&gt; character to specify that all fields should be
+        /// expanded.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;path&quot;&gt;API path to use to get a fixture for openai-mock.&lt;/param&gt;
+        /// &lt;param name=&quot;expansions&quot;&gt;Set of expansions that should be applied.&lt;/param&gt;
+        /// &lt;returns&gt;Fixture data encoded as JSON.&lt;/returns&gt;
+        protected string GetFixture(string path, string[] expansions = null)
+        {
+            if (this.OpenAIMockFixture == null)
+            {
+                throw new OpenAITestException(
+                    &quot;GetFixture called from a test class that doesn&#39;t have access to &quot;
+                    + &quot;OpenAIMockFixture. Make sure that the constructor for &quot;
+                    + $&quot;{this.GetType().Name} receives OpenAIMockFixture and calls the &quot;
+                    + &quot;base constructor.&quot;);
+            }
+
+            return this.OpenAIMockFixture.GetFixture(path, expansions);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[18,15,18,31,1],[20,9,20,10,1],[32,15,32,44,1],[34,9,34,10,1],[46,15,46,48,1],[48,9,48,10,1],[62,9,64,57,1],[66,13,66,56,1],[67,13,67,64,1],[69,13,69,90,1],[72,17,73,84,1],[74,17,75,45,1],[78,17,78,52,1],[80,18,80,53,1],[83,17,83,80,1],[85,18,85,57,1],[88,17,89,84,1],[90,17,92,45,1],[95,17,95,52,1],[100,17,100,65,1],[102,9,102,10,1],[104,48,104,52,1],[106,65,106,69,1],[108,57,108,61,1],[117,13,117,70,1],[118,13,120,44,1],[122,13,122,29,1],[132,13,132,52,1],[134,17,138,44,0],[141,13,141,68,1],[142,9,142,10,1],[155,13,155,52,0],[157,17,161,44,0],[164,13,164,91,0],[165,9,165,10,0],[178,13,178,48,1],[180,17,184,44,0],[187,13,187,72,1]]);
+    </script>
+  </body>
+</html>

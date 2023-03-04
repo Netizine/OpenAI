@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Services\Base\StringEnum.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    /// &lt;summary&gt;
+    /// Abstract base class for string enum parameters.
+    /// &lt;/summary&gt;
+    /// &lt;remarks&gt;
+    /// This class is used to define request parameters that can only take certain string values.
+    /// We use it instead of defining a regular &lt;c&gt;enum&lt;/c&gt; with
+    /// &lt;see cref=&quot;System.Runtime.Serialization.EnumMemberAttribute&quot;/&gt; annotations for
+    /// serialization because &lt;c&gt;enum&lt;/c&gt; is really an integer under the hood. This can be
+    /// problematic in some cases, like when a parameter can be an integer OR a string enum.
+    /// &lt;/remarks&gt;
+    /// &lt;example&gt;
+    /// This sample shows how to define a new string enum type.
+    /// &lt;code&gt;
+    /// public class FooBar : StringEnum
+    /// {
+    ///     public static readonly FooBar Foo = new FooBar(&quot;foo&quot;);
+    ///     public static readonly FooBar Bar = new FooBar(&quot;bar&quot;);
+    ///
+    ///     private FooBar(string value) : base(value) {}
+    /// }
+    /// &lt;/code&gt;
+    /// &lt;/example&gt;
+    public abstract class StringEnum
+    {
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;StringEnum&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;value&quot;&gt;The serialized value for the instance.&lt;/param&gt;
+        protected StringEnum(string value)
+        {
+            this.Value = value;
+        }
+
+        /// &lt;summary&gt;Gets or sets the serialized value.&lt;/summary&gt;
+        /// &lt;returns&gt;The serialized value.&lt;/returns&gt;
+        public string Value { get; protected set; }
+
+        /// &lt;summary&gt;Returns the serialized value.&lt;/summary&gt;
+        /// &lt;returns&gt;The serialized value.&lt;/returns&gt;
+        public override string ToString()
+        {
+            return this.Value;
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[29,9,29,43,1],[31,13,31,32,1],[32,9,32,10,1],[36,31,36,35,1],[36,36,36,50,1],[42,13,42,31,1]]);
+    </script>
+  </body>
+</html>

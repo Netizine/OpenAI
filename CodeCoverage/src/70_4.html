@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\OpenAIMockFixture.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System.Reflection;
+using Newtonsoft.Json.Linq;
+
+namespace OpenAI.Tests
+{
+    using System;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using OpenAI;
+
+    public class OpenAIMockFixture : IDisposable
+    {
+        /// &lt;value&gt;Minimum required version of openai-mock.&lt;/value&gt;
+        private const string MockMinimumVersion = &quot;1.0.8.0&quot;;
+
+        private readonly string port;
+
+        public OpenAIMockFixture()
+        {
+            if (OpenAIMockHandler.StartOpenAIMock())
+            {
+                this.port = OpenAIMockHandler.Port.ToString();
+            }
+            else
+            {
+                this.port = Environment.GetEnvironmentVariable(&quot;OPENAI_MOCK_PORT&quot;) ?? &quot;8020&quot;;
+            }
+
+            this.EnsureOpenAIMockMinimumVersion();
+        }
+
+        public void Dispose()
+        {
+            OpenAIMockHandler.StopOpenAIMock();
+        }
+
+        /// &lt;summary&gt;
+        /// Creates and returns a new instance of &lt;see cref=&quot;OpenAIClient&quot;/&gt; suitable for use with
+        /// openai-mock.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;httpClient&quot;&gt;
+        /// The &lt;see cref=&quot;IHttpClient&quot;/&gt; client to use. If &lt;c&gt;null&lt;/c&gt;, an HTTP client will be
+        /// created with default parameters.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;The new &lt;see cref=&quot;OpenAIClient&quot;/&gt; instance.&lt;/returns&gt;
+        public OpenAIClient BuildOpenAIClient(IHttpClient httpClient = null)
+        {
+            return new OpenAIClient(
+                &quot;sk-test&quot;,
+                &quot;org_123&quot;,
+                httpClient: httpClient,
+                apiBase: $&quot;http://localhost:{this.port}&quot;);
+        }
+
+        /// &lt;summary&gt;
+        /// Gets fixture data with expansions specified. Expansions are specified the same way as
+        /// they are in the normal API like &lt;c&gt;customer&lt;/c&gt; or &lt;c&gt;data.customer&lt;/c&gt;.
+        /// Use the special &lt;c&gt;*&lt;/c&gt; character to specify that all fields should be
+        /// expanded.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;path&quot;&gt;API path to use to get a fixture for openai-mock.&lt;/param&gt;
+        /// &lt;param name=&quot;expansions&quot;&gt;Set of expansions that should be applied.&lt;/param&gt;
+        /// &lt;returns&gt;Fixture data encoded as JSON.&lt;/returns&gt;
+        public string GetFixture(string path, string[] expansions = null)
+        {
+            string url = $&quot;http://localhost:{this.port}{path}&quot;;
+
+            if (expansions != null)
+            {
+                string query = string.Join(&quot;&amp;&quot;, expansions.Select(x =&gt; $&quot;expand[]={x}&quot;).ToArray());
+                url += $&quot;?{query}&quot;;
+            }
+
+            using (System.Net.Http.HttpClient client = new System.Net.Http.HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization
+                    = new System.Net.Http.Headers.AuthenticationHeaderValue(
+                        &quot;Bearer&quot;,
+                        &quot;sk-test&quot;);
+
+                HttpResponseMessage response;
+
+                try
+                {
+                    response = client.GetAsync(url).Result;
+                }
+                catch (Exception)
+                {
+                    throw new OpenAITestException(
+                        $&quot;Couldn&#39;t reach openai-mock at `localhost:{this.port}`. &quot;
+                        + &quot;Is it running? Please see README for setup instructions.&quot;);
+                }
+
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new OpenAITestException(
+                        $&quot;openai-mock returned status code: {response.StatusCode}.&quot;);
+                }
+
+                return response.Content.ReadAsStringAsync().Result;
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// Compares two version strings.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;a&quot;&gt;A version string (e.g. &quot;1.2.3&quot;).&lt;/param&gt;
+        /// &lt;param name=&quot;b&quot;&gt;Another version string.&lt;/param&gt;
+        /// &lt;returns&gt;-1 if a &amp;gt; b, 1 if a &amp;lt; b, 0 if a == b.&lt;/returns&gt;
+        private static int CompareVersions(string a, string b)
+        {
+            var version1 = new Version(a);
+            var version2 = new Version(b);
+            return version2.CompareTo(version1);
+        }
+
+        private void EnsureOpenAIMockMinimumVersion()
+        {
+            string url = $&quot;http://localhost:{this.port}/v1/version&quot;;
+
+            using (System.Net.Http.HttpClient client = new System.Net.Http.HttpClient())
+            {
+                HttpResponseMessage response;
+
+                try
+                {
+                    response = client.GetAsync(url).Result;
+                }
+                catch (Exception)
+                {
+                    throw new OpenAITestException(
+                        $&quot;Couldn&#39;t reach openai-mock at `localhost:{this.port}`. &quot;
+                        + &quot;Is it running? Please see README for setup instructions.&quot;);
+                }
+
+                string json = response.Content.ReadAsStringAsync().Result;
+
+                //string version = System.Text.Json.JsonDocument.Parse(json).RootElement.GetProperty(&quot;version&quot;).GetString();
+                dynamic d = JObject.Parse(json);
+
+                string version = ((Newtonsoft.Json.Linq.JValue)d.version).Value.ToString();
+
+                if (!version.Equals(MockMinimumVersion))
+                {
+                    throw new OpenAITestException(
+                        $&quot;openai-mock version {version} is not supported. &quot;
+                        + $&quot;Please upgrade to at least version {MockMinimumVersion}.&quot;);
+                }
+            }
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[19,9,19,35,1],[21,13,21,53,1],[23,17,23,63,1],[27,17,27,94,0],[30,13,30,51,1],[31,9,31,10,1],[35,13,35,48,1],[36,9,36,10,1],[49,13,53,59,1],[67,13,67,64,1],[69,13,69,36,1],[71,17,71,72,0],[71,72,71,87,0],[71,87,71,100,0],[72,17,72,36,0],[75,20,75,88,1],[77,17,80,36,1],[86,21,86,60,1],[87,17,87,18,1],[88,17,88,34,0],[90,21,92,87,0],[95,17,95,62,1],[97,21,98,86,0],[101,17,101,68,1],[103,9,103,10,1],[113,13,113,43,0],[114,13,114,43,0],[115,13,115,49,0],[120,13,120,69,1],[122,20,122,88,1],[128,21,128,60,1],[129,17,129,18,1],[130,17,130,34,0],[132,21,134,87,0],[137,17,137,75,1],[140,17,140,49,1],[142,17,142,92,1],[144,17,144,57,1],[146,21,148,88,0],[150,13,150,14,1],[151,9,151,10,1]]);
+    </script>
+  </body>
+</html>

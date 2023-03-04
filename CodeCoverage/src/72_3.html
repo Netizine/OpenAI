@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\MockHttpClientFixture.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Tests
+{
+    using System;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Moq;
+    using Moq.Protected;
+    using OpenAI;
+
+    public class MockHttpClientFixture
+    {
+        public MockHttpClientFixture()
+        {
+            this.MockHandler = new Mock&lt;HttpClientHandler&gt;
+            {
+                CallBase = true,
+            };
+            this.HttpClient = new SystemNetHttpClient(
+                new System.Net.Http.HttpClient(this.MockHandler.Object));
+        }
+
+        public Mock&lt;HttpClientHandler&gt; MockHandler { get; }
+
+        public SystemNetHttpClient HttpClient { get; }
+
+        /// &lt;summary&gt;
+        /// Resets the mock&#39;s state.
+        /// &lt;/summary&gt;
+        public void Reset()
+        {
+            this.MockHandler.Reset();
+        }
+
+        /// &lt;summary&gt;
+        /// Asserts that a single HTTP request was made with the specified method and path.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;method&quot;&gt;The HTTP method.&lt;/param&gt;
+        /// &lt;param name=&quot;path&quot;&gt;The HTTP path.&lt;/param&gt;
+        public void AssertRequest(HttpMethod method, string path)
+        {
+            this.MockHandler.Protected()
+                .Verify(
+                    &quot;SendAsync&quot;,
+                    Times.Once(),
+                    ItExpr.Is&lt;HttpRequestMessage&gt;(m =&gt;
+                        m.Method == method &amp;&amp;
+                        m.RequestUri.AbsolutePath == path),
+                    ItExpr.IsAny&lt;CancellationToken&gt;());
+        }
+
+        /// &lt;summary&gt;
+        /// Stubs an HTTP request with the specified method and path to return the specified status
+        /// code and response body.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;method&quot;&gt;The HTTP method.&lt;/param&gt;
+        /// &lt;param name=&quot;path&quot;&gt;The HTTP path.&lt;/param&gt;
+        /// &lt;param name=&quot;status&quot;&gt;The status code to return.&lt;/param&gt;
+        /// &lt;param name=&quot;response&quot;&gt;The response body to return.&lt;/param&gt;
+        /// &lt;param name=&quot;query&quot;&gt;The HTTP query.&lt;/param&gt;
+        public void StubRequest(HttpMethod method, string path, HttpStatusCode status, string response, string query = null)
+        {
+            var responseMessage = new HttpResponseMessage(status);
+            responseMessage.Content = new StringContent(response);
+
+            this.MockHandler.Protected()
+                .Setup&lt;Task&lt;HttpResponseMessage&gt;&gt;(
+                    &quot;SendAsync&quot;,
+                    ItExpr.Is&lt;HttpRequestMessage&gt;(m =&gt;
+                        (m.Method == method &amp;&amp;
+                        m.RequestUri.AbsolutePath == path) &amp;&amp;
+                        (query == null || m.RequestUri.Query == query)),
+                    ItExpr.IsAny&lt;CancellationToken&gt;())
+                .Returns(Task.FromResult(responseMessage));
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[14,9,14,39,1],[16,13,19,15,1],[20,13,21,74,1],[22,9,22,10,1],[24,54,24,58,1],[26,49,26,53,0],[33,13,33,38,1],[34,9,34,10,1],[43,13,50,56,1],[51,9,51,10,1],[64,13,64,67,0],[65,13,65,67,0],[67,13,75,60,0],[76,9,76,10,0]]);
+    </script>
+  </body>
+</html>

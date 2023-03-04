@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Services\Images\ImageService.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
+
+#pragma warning disable CS1584 // XML comment has syntactically incorrect cref attribute
+#pragma warning disable CS1658 // Warning is overriding an error
+    /// &lt;summary&gt;
+    /// ImageService class.
+    /// Implements the &lt;see cref=&quot;OpenAI.Service{OpenAI.Image}&quot; /&gt;.
+    /// &lt;/summary&gt;
+    /// &lt;seealso cref=&quot;OpenAI.Service{OpenAI.Image}&quot; /&gt;
+    public class ImageService : Service&lt;Image&gt;
+#pragma warning restore CS1658 // Warning is overriding an error
+#pragma warning restore CS1584 // XML comment has syntactically incorrect cref attribute
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;ImageService&quot;/&gt; class.
+        /// &lt;/summary&gt;
+        // ReSharper disable once UnusedMember.Global
+        public ImageService()
+            : base(null)
+        {
+        }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;ImageService&quot;/&gt; class.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;client&quot;&gt;The client used by the service to send requests.&lt;/param&gt;
+        public ImageService(IOpenAIClient client)
+            : base(client)
+        {
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the base path.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;The base path.&lt;/value&gt;
+        public override string BasePath =&gt; null;
+
+        /// &lt;summary&gt;
+        /// Creates the specified image with the specified options.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;imageCreateOptions&quot;&gt;The image create options.&lt;/param&gt;
+        /// &lt;returns&gt;Image.&lt;/returns&gt;
+        public virtual Image Create(ImageCreateOptions imageCreateOptions)
+        {
+            return this.Create(imageCreateOptions, null);
+        }
+
+        /// &lt;summary&gt;
+        /// Creates the specified image with the specified options.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;imageCreateOptions&quot;&gt;The image create options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Image.&lt;/returns&gt;
+        public virtual Image Create(ImageCreateOptions imageCreateOptions, RequestOptions requestOptions)
+        {
+            return this.Request(HttpMethod.Post, &quot;/v1/images/generations&quot;, imageCreateOptions, requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Creates the specified image with the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;imageCreateOptions&quot;&gt;The image create options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Image&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;Image&gt; CreateAsync(ImageCreateOptions imageCreateOptions)
+        {
+            return this.CreateAsync(imageCreateOptions, null, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Creates the specified image with the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;imageCreateOptions&quot;&gt;The image create options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Image&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;Image&gt; CreateAsync(ImageCreateOptions imageCreateOptions, RequestOptions requestOptions)
+        {
+            return this.CreateAsync(imageCreateOptions, requestOptions, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Creates the specified image with the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;imageCreateOptions&quot;&gt;The image create options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Image&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;Image&gt; CreateAsync(ImageCreateOptions imageCreateOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.RequestAsync(HttpMethod.Post, &quot;/v1/images/generations&quot;, imageCreateOptions, requestOptions, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Edits the image with the specified options.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;editImageCreateOptions&quot;&gt;The edit image create options.&lt;/param&gt;
+        /// &lt;returns&gt;Image.&lt;/returns&gt;
+        public virtual Image Edit(EditImageCreateOptions editImageCreateOptions)
+        {
+            return this.Edit(editImageCreateOptions, null);
+        }
+
+        /// &lt;summary&gt;
+        /// Edits the image with the specified options.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;editImageCreateOptions&quot;&gt;The edit image create options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Image.&lt;/returns&gt;
+        public virtual Image Edit(EditImageCreateOptions editImageCreateOptions, RequestOptions requestOptions)
+        {
+            return this.Request(HttpMethod.Post, &quot;/v1/images/edits&quot;, editImageCreateOptions, requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        /// Edits the image with the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;editImageCreateOptions&quot;&gt;The edit image create options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Image&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;Image&gt; EditAsync(EditImageCreateOptions editImageCreateOptions)
+        {
+            return this.EditAsync(editImageCreateOptions, null, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Edits the image with the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;editImageCreateOptions&quot;&gt;The edit image create options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Image&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;Image&gt; EditAsync(EditImageCreateOptions editImageCreateOptions, CancellationToken cancellationToken)
+        {
+            return this.EditAsync(editImageCreateOptions, null, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Edits the image with the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;editImageCreateOptions&quot;&gt;The edit image create options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Image&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;Image&gt; EditAsync(EditImageCreateOptions editImageCreateOptions, RequestOptions requestOptions)
+        {
+            return this.EditAsync(editImageCreateOptions, requestOptions, default);
+        }
+
+        /// &lt;summary&gt;
+        /// Edits the image with the specified options asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;editImageCreateOptions&quot;&gt;The edit image create options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Image&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;Image&gt; EditAsync(EditImageCreateOptions editImageCreateOptions, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.RequestAsync(HttpMethod.Post, &quot;/v1/images/edits&quot;, editImageCreateOptions, requestOptions, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        /// Creates a image variation.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;imageVariationCreateOption&quot;&gt;The image variation create options.&lt;/param&gt;
+        /// &lt;returns&gt;Image.&lt;/returns&gt;
+        public virtual Image CreateVariation(ImageVariationCreateOption imageVariationCreateOption)
+        {
+            return this.CreateVariation(imageVariationCreateOption, null);
+        }
+
+        /// &lt;summary&gt;
+        /// Creates image variations.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;imageVariationCreateOption&quot;&gt;The image variation create options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Image.&lt;/returns&gt;
+        public virtual Image CreateVariation(ImageVariationCreateOption imageVariationCreateOption, RequestOptions requestOptions)
+        {
+            return this.Request(HttpMethod.Post, &quot;/v1/images/variations&quot;, imageVariationCreateOption, requestOptions);
+        }
+
+        /// &lt;summary&gt;
+        ///  Creates image variations asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;imageVariationCreateOption&quot;&gt;The image variation create options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Image&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;Image&gt; CreateVariationAsync(ImageVariationCreateOption imageVariationCreateOption)
+        {
+            return this.CreateVariationAsync(imageVariationCreateOption, null, default);
+        }
+
+        /// &lt;summary&gt;
+        ///  Creates image variations asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;imageVariationCreateOption&quot;&gt;The image variation create options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Image&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;Image&gt; CreateVariationAsync(ImageVariationCreateOption imageVariationCreateOption, CancellationToken cancellationToken)
+        {
+            return this.CreateVariationAsync(imageVariationCreateOption, null, cancellationToken);
+        }
+
+        /// &lt;summary&gt;
+        ///  Creates image variations asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;imageVariationCreateOption&quot;&gt;The image variation create options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Image&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;Image&gt; CreateVariationAsync(ImageVariationCreateOption imageVariationCreateOption, RequestOptions requestOptions)
+        {
+            return this.CreateVariationAsync(imageVariationCreateOption, requestOptions, default);
+        }
+
+        /// &lt;summary&gt;
+        ///  Creates image variations asynchronously.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;imageVariationCreateOption&quot;&gt;The image variation create options.&lt;/param&gt;
+        /// &lt;param name=&quot;requestOptions&quot;&gt;The request options.&lt;/param&gt;
+        /// &lt;param name=&quot;cancellationToken&quot;&gt;The cancellation token that can be used by other objects or threads to receive notice of cancellation.&lt;/param&gt;
+        /// &lt;returns&gt;Task&amp;lt;Image&amp;gt;.&lt;/returns&gt;
+        public virtual Task&lt;Image&gt; CreateVariationAsync(ImageVariationCreateOption imageVariationCreateOption, RequestOptions requestOptions, CancellationToken cancellationToken)
+        {
+            return this.RequestAsync(HttpMethod.Post, &quot;/v1/images/variations&quot;, imageVariationCreateOption, requestOptions, cancellationToken);
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[23,15,23,25,0],[25,9,25,10,0],[32,15,32,27,1],[34,9,34,10,1],[40,44,40,48,0],[49,13,49,58,1],[60,13,60,112,1],[70,13,70,72,1],[81,13,81,82,0],[93,13,93,136,1],[103,13,103,60,1],[114,13,114,110,1],[124,13,124,74,1],[135,13,135,84,0],[146,13,146,84,0],[158,13,158,134,1],[168,13,168,75,1],[179,13,179,119,1],[189,13,189,89,1],[200,13,200,99,0],[211,13,211,99,0],[223,13,223,143,1]]);
+    </script>
+  </body>
+</html>

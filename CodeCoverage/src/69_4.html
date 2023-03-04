@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Infrastructure\TestData\TestOptions.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Tests.Infrastructure.TestData
+{
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Runtime.Serialization;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using OpenAI;
+    using OpenAI.Infrastructure;
+
+    public class TestOptions : BaseOptions
+    {
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum TestEnum
+        {
+            [EnumMember(Value = &quot;test_one&quot;)]
+            TestOne,
+
+            // TestTwo purposefully doesn&#39;t define a serialization value
+            TestTwo,
+        }
+
+        [JsonProperty(&quot;any_of&quot;)]
+        [JsonConverter(typeof(AnyOfConverter))]
+        public AnyOf&lt;string, Dictionary&lt;string, string&gt;&gt; AnyOf { get; set; }
+
+        [JsonProperty(&quot;array&quot;)]
+        public string[] Array { get; set; }
+
+        [JsonProperty(&quot;bool&quot;)]
+        public bool? Bool { get; set; }
+
+        [JsonProperty(&quot;datetime&quot;)]
+        public DateTime? DateTime { get; set; }
+
+        [JsonProperty(&quot;decimal&quot;)]
+        public decimal? Decimal { get; set; }
+
+        [JsonProperty(&quot;dictionary&quot;)]
+        public Dictionary&lt;string, object&gt; Dictionary { get; set; }
+
+        [JsonProperty(&quot;enum&quot;)]
+        public TestEnum? Enum { get; set; }
+
+        [JsonProperty(&quot;list&quot;)]
+        public List&lt;object&gt; List { get; set; }
+
+        [JsonProperty(&quot;long&quot;)]
+        public long? Long { get; set; }
+
+        [JsonProperty(&quot;stream&quot;)]
+        public Stream Stream { get; set; }
+
+        [JsonProperty(&quot;string&quot;)]
+        public string String { get; set; }
+
+        [JsonProperty(&quot;string_enum&quot;)]
+        public TestStringEnum StringEnum { get; set; }
+
+        public class TestStringEnum : StringEnum
+        {
+            public static readonly TestStringEnum Foo = new TestStringEnum(&quot;foo&quot;);
+
+            private TestStringEnum(string value)
+                : base(value)
+            {
+            }
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[26,66,26,70,1],[26,71,26,75,1],[29,33,29,37,1],[29,38,29,42,1],[32,29,32,33,1],[32,34,32,38,1],[35,37,35,41,1],[35,42,35,46,1],[38,35,38,39,1],[38,40,38,44,1],[41,56,41,60,1],[41,61,41,65,1],[44,33,44,37,1],[44,38,44,42,1],[47,36,47,40,1],[47,41,47,45,1],[50,29,50,33,1],[50,34,50,38,1],[53,32,53,36,1],[53,37,53,41,1],[56,32,56,36,1],[56,37,56,41,1],[59,44,59,48,1],[59,49,59,53,1],[63,13,63,83,1],[66,19,66,30,1],[68,13,68,14,1]]);
+    </script>
+  </body>
+</html>

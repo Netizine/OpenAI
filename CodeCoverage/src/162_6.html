@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Services\FineTunes\FineTuneCreateOptions.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    using System.Collections.Generic;
+    using Newtonsoft.Json;
+
+    /// &lt;summary&gt;
+    /// Creates a job that fine-tunes a specified model from a given dataset.
+    /// &lt;/summary&gt;
+    public class FineTuneCreateOptions : BaseOptions
+    {
+        /// &lt;summary&gt;
+        /// The ID of an uploaded file that contains training data.
+        /// See &lt;see href=&quot;https://beta.openai.com/docs/api-reference/files/upload&quot;&gt;upload file&lt;/see&gt; for how to upload a file.
+        /// Your dataset must be formatted as a JSONL file, where each training example is a JSON object with the keys \&quot;prompt\&quot; and \&quot;completion\&quot;.
+        /// Additionally, you must upload your file with the purpose `fine-tune`.
+        /// See the &lt;see href=&quot;https://beta.openai.com/docs/guides/fine-tuning/creating-training-data&quot;&gt;fine-tuning guide&lt;/see&gt; for more details.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;training_file&quot;)]
+        public string TrainingFile { get; set; }
+
+        /// &lt;summary&gt;
+        /// The ID of an uploaded file that contains validation data.
+        /// If you provide this file, the data is used to generate validation metrics periodically during fine-tuning.
+        /// These metrics can be viewed in the &lt;see href=&quot;https://beta.openai.com/docs/guides/fine-tuning/analyzing-your-fine-tuned-model&quot;&gt;fine-tuning results file&lt;/see&gt;.
+        /// Your train and validation data should be mutually exclusive.
+        /// Your dataset must be formatted as a JSONL file, where each validation example is a JSON object with the keys \&quot;prompt\&quot; and \&quot;completion\&quot;.
+        /// Additionally, you must upload your file with the purpose `fine-tune`.
+        /// See the &lt;see href=&quot;https://beta.openai.com/docs/guides/fine-tuning/creating-training-data&quot;&gt;fine-tuning guide&lt;/see&gt; for more details.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;validation_file&quot;)]
+        public string ValidationFile { get; set; }
+
+        /// &lt;summary&gt;
+        /// The name of the base model to fine-tune. You can select one of \&quot;ada\&quot;, \&quot;babbage\&quot;, \&quot;curie\&quot;, \&quot;davinci\&quot;, or a fine-tuned model created after 2022-04-21.
+        /// To learn more about these models, see the &lt;see href=&quot;https://beta.openai.com/docs/models&quot;&gt;Models&lt;/see&gt; documentation.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;model&quot;)]
+        public string Model { get; set; }
+
+        /// &lt;summary&gt;
+        /// The number of epochs to train the model for.
+        /// An epoch refers to one full cycle through the training dataset.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;n_epochs&quot;)]
+        public int? NEpochs { get; set; }
+
+        /// &lt;summary&gt;
+        /// The batch size to use for training.
+        /// The batch size is the number of training examples used to train a single forward and backward pass.
+        /// By default, the batch size will be dynamically configured to be ~0.2% of the number of examples in the training set, capped at 256 - in general, OpenAI has found that larger batch sizes tend to work better for larger datasets.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;batch_size&quot;)]
+        public int? BatchSize { get; set; }
+
+        /// &lt;summary&gt;
+        /// The learning rate multiplier to use for training.
+        /// The fine-tuning learning rate is the original learning rate used for pretraining multiplied by this value.
+        /// By default, the learning rate multiplier is the 0.05, 0.1, or 0.2 depending on final `batch_size` (larger learning rates tend to perform better with larger batch sizes).
+        /// OpenAI recommend experimenting with values in the range 0.02 to 0.2 to see what produces the best results.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;learning_rate_multiplier&quot;)]
+        public decimal? LearningRateMultiplier { get; set; }
+
+        /// &lt;summary&gt;
+        /// The weight to use for loss on the prompt tokens.
+        /// This controls how much the model tries to learn to generate the prompt (as compared to the completion which always has a weight of 1.0), and can add a stabilizing effect to training when completions are short.
+        /// If prompts are extremely long (relative to completions), it may make sense to reduce this weight so as to avoid over-prioritizing learning the prompt.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;prompt_loss_weight&quot;)]
+        public decimal? PromptLossWeight { get; set; }
+
+        /// &lt;summary&gt;
+        /// If set, OpenAI calculate classification-specific metrics such as accuracy and F-1 score using the validation set at the end of every epoch.
+        /// These metrics can be viewed in the &lt;see href=&quot;https://beta.openai.com/docs/guides/fine-tuning/analyzing-your-fine-tuned-model&quot;&gt;results file&lt;/see&gt;.
+        /// In order to compute classification metrics, you must provide a `validation_file`.
+        /// Additionally, you must specify `classification_n_classes` for multiclass classification or `classification_positive_class` for binary classification.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;compute_classification_metrics&quot;)]
+        public bool? ComputeClassificationMetrics { get; set; }
+
+        /// &lt;summary&gt;
+        /// The number of classes in a classification task.
+        /// This parameter is required for multiclass classification.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;classification_n_classes&quot;)]
+        public int? ClassificationNClasses { get; set; }
+
+        /// &lt;summary&gt;
+        /// The positive class in binary classification.
+        /// This parameter is needed to generate precision, recall, and F1 metrics when doing binary classification.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;classification_positive_class&quot;)]
+        public string ClassificationPositiveClass { get; set; }
+
+        /// &lt;summary&gt;
+        /// If this is provided, OpenAI calculate F-beta scores at the specified beta values.
+        /// The F-beta score is a generalization of F-1 score.
+        /// This is only used for binary classification.
+        /// With a beta of 1 (i.e. the F-1 score), precision and recall are given the same weight.
+        /// A larger beta score puts more weight on recall and less on precision.
+        /// A smaller beta score puts more weight on precision and less on recall.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;classification_betas&quot;)]
+        public List&lt;decimal?&gt; ClassificationBetas { get; set; }
+
+        /// &lt;summary&gt;
+        /// A string of up to 40 characters that will be added to your fine-tuned model name.
+        /// For example, a `suffix` of \&quot;custom-model-name\&quot; would produce a model name like `ada:ft-your-org:custom-model-name-2022-02-15-04-21-04`.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;suffix&quot;)]
+        public string Suffix { get; set; }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[19,38,19,42,1],[19,43,19,47,1],[31,40,31,44,1],[31,45,31,49,0],[38,31,38,35,1],[38,36,38,40,0],[45,31,45,35,1],[45,36,45,40,0],[53,33,53,37,1],[53,38,53,42,0],[62,50,62,54,1],[62,55,62,59,0],[70,44,70,48,1],[70,49,70,53,0],[79,53,79,57,1],[79,58,79,62,0],[86,46,86,50,1],[86,51,86,55,0],[93,53,93,57,1],[93,58,93,62,0],[104,53,104,57,1],[104,58,104,62,0],[111,32,111,36,1],[111,37,111,41,0]]);
+    </script>
+  </body>
+</html>

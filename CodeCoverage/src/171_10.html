@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Services\Images\ImageVariationCreateOption.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    using Newtonsoft.Json;
+
+    /// &lt;summary&gt;
+    /// Creates a variation of a given image.
+    /// &lt;/summary&gt;
+    public class ImageVariationCreateOption : BaseOptions
+    {
+        /// &lt;summary&gt;
+        /// The image to use as the basis for the variation(s). Must be a valid PNG file, less than 4MB, and square.
+        /// If mask is not provided, image must have transparency, which will be used as the mask.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;image&quot;)]
+        public string Image { get; set; }
+
+        /// &lt;summary&gt;
+        /// The image source path.
+        /// &lt;/summary&gt;
+        [JsonIgnore]
+        public byte[] ImageSource { get; set; }
+
+        /// &lt;summary&gt;
+        /// The number of images to generate. Must be between 1 and 10.
+        /// Defaults to 1.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;n&quot;)]
+        public int? N { get; set; }
+
+        /// &lt;summary&gt;
+        /// The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024.
+        /// Defaults to 1024x1024.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;size&quot;)]
+        public string Size { get; set; }
+
+        /// &lt;summary&gt;
+        /// The format in which the generated images are returned.
+        /// Must be one of url or b64_json. Defaults to url.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;response_format&quot;)]
+        public string ResponseFormat { get; set; }
+
+        /// &lt;summary&gt;
+        /// A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse.
+        /// &lt;see href=&quot;https://beta.openai.com/docs/guides/safety-best-practices/end-user-ids&quot;&gt;Learn more&lt;/see&gt;.
+        /// &lt;/summary&gt;
+        [JsonProperty(&quot;user&quot;)]
+        public string User { get; set; }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[15,31,15,35,1],[15,36,15,40,1],[21,37,21,41,1],[21,42,21,46,1],[28,25,28,29,1],[28,30,28,34,1],[35,30,35,34,1],[35,35,35,39,1],[42,40,42,44,1],[42,45,42,49,0],[49,30,49,34,1],[49,35,49,39,0]]);
+    </script>
+  </body>
+</html>

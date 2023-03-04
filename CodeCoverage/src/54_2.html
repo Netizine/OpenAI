@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Services\Images\ImageServiceTest.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI.Tests.Services.Images
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+
+    using OpenAI;
+    using Xunit;
+
+    public class ImageServiceTest : BaseOpenAITest
+    {
+        private readonly ImageService service;
+        private readonly ImageCreateOptions imageCreateOptions;
+        private readonly EditImageCreateOptions editCreateOptions;
+        private readonly ImageVariationCreateOption variationCreateOptions;
+
+        public ImageServiceTest(
+            OpenAIMockFixture openAIMockFixture,
+            MockHttpClientFixture mockHttpClientFixture)
+            : base(openAIMockFixture, mockHttpClientFixture)
+        {
+            this.service = new ImageService(this.OpenAIClient);
+
+            this.imageCreateOptions = new ImageCreateOptions
+            {
+                Prompt = &quot;A cute baby sea otter&quot;,
+                N = 2,
+                Size = &quot;1024x1024&quot;,
+            };
+
+            this.editCreateOptions = new EditImageCreateOptions
+            {
+                Image = &quot;otters.png&quot;,
+                ImageSource = System.IO.File.ReadAllBytes(&quot;otters.png&quot;),
+                Mask = &quot;otters-mask.png&quot;,
+                MaskSource = System.IO.File.ReadAllBytes(&quot;otters-mask.png&quot;),
+                Prompt = &quot;A cute baby sea otter wearing a beret&quot;,
+                N = 2,
+                Size = &quot;1024x1024&quot;,
+            };
+
+            this.variationCreateOptions = new ImageVariationCreateOption
+            {
+                Image = &quot;otters.png&quot;,
+                ImageSource = System.IO.File.ReadAllBytes(&quot;otters.png&quot;),
+                N = 2,
+                Size = &quot;1024x1024&quot;,
+            };
+        }
+
+        [Fact]
+        public void Create()
+        {
+            var image = this.service.Create(this.imageCreateOptions);
+            this.AssertRequest(HttpMethod.Post, &quot;/v1/images/generations&quot;);
+            Assert.NotNull(image);
+            Assert.IsType&lt;Image&gt;(image);
+            Assert.NotEmpty(image.Data);
+            Assert.StartsWith(&quot;https&quot;, image.Data[0].Url);
+        }
+
+        [Fact]
+        public async Task CreateAsync()
+        {
+            var image = await this.service.CreateAsync(this.imageCreateOptions);
+            this.AssertRequest(HttpMethod.Post, &quot;/v1/images/generations&quot;);
+            Assert.NotNull(image);
+            Assert.IsType&lt;Image&gt;(image);
+            Assert.NotEmpty(image.Data);
+            Assert.StartsWith(&quot;https&quot;, image.Data[0].Url);
+        }
+
+        [Fact]
+        public void Edit()
+        {
+            var image = this.service.Edit(this.editCreateOptions);
+            this.AssertRequest(HttpMethod.Post, &quot;/v1/images/edits&quot;);
+            Assert.NotNull(image);
+            Assert.IsType&lt;Image&gt;(image);
+            Assert.NotEmpty(image.Data);
+            Assert.StartsWith(&quot;https&quot;, image.Data[0].Url);
+        }
+
+        [Fact]
+        public async Task EditAsync()
+        {
+            var image = await this.service.EditAsync(this.editCreateOptions);
+            this.AssertRequest(HttpMethod.Post, &quot;/v1/images/edits&quot;);
+            Assert.NotNull(image);
+            Assert.IsType&lt;Image&gt;(image);
+            Assert.NotEmpty(image.Data);
+            Assert.StartsWith(&quot;https&quot;, image.Data[0].Url);
+        }
+
+        [Fact]
+        public void CreateVariation()
+        {
+            var image = this.service.CreateVariation(this.variationCreateOptions);
+            this.AssertRequest(HttpMethod.Post, &quot;/v1/images/variations&quot;);
+            Assert.NotNull(image);
+            Assert.IsType&lt;Image&gt;(image);
+            Assert.NotEmpty(image.Data);
+            Assert.StartsWith(&quot;https&quot;, image.Data[0].Url);
+        }
+
+        [Fact]
+        public async Task CreateVariationAsync()
+        {
+            var image = await this.service.CreateVariationAsync(this.variationCreateOptions);
+            this.AssertRequest(HttpMethod.Post, &quot;/v1/images/variations&quot;);
+            Assert.NotNull(image);
+            Assert.IsType&lt;Image&gt;(image);
+            Assert.NotEmpty(image.Data);
+            Assert.StartsWith(&quot;https&quot;, image.Data[0].Url);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[22,15,22,61,1],[24,13,24,64,1],[26,13,31,15,1],[33,13,42,15,1],[44,13,50,15,1],[51,9,51,10,1],[56,13,56,70,1],[57,13,57,75,1],[58,13,58,35,1],[59,13,59,41,1],[60,13,60,41,1],[61,13,61,59,1],[62,9,62,10,1],[67,13,67,81,1],[68,13,68,75,1],[69,13,69,35,1],[70,13,70,41,1],[71,13,71,41,1],[72,13,72,59,1],[73,9,73,10,1],[78,13,78,67,1],[79,13,79,69,1],[80,13,80,35,1],[81,13,81,41,1],[82,13,82,41,1],[83,13,83,59,1],[84,9,84,10,1],[89,13,89,78,1],[90,13,90,69,1],[91,13,91,35,1],[92,13,92,41,1],[93,13,93,41,1],[94,13,94,59,1],[95,9,95,10,1],[100,13,100,83,1],[101,13,101,74,1],[102,13,102,35,1],[103,13,103,41,1],[104,13,104,41,1],[105,13,105,59,1],[106,9,106,10,1],[111,13,111,94,1],[112,13,112,74,1],[113,13,113,35,1],[114,13,114,41,1],[115,13,115,41,1],[116,13,116,59,1],[117,9,117,10,1]]);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\tests\Netizine.OpenAI.Tests\Infrastructure\Public\OpenAIResponseTest.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+#pragma warning disable CS0618
+namespace OpenAI.Tests
+{
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Http.Headers;
+    using OpenAI;
+    using Xunit;
+
+    public class OpenAIResponseTest : BaseOpenAITest
+    {
+        public OpenAIResponseTest(OpenAIMockFixture openAIMockFixture)
+            : base(openAIMockFixture)
+        {
+        }
+
+        /* Most of OpenAIResponse&#39;s methods are helpers for accessing headers. Unfortunately,
+         * HttpResponseHeaders is a sealed class with no public constructor, which makes it
+         * ~impossible to write unit tests for OpenAIResponse. This is why we rely on real
+         * requests and fetch OpenAIResponse instances attached to resources.
+         */
+
+        [Fact]
+        public void Date()
+        {
+            var response = new EngineService(this.OpenAIClient).Get(&quot;text-davinci-003&quot;).OpenAIResponse;
+
+            Assert.NotNull(response.Date);
+        }
+
+        // James
+        //[Fact]
+        //public void OrganizationIdKey_Present()
+        //{
+        //    var requestOptions = new RequestOptions { OrganizationId = &quot;organization_key&quot; };
+        //    var response = new EngineService(this.OpenAIClient).Get(&quot;text-davinci-003&quot;, null, requestOptions).OpenAIResponse;
+
+        //    Assert.Equal(&quot;organization_key&quot;, response.OrganizationId);
+        //}
+
+        // James
+        // [Fact]
+        // public void OrganizationIdKey_Absent()
+        // {
+        //     var response = new AccountService(this.OpenAIClient).GetSelf().OpenAIResponse;
+        //
+        //     Assert.Null(response.OrganizationId);
+        // }
+
+        // James
+        // [Fact]
+        // public void RequestId()
+        // {
+        //     var response = new AccountService(this.OpenAIClient).GetSelf().OpenAIResponse;
+        //
+        //     Assert.NotNull(response.RequestId);
+        // }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[13,15,13,38,1],[15,9,15,10,1],[26,13,26,104,1],[28,13,28,43,1],[29,9,29,10,1]]);
+    </script>
+  </body>
+</html>

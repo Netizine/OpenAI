@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Projects\Netizine.OpenAI\src\Netizine.OpenAI\Services\Files\FileCreateOptions.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace OpenAI
+{
+    using Newtonsoft.Json;
+
+    /// &lt;summary&gt;
+    /// Class FileCreateOptions.
+    /// Implements the &lt;see cref=&quot;OpenAI.BaseOptions&quot; /&gt;.
+    /// &lt;/summary&gt;
+    /// &lt;seealso cref=&quot;OpenAI.BaseOptions&quot; /&gt;
+    public class FileCreateOptions : BaseOptions
+    {
+        /// &lt;summary&gt;
+        /// Gets or sets the purpose.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;The purpose.&lt;/value&gt;
+        [JsonProperty(&quot;purpose&quot;)]
+        public string Purpose { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the file.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;The file.&lt;/value&gt;
+        [JsonProperty(&quot;file&quot;)]
+        public string File { get; set; }
+
+        /// &lt;summary&gt;
+        /// The file source path.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;The file source.&lt;/value&gt;
+        [JsonIgnore]
+        public byte[] FileSource { get; set; }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[17,33,17,37,1],[17,38,17,42,1],[24,30,24,34,1],[24,35,24,39,1],[31,36,31,40,1],[31,41,31,45,1]]);
+    </script>
+  </body>
+</html>

@@ -6,7 +6,6 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/Netizine/OpenAI)
 ![GitHub](https://img.shields.io/github/license/Netizine/OpenAI)
 ![Nuget](https://img.shields.io/nuget/dt/Netizine.OpenAI)
-![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/Netizine/OpenAI)
 ## The unofficial [OpenAI][openai] .NET library, supporting .NET Standard 2.0+, .NET Core 2.0+, and .NET Framework 4.6.2+.
 
 ## Installation

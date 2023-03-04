@@ -2,7 +2,6 @@
 namespace OpenAI
 {
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Reflection;
     using Newtonsoft.Json;
     using Infrastructure;
@@ -40,10 +39,7 @@ namespace OpenAI
         /// </summary>
         public static string ApiKey
         {
-            get
-            {
-                return _apiKey;
-            }
+            get => _apiKey;
 
             set
             {

@@ -430,11 +430,12 @@ namespace OpenAI
         }
 
         /// <summary>
-        /// Cancels the specified fine-tune  event by identifier asynchronously.
+        /// Cancels the specified fine-tune event by identifier asynchronously.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;FineTune&gt;.</returns>
+        // ReSharper disable UnusedMember.Global
         public virtual Task<FineTune> CancelAsync(string id, CancellationToken cancellationToken)
         {
             return CancelAsync(id, null, null, cancellationToken);
@@ -510,5 +511,6 @@ namespace OpenAI
         {
             return RequestAsync(HttpMethod.Post, $"/v1/fine-tunes/{id}/cancel", fineTuneCancelPutOptions, requestOptions, cancellationToken);
         }
+        // ReSharper restore UnusedMember.Global
     }
 }

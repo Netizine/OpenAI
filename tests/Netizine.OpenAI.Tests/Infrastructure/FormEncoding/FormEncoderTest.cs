@@ -7,7 +7,6 @@ namespace OpenAI.Tests
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-    using OpenAI;
     using OpenAI.Infrastructure.FormEncoding;
     using Infrastructure.TestData;
     using Xunit;

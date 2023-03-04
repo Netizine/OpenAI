@@ -195,7 +195,6 @@ namespace OpenAI.Infrastructure
 
         // sample input:
         // for dotnet run: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.12\
-        // for dotnet publish: C:\Users\James\source\repos\ConsoleApp25\ConsoleApp25\bin\Release\netcoreapp2.0\win-x64\publish\
         internal static bool TryGetVersionFromRuntimeDirectory(string runtimeDirectory, out Version version)
         {
             if (!string.IsNullOrEmpty(runtimeDirectory) && Version.TryParse(GetParsableVersionPart(new DirectoryInfo(runtimeDirectory).Name), out version))
@@ -207,12 +206,6 @@ namespace OpenAI.Infrastructure
             return false;
         }
 
-        // sample input:
-        // 2.0: 4.6.26614.01 @BuiltBy: dlab14-DDVSOWINAGE018 @Commit: a536e7eec55c538c94639cefe295aa672996bf9b, Microsoft .NET Framework
-        // 2.1: 4.6.27817.01 @BuiltBy: dlab14-DDVSOWINAGE101 @Branch: release/2.1 @SrcCode: https://github.com/dotnet/coreclr/tree/6f78fbb3f964b4f407a2efb713a186384a167e5c, Microsoft .NET Framework
-        // 2.2: 4.6.27817.03 @BuiltBy: dlab14-DDVSOWINAGE101 @Branch: release/2.2 @SrcCode: https://github.com/dotnet/coreclr/tree/ce1d090d33b400a25620c0145046471495067cc7, Microsoft .NET Framework
-        // 3.0: 3.0.0-preview8.19379.2+ac25be694a5385a6a1496db40de932df0689b742, Microsoft .NET Core
-        // 5.0: 5.0.0-alpha1.19413.7+0ecefa44c9d66adb8a997d5778dc6c246ad393a7, Microsoft .NET Core
         internal static bool TryGetVersionFromProductInfo(string productVersion, string productName, out Version version)
         {
             if (!string.IsNullOrEmpty(productVersion) && !string.IsNullOrEmpty(productName))

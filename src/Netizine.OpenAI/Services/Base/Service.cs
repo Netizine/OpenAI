@@ -4,7 +4,6 @@ namespace OpenAI
     using System;
     using System.Net;
     using System.Net.Http;
-    using System.Reflection;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -214,47 +213,6 @@ namespace OpenAI
         }
 
         /// <summary>
-        /// Updates the entity.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <param name="options">The options.</param>
-        /// <param name="requestOptions">The request options.</param>
-        /// <returns>The type of <see cref="IOpenAIEntity"/> that this service returns.</returns>
-        protected TEntityReturned UpdateEntity(
-            string id,
-            BaseOptions options,
-            RequestOptions requestOptions)
-        {
-            return Request(
-                HttpMethod.Post,
-                InstanceUrl(id),
-                options,
-                requestOptions);
-        }
-
-        /// <summary>
-        /// Updates the entity asynchronously.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <param name="options">The options.</param>
-        /// <param name="requestOptions">The request options.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The type of <see cref="IOpenAIEntity"/> that this service returns.</returns>
-        protected Task<TEntityReturned> UpdateEntityAsync(
-            string id,
-            BaseOptions options,
-            RequestOptions requestOptions,
-            CancellationToken cancellationToken)
-        {
-            return RequestAsync(
-                HttpMethod.Post,
-                InstanceUrl(id),
-                options,
-                requestOptions,
-                cancellationToken);
-        }
-
-        /// <summary>
         /// Requests the specified method.
         /// </summary>
         /// <param name="method">The method.</param>
@@ -439,13 +397,6 @@ namespace OpenAI
             }
 
             return $"{ClassUrl()}/{WebUtility.UrlEncode(id)}";
-        }
-
-        private static bool IsOpenAIList<T>()
-        {
-            var typeInfo = typeof(T).GetTypeInfo();
-            return typeInfo.IsGenericType
-                && typeInfo.GetGenericTypeDefinition() == typeof(OpenAIList<>);
         }
     }
 }

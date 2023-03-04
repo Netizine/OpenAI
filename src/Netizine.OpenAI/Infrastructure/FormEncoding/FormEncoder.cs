@@ -105,7 +105,7 @@ namespace OpenAI.Infrastructure.FormEncoding
             // characters back to their literals. This is fine by the server, and
             // makes these parameter strings easier to read.
             return WebUtility.UrlEncode(value)
-                ?.Replace("%5B", "[")
+                .Replace("%5B", "[")
                 .Replace("%5D", "]");
         }
 

@@ -3,7 +3,6 @@ namespace OpenAI.Tests.Entities.Engines
 {
     using Newtonsoft.Json;
     using OpenAI;
-    using System.Security.Principal;
     using Xunit;
 
     public class EngineTest : BaseOpenAITest

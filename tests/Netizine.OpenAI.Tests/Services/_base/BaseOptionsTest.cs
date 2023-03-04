@@ -1,6 +1,5 @@
 namespace OpenAI.Tests
 {
-    using System.Linq;
     using Newtonsoft.Json;
     using OpenAI;
     using Xunit;

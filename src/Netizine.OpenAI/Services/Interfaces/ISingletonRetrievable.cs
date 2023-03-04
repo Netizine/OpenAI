@@ -10,6 +10,7 @@ namespace OpenAI
     /// <typeparam name="TEntity">
     /// Type of the entity.
     /// </typeparam>
+    // ReSharper disable once UnusedMember.Global
     public interface ISingletonRetrievable<TEntity>
         where TEntity : IOpenAIEntity
     {

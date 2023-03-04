@@ -16,7 +16,7 @@ namespace OpenAI
         public float Hate { get; set; }
 
         /// <summary>
-        /// Gets the hate threatining content score.
+        /// Gets the hate threatening content score.
         /// </summary>
         [JsonProperty("hatethreatening")]
         public float HateThreatening { get; set; }

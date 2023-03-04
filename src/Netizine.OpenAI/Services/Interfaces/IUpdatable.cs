@@ -9,6 +9,7 @@ namespace OpenAI
     /// </summary>
     /// <typeparam name="TEntity">The type of the t entity.</typeparam>
     /// <typeparam name="TOptions">The type of the t options.</typeparam>
+    // ReSharper disable once UnusedMember.Global
     public interface IUpdatable<TEntity, in TOptions>
         where TEntity : IOpenAIEntity, IHasId
         where TOptions : BaseOptions, new()
@@ -36,6 +37,7 @@ namespace OpenAI
         /// <param name="id">The identifier.</param>
         /// <param name="updateOptions">The update options.</param>
         /// <returns>Task&lt;TEntity&gt;.</returns>
+        // ReSharper disable UnusedMember.Global
         Task<TEntity> UpdateAsync(string id, TOptions updateOptions);
 
         /// <summary>
@@ -65,5 +67,6 @@ namespace OpenAI
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;TEntity&gt;.</returns>
         Task<TEntity> UpdateAsync(string id, TOptions updateOptions, RequestOptions requestOptions, CancellationToken cancellationToken);
+        // ReSharper restore UnusedMember.Global
     }
 }

@@ -1,9 +1,5 @@
 namespace OpenAI.Tests
 {
-    using System.Threading.Tasks;
-    using OpenAI;
-    using Xunit;
-
     public class OpenAIExceptionTest : BaseOpenAITest
     {
         public OpenAIExceptionTest(OpenAIMockFixture openAIMockFixture)

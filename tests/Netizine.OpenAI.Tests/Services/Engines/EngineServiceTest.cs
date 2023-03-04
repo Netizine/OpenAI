@@ -1,9 +1,6 @@
 ﻿#pragma warning disable CS0618
 namespace OpenAI.Tests.Services.Engines
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Net.Http;
     using System.Threading.Tasks;
 

@@ -131,6 +131,7 @@ namespace OpenAI
         /// <param name="editImageCreateOptions">The edit image create options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;Image&gt;.</returns>
+        // ReSharper disable UnusedMember.Global
         public virtual Task<Image> EditAsync(EditImageCreateOptions editImageCreateOptions, CancellationToken cancellationToken)
         {
             return EditAsync(editImageCreateOptions, null, cancellationToken);
@@ -158,6 +159,7 @@ namespace OpenAI
         {
             return RequestAsync(HttpMethod.Post, "/v1/images/edits", editImageCreateOptions, requestOptions, cancellationToken);
         }
+        // ReSharper restore UnusedMember.Global
 
         /// <summary>
         /// Creates a image variation.
@@ -196,6 +198,7 @@ namespace OpenAI
         /// <param name="imageVariationCreateOption">The image variation create options.</param>
         /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Task&lt;Image&gt;.</returns>
+        // ReSharper disable UnusedMember.Global
         public virtual Task<Image> CreateVariationAsync(ImageVariationCreateOption imageVariationCreateOption, CancellationToken cancellationToken)
         {
             return CreateVariationAsync(imageVariationCreateOption, null, cancellationToken);
@@ -211,6 +214,7 @@ namespace OpenAI
         {
             return CreateVariationAsync(imageVariationCreateOption, requestOptions, default);
         }
+        // ReSharper restore UnusedMember.Global
 
         /// <summary>
         ///  Creates image variations asynchronously.

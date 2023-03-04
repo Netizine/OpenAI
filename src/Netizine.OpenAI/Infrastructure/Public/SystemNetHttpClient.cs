@@ -51,7 +51,7 @@ namespace OpenAI
         static SystemNetHttpClient()
         {
             // Enable support for TLS 1.2, as OpenAI's API requires it. This should only be
-            // necessary for .NET Framework 4.5 as more recent runtimes should have TLS 1.2 enabled
+            // necessary for .NET Framework 4.5 as more recent run-times should have TLS 1.2 enabled
             // by default, but it can be disabled in some environments.
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
         }

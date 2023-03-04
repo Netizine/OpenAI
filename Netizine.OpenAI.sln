@@ -6,6 +6,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sln", "sln", "{1A20A100-9E7
 	ProjectSection(SolutionItems) = preProject
 		ADVANCED_CLIENT_USAGE.md = ADVANCED_CLIENT_USAGE.md
 		CHANGELOG.md = CHANGELOG.md
+		codacy-coverage-reporter.yaml = codacy-coverage-reporter.yaml
 		.github\workflows\publish.yml = .github\workflows\publish.yml
 		README.md = README.md
 		SECURITY.md = SECURITY.md

@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
-name: publish
+name: Build And Publish
 on:
   workflow_dispatch: # Allow running the workflow manually from the GitHub UI
   push:
@@ -41,12 +41,6 @@ jobs:
       run: dotnet tool install --global OpenAI.Mock 
     - name: Run Tests
       run: dotnet test --no-restore --no-build --collect:"XPlat Code Coverage" --configuration Release
-    - name: Install Code Coverage
-      uses: codacy/codacy-coverage-reporter-action@v1
-      with:
-        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        coverage-reports: 'src/Netizine.OpenAI.Tests/TestResults/*/coverage.cobertura.xml'
-      run: d9f9b8667d9c4c15b52fe771210c3495  
     - name: Pack Nuget
       run: dotnet pack src/Netizine.OpenAI/Netizine.OpenAI.csproj --no-build --verbosity normal --output nupkgs
     - name: Get Version

@@ -1,6 +1,7 @@
 # OpenAI
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/d19cad2e2bb647c89b351e2f380e12c6)](https://www.codacy.com/gh/Netizine/OpenAI/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Netizine/OpenAI&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/d19cad2e2bb647c89b351e2f380e12c6)](https://www.codacy.com/gh/Netizine/OpenAI/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Netizine/OpenAI&amp;utm_campaign=Badge_Coverage)
 ## The unofficial [OpenAI][openai] .NET library, supporting .NET Standard 2.0+, .NET Core 2.0+, and .NET Framework 4.6.2+.
 
 ## Installation

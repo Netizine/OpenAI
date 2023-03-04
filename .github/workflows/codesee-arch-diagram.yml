@@ -1,11 +1,16 @@
 # This workflow was added by CodeSee. Learn more at https://codesee.io/
 # This is v2.0 of this workflow file
 on:
+  workflow_dispatch: # Allow running the workflow manually from the GitHub UI
   push:
     branches:
-      - master
-  pull_request_target:
-    types: [opened, synchronize, reopened]
+      - 'main'       # Run the workflow when pushing to the main branch
+  pull_request:
+    branches:
+      - '*'          # Run the workflow for all pull requests
+  release:
+    types:
+      - published    # Run the workflow when a new GitHub release is published
 
 name: CodeSee
 

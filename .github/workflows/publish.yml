@@ -40,7 +40,7 @@ jobs:
     - name: Install OpenAI.Mock
       run: dotnet tool install --global OpenAI.Mock 
     - name: Run Tests
-      run: dotnet test --configuration Release
+      run: dotnet test --no-restore --no-build --collect:"XPlat Code Coverage" --configuration Release
     - name: Pack Nuget
       run: dotnet pack src/Netizine.OpenAI/Netizine.OpenAI.csproj --no-build --verbosity normal --output nupkgs
     - name: Get Version
@@ -54,3 +54,5 @@ jobs:
       run: dotnet validate package local "nupkgs/Netizine.OpenAI.${{steps.get-version.outputs.version}}.nupkg"
     - name: Publish NuGet Package
       run: dotnet nuget push "nupkgs/Netizine.OpenAI.${{steps.get-version.outputs.version}}.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+    - name: Publish NuGet Package to Github
+      run: dotnet nuget push "nupkgs/Netizine.OpenAI.${{steps.get-version.outputs.version}}.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://nuget.pkg.github.com/NAMESPACE/index.json --skip-duplicate

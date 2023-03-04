@@ -1,4 +1,5 @@
-﻿namespace OpenAI
+﻿// ReSharper disable once CheckNamespace
+namespace OpenAI
 {
     using System;
     using System.Threading;

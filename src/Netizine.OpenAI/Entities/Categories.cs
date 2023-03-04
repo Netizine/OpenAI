@@ -1,4 +1,5 @@
 ﻿// ReSharper disable StringLiteralTypo
+// ReSharper disable once CheckNamespace
 namespace OpenAI
 {
     using Newtonsoft.Json;

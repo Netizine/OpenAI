@@ -1,4 +1,5 @@
-﻿namespace OpenAI.Infrastructure
+﻿// ReSharper disable once CheckNamespace
+namespace OpenAI.Infrastructure
 {
     using System;
     using System.Security.Cryptography;

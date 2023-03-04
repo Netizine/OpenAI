@@ -12,17 +12,27 @@ namespace OpenAI
     /// </summary>
     public static class OpenAIConfiguration
     {
-        private static string apiKey;
+        private static string _apiKey;
 
-        private static string organizationId;
+        private static int _maxNetworkRetries = SystemNetHttpClient.DefaultMaxNumberRetries;
 
-        private static int maxNetworkRetries = SystemNetHttpClient.DefaultMaxNumberRetries;
-
-        private static IOpenAIClient openAIClient;
+        private static IOpenAIClient _openAIClient;
 
         static OpenAIConfiguration()
         {
-            OpenAIClientVersion = new AssemblyName(typeof(OpenAIConfiguration).GetTypeInfo().Assembly.FullName).Version.ToString(3);
+            var assemblyName = typeof(OpenAIConfiguration).GetTypeInfo().Assembly.FullName;
+            if (assemblyName != null)
+            {
+                var version = new AssemblyName(assemblyName).Version;
+                if (version != null)
+                {
+                    OpenAIClientVersion = version.ToString(3);
+                }
+            }
+            else
+            {
+                OpenAIClientVersion = "1.0.8";
+            }
         }
 
         /// <summary>
@@ -32,32 +42,24 @@ namespace OpenAI
         {
             get
             {
-                return apiKey;
+                return _apiKey;
             }
 
             set
             {
-                if (value != apiKey)
+                if (value != _apiKey)
                 {
                     OpenAIClient = null;
                 }
 
-                apiKey = value;
+                _apiKey = value;
             }
         }
 
         /// <summary>
         /// Organization id passed to OpenAI.
         /// </summary>
-        public static string OrganizationId
-        {
-            get
-            {
-                return organizationId;
-            }
-
-            set => organizationId = value;
-        }
+        public static string OrganizationId { get; set; }
 
         /// <summary>
         /// Gets or sets the settings used for deserializing JSON objects returned by OpenAI's API.
@@ -75,16 +77,16 @@ namespace OpenAI
         /// </summary>
         public static int MaxNetworkRetries
         {
-            get => maxNetworkRetries;
+            get => _maxNetworkRetries;
 
             set
             {
-                if (value != maxNetworkRetries)
+                if (value != _maxNetworkRetries)
                 {
                     OpenAIClient = null;
                 }
 
-                maxNetworkRetries = value;
+                _maxNetworkRetries = value;
             }
         }
 
@@ -105,9 +107,9 @@ namespace OpenAI
         /// </example>
         public static IOpenAIClient OpenAIClient
         {
-            get => openAIClient ??= BuildDefaultOpenAIClient();
+            get => _openAIClient ??= BuildDefaultOpenAIClient();
 
-            set => openAIClient = value;
+            set => _openAIClient = value;
         }
 
         /// <summary>Gets the version of the OpenAI client library.</summary>

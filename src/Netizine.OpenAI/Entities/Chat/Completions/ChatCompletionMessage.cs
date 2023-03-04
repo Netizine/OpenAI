@@ -1,4 +1,5 @@
-﻿namespace OpenAI
+﻿// ReSharper disable once CheckNamespace
+namespace OpenAI
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;

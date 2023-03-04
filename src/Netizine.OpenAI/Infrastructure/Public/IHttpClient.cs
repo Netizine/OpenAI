@@ -9,6 +9,11 @@ namespace OpenAI
     /// </summary>
     public interface IHttpClient
     {
+        /// <summary>
+        /// Makes the HTTP request request asynchronously.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>Task&lt;OpenAIResponse&gt;.</returns>
         Task<OpenAIResponse> MakeRequestAsync(
             OpenAIRequest request);
 

@@ -40,6 +40,11 @@ namespace OpenAI
         /// <value>The base path.</value>
         public override string BasePath => "/v1/moderations";
 
+        /// <summary>
+        /// Gets the specified moderation results.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <returns>Moderation.</returns>
         public Moderation Get(ModerationGetOptions options)
         {
             return this.Get(options, null);

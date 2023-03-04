@@ -22,6 +22,15 @@ namespace OpenAI
         /// <value>The Organization ID used by the client.</value>
         string OrganizationId { get; }
 
+        /// <summary>
+        /// makes the HTTP requests asynchronously.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="method">The method.</param>
+        /// <param name="path">The path.</param>
+        /// <param name="options">The options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;T&gt;.</returns>
         Task<T> RequestAsync<T>(
             HttpMethod method,
             string path,

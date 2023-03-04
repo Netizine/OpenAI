@@ -212,8 +212,13 @@ namespace OpenAI
         {
             var (response, retries) = await this.SendHttpRequest(request, cancellationToken).ConfigureAwait(false);
 
+#if NET7_0 || NET6_0
+            var reader = new StreamReader(
+                await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false));
+#else
             var reader = new StreamReader(
                 await response.Content.ReadAsStreamAsync().ConfigureAwait(false));
+#endif
 
             return new OpenAIResponse(
                 response.StatusCode,

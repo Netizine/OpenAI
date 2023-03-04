@@ -1,3 +1,4 @@
+// ReSharper disable once CheckNamespace
 namespace OpenAI
 {
     using System.Threading;
@@ -12,10 +13,27 @@ namespace OpenAI
         where TEntity : IOpenAIEntity, IHasId
         where TOptions : BaseOptions, new()
     {
+        /// <summary>
+        /// Deletes the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>The deleted entity.</returns>
         TEntity Delete(string id);
 
+        /// <summary>
+        /// Deletes the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="options">The options.</param>
+        /// <returns>The deleted entity.</returns>
         TEntity Delete(string id, TOptions options);
 
+        /// <summary>
+        /// Deletes the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>The deleted entity.</returns>
         TEntity Delete(string id, RequestOptions requestOptions);
 
         /// <summary>

@@ -49,15 +49,13 @@ namespace OpenAI
                 return potentialType;
             }
 
-            if (!string.IsNullOrEmpty(objectValue) &&
-                ObjectsToTypes.TryGetValue(objectValue, out var concreteType))
+            if (string.IsNullOrEmpty(objectValue) ||
+                !ObjectsToTypes.TryGetValue(objectValue, out var concreteType)) return null;
+            // Found a concrete type matching the value of the `object` key, check if it's
+            // compatible with the interface.
+            if (potentialType != null && potentialType.GetTypeInfo().IsAssignableFrom(concreteType.GetTypeInfo()))
             {
-                // Found a concrete type matching the value of the `object` key, check if it's
-                // compatible with the interface.
-                if (potentialType.GetTypeInfo().IsAssignableFrom(concreteType.GetTypeInfo()))
-                {
-                    return concreteType;
-                }
+                return concreteType;
             }
 
             return null;

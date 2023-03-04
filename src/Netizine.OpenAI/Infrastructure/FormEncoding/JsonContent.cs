@@ -1,17 +1,12 @@
-using System.Collections.Generic;
-using System.Globalization;
-using Newtonsoft.Json.Converters;
-
+// ReSharper disable once CheckNamespace
 namespace OpenAI.Infrastructure.FormEncoding
 {
     using System;
-    using System.Data;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Text;
 
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
 
     /// <summary>
     /// A container for name/value tuples encoded using <c>application/json</c>

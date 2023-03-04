@@ -1,4 +1,5 @@
-﻿namespace OpenAI
+﻿// ReSharper disable once CheckNamespace
+namespace OpenAI
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -91,36 +92,80 @@
             return this.GetEntity(id, modelGetOptions, requestOptions);
         }
 
+        /// <summary>
+        /// Gets the specified model based on the identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Task&lt;Model&gt;.</returns>
         public virtual Task<Model> GetAsync(string id)
         {
             return this.GetAsync(id, null, null, default);
         }
 
+        /// <summary>
+        /// Gets the specified model based on the identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;Model&gt;.</returns>
         public virtual Task<Model> GetAsync(string id, CancellationToken cancellationToken)
         {
             return this.GetAsync(id, null, null, cancellationToken);
         }
 
+        /// <summary>
+        /// Gets the specified model based on the identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="modelGetOptions">The model get options.</param>
+        /// <returns>Task&lt;Model&gt;.</returns>
         public virtual Task<Model> GetAsync(string id, ModelGetOptions modelGetOptions)
         {
             return this.GetAsync(id, modelGetOptions, null, default);
         }
 
+        /// <summary>
+        /// Gets the specified model based on the identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="modelGetOptions">The model get options.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;Model&gt;.</returns>
         public virtual Task<Model> GetAsync(string id, ModelGetOptions modelGetOptions, CancellationToken cancellationToken)
         {
             return this.GetAsync(id, modelGetOptions, null, cancellationToken);
         }
 
+        /// <summary>
+        /// Gets the specified model based on the identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;Model&gt;.</returns>
         public virtual Task<Model> GetAsync(string id, RequestOptions requestOptions)
         {
             return this.GetAsync(id, null, requestOptions, default);
         }
 
+        /// <summary>
+        /// Gets the specified model based on the identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Task&lt;Model&gt;.</returns>
         public virtual Task<Model> GetAsync(string id, RequestOptions requestOptions, CancellationToken cancellationToken)
         {
             return this.GetAsync(id, null, requestOptions, cancellationToken);
         }
 
+        /// <summary>
+        /// Gets the specified model based on the identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="modelGetOptions">The model get options.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>Task&lt;Model&gt;.</returns>
         public virtual Task<Model> GetAsync(string id, ModelGetOptions modelGetOptions, RequestOptions requestOptions)
         {
             return this.GetAsync(id, modelGetOptions, requestOptions, default);
@@ -275,16 +320,30 @@
             return this.DeleteEntityAsync(id, modelDeleteOptions, requestOptions, cancellationToken);
         }
 
+        /// <summary>
+        /// Lists the specified models based on the passed options.
+        /// </summary>
+        /// <returns>OpenAIList&lt;Model&gt;.</returns>
         public virtual OpenAIList<Model> List()
         {
             return this.List(null, null);
         }
 
+        /// <summary>
+        /// Lists the specified models based on the passed options.
+        /// </summary>
+        /// <param name="modelListOptions">The model list options.</param>
+        /// <returns>OpenAIList&lt;Model&gt;.</returns>
         public virtual OpenAIList<Model> List(ModelListOptions modelListOptions)
         {
             return this.List(modelListOptions, null);
         }
 
+        /// <summary>
+        /// Lists the specified models based on the passed options.
+        /// </summary>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>OpenAIList&lt;Model&gt;.</returns>
         public virtual OpenAIList<Model> List(RequestOptions requestOptions)
         {
             return this.List(null, requestOptions);

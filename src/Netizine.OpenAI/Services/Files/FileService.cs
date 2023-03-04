@@ -1,4 +1,5 @@
-﻿namespace OpenAI
+﻿// ReSharper disable once CheckNamespace
+namespace OpenAI
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -174,16 +175,30 @@
             return this.GetEntityAsync(id, fileGetOptions, requestOptions, cancellationToken);
         }
 
+        /// <summary>
+        /// Lists the specified options.
+        /// </summary>
+        /// <returns>OpenAIList&lt;File&gt;.</returns>
         public virtual OpenAIList<File> List()
         {
             return this.List(null, null);
         }
 
+        /// <summary>
+        /// Lists the specified options.
+        /// </summary>
+        /// <param name="fileListOptions">The file list options.</param>
+        /// <returns>OpenAIList&lt;File&gt;.</returns>
         public virtual OpenAIList<File> List(FileListOptions fileListOptions)
         {
             return this.List(fileListOptions, null);
         }
 
+        /// <summary>
+        /// Lists the specified options.
+        /// </summary>
+        /// <param name="requestOptions">The request options.</param>
+        /// <returns>OpenAIList&lt;File&gt;.</returns>
         public virtual OpenAIList<File> List(RequestOptions requestOptions)
         {
             return this.List(null, requestOptions);

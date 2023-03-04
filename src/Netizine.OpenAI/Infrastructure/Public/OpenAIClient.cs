@@ -14,6 +14,12 @@ namespace OpenAI
     /// </summary>
     public class OpenAIClient : IOpenAIClient
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenAIClient"/> class.
+        /// </summary>
+        /// <param name="apiKey">The API key.</param>
+        /// <exception cref="System.ArgumentException">API key cannot be the empty string. - apiKey</exception>
+        /// <exception cref="System.ArgumentException">API key cannot contain whitespace. - apiKey</exception>
         public OpenAIClient(string apiKey)
         {
             if (apiKey is { Length: 0 })
@@ -32,6 +38,13 @@ namespace OpenAI
             this.ApiBase = DefaultApiBase;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenAIClient"/> class.
+        /// </summary>
+        /// <param name="apiKey">The API key.</param>
+        /// <param name="httpClient">The HTTP client.</param>
+        /// <exception cref="System.ArgumentException">API key cannot be the empty string. - apiKey</exception>
+        /// <exception cref="System.ArgumentException">API key cannot contain whitespace. - apiKey</exception>
         public OpenAIClient(string apiKey, IHttpClient httpClient)
         {
             if (apiKey is { Length: 0 })
@@ -50,6 +63,14 @@ namespace OpenAI
             this.ApiBase = DefaultApiBase;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenAIClient"/> class.
+        /// </summary>
+        /// <param name="apiKey">The API key.</param>
+        /// <param name="httpClient">The HTTP client.</param>
+        /// <param name="apiBase">The API base.</param>
+        /// <exception cref="System.ArgumentException">API key cannot be the empty string. - apiKey</exception>
+        /// <exception cref="System.ArgumentException">API key cannot contain whitespace. - apiKey</exception>
         public OpenAIClient(string apiKey, IHttpClient httpClient, string apiBase)
         {
             if (apiKey is { Length: 0 })
@@ -68,6 +89,13 @@ namespace OpenAI
             this.ApiBase = apiBase ?? DefaultApiBase;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenAIClient"/> class.
+        /// </summary>
+        /// <param name="apiKey">The API key.</param>
+        /// <param name="organizationId">The organization identifier.</param>
+        /// <exception cref="System.ArgumentException">API key cannot be the empty string. - apiKey</exception>
+        /// <exception cref="System.ArgumentException">API key cannot contain whitespace. - apiKey</exception>
         public OpenAIClient(string apiKey, string organizationId)
         {
             if (apiKey is { Length: 0 })
@@ -86,6 +114,14 @@ namespace OpenAI
             this.ApiBase = DefaultApiBase;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenAIClient"/> class.
+        /// </summary>
+        /// <param name="apiKey">The API key.</param>
+        /// <param name="organizationId">The organization identifier.</param>
+        /// <param name="httpClient">The HTTP client.</param>
+        /// <exception cref="System.ArgumentException">API key cannot be the empty string. - apiKey</exception>
+        /// <exception cref="System.ArgumentException">API key cannot contain whitespace. - apiKey</exception>
         public OpenAIClient(string apiKey, string organizationId, IHttpClient httpClient)
         {
             if (apiKey is { Length: 0 })

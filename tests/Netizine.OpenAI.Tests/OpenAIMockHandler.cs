@@ -74,7 +74,7 @@ namespace OpenAI.Tests
                 Environment.Exit(1);
             }
 
-            Console.WriteLine($"Started openai-mock, PID = #{process.Id}");
+            Console.WriteLine($@"Started openai-mock, PID = #{process.Id}");
 
             return true;
         }
@@ -100,9 +100,26 @@ namespace OpenAI.Tests
         /// <returns>The available port.</returns>
         private static int FindAvailablePort()
         {
-            TcpListener l = new TcpListener(IPAddress.Loopback, 0);
+            TcpListener l;
+            int availablePort;
+            var portVariable = Environment.GetEnvironmentVariable("OPENAI_MOCK_PORT");
+            if (!string.IsNullOrEmpty(portVariable))
+            {
+                if (!int.TryParse(portVariable, out var environmentalPort))
+                {
+                    l = new TcpListener(IPAddress.Loopback, 0);
+                    l.Start();
+                    availablePort = ((IPEndPoint)l.LocalEndpoint).Port;
+                    l.Stop();
+                    return availablePort;
+                }
+
+                return environmentalPort;
+            }
+            
+            l = new TcpListener(IPAddress.Loopback, 0);
             l.Start();
-            int availablePort = ((IPEndPoint)l.LocalEndpoint).Port;
+            availablePort = ((IPEndPoint)l.LocalEndpoint).Port;
             l.Stop();
             return availablePort;
         }

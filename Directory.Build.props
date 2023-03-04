@@ -4,7 +4,7 @@
   <PropertyGroup Label="Metadata configuration">
     <OrganizationName>Netizine</OrganizationName>
     <RepositoryName>OpenAI</RepositoryName>
-    <Version>1.0.1</Version>
+    <Version>1.0.7</Version>
   </PropertyGroup>
 
   <!-- Solution wide properties -->

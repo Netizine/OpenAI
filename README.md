@@ -146,7 +146,7 @@ used if you want to pass the secret API key on each method etc.
 ```c#
 var requestOptions = new RequestOptions
 {
-    ApiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY"),
+    ApiKey = "SECRET API KEY",
     OrganizationId = "ORGANIZATION ID"
 };
 ```
@@ -213,7 +213,7 @@ var featureEnabled = model.RawJObject["feature_enabled"];
 This information is passed along when the library makes calls to the OpenAI API.
 
 ```
-dotnet add package OpenAI
+dotnet add package OpenAI --version
 ```
 
 ## Support
@@ -256,6 +256,16 @@ Run tests for a single target framework:
 dotnet test --framework netcoreapp2.1
 ```
 
+# CI/CD Tests
+
+If you need to run tests in a CI/CD pipeline, you can specify the `OPENAI_MOCK_PORT` environment variable to a specific port.
+Then in your pipeline, add a step to install the openai-mock server before running unit tests.
+
+```yaml
+    - name: Install OpenAI.Mock
+      run: dotnet tool install OpenAI.Mock --global
+```
+
 The library uses [`dotnet-format`][dotnet-format] for code formatting. Code
 must be formatted before PRs are submitted, otherwise CI will fail. Run the
 formatter with:
@@ -278,6 +288,6 @@ pull request][pulls].
 [package-manager-console]: https://docs.microsoft.com/en-us/nuget/tools/package-manager-console
 [pulls]: https://github.com/Netizine/OpenAI/pulls
 [openai]: https://openai.com
-[openai-mock]: https://github.com/Netizine/OpenAI/blob/master/OpenAI_mock.md
-[openai-mock-usage]: https://github.com/Netizine/OpenAI/blob/master/OpenAI_mock.md#usage
+[openai-mock]: https://github.com/Netizine/OpenAI.Mock/blob/master/README.md
+[openai-mock-usage]: https://github.com/Netizine/OpenAI.Mock/blob/master/README.md#usage
 [youtube-playlist]: https://www.youtube.com/openai

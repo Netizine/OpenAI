@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "opena--mock": {
-      "commandName": "Project",
-      "commandLineArgs": "-p 5043",
-      "workingDirectory": "$(MSBuildProjectDirectory)"
-    }
-  }
-}

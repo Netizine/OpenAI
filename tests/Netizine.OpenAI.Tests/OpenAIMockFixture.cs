@@ -12,7 +12,7 @@ namespace OpenAI.Tests
     public class OpenAIMockFixture : IDisposable
     {
         /// <value>Minimum required version of openai-mock.</value>
-        private const string MockMinimumVersion = "1.0.1.0";
+        private const string MockMinimumVersion = "1.0.7.0";
 
         private readonly string port;
 
@@ -24,7 +24,7 @@ namespace OpenAI.Tests
             }
             else
             {
-                this.port = Environment.GetEnvironmentVariable("OPENAI_MOCK_PORT") ?? "12111";
+                this.port = Environment.GetEnvironmentVariable("OPENAI_MOCK_PORT") ?? "8020";
             }
 
             this.EnsureOpenAIMockMinimumVersion();

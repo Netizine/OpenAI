@@ -261,7 +261,7 @@ Run tests for a single target framework:
 dotnet test --framework netcoreapp2.1
 ```
 
-# CI/CD Tests
+## CI/CD Tests
 
 If you need to run tests in a CI/CD pipeline, you can specify the `OPENAI_MOCK_PORT` environment variable to a specific port.
 Then in your pipeline, add a step to install the openai-mock server before running unit tests.

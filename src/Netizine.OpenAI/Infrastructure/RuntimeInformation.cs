@@ -71,7 +71,10 @@ namespace OpenAI.Infrastructure
         public static string GetNewtonsoftJsonVersion()
         {
             var assembly = Assembly.GetAssembly(typeof(Newtonsoft.Json.JsonConvert));
-            if (assembly == null) return "13.0.2";
+            if (assembly == null)
+            {
+                return "13.0.2";
+            }
             var fileVersion = FileVersionInfo.GetVersionInfo(assembly.Location);
             return fileVersion.FileVersion;
         }

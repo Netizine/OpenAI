@@ -40,7 +40,7 @@ jobs:
     - name: Install OpenAI.Mock
       run: dotnet tool install --global OpenAI.Mock 
     - name: Run Tests
-      run: dotnet test --no-restore --no-build --collect:"XPlat Code Coverage" --configuration Release
+      run: dotnet test --no-restore --no-build --configuration Release
     - name: Pack Nuget
       run: dotnet pack src/Netizine.OpenAI/Netizine.OpenAI.csproj --no-build --verbosity normal --output nupkgs
     - name: Get Version

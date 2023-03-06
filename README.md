@@ -3,7 +3,6 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/d19cad2e2bb647c89b351e2f380e12c6)](https://www.codacy.com/gh/Netizine/OpenAI/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Netizine/OpenAI&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/d19cad2e2bb647c89b351e2f380e12c6)](https://www.codacy.com/gh/Netizine/OpenAI/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Netizine/OpenAI&amp;utm_campaign=Badge_Coverage)
 ![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/Netizine/OpenAI/publish.yml)
-[![Known Vulnerabilities](https://snyk.io/test/github/Netizine/OpenAI/badge.svg)](https://snyk.io/test/github/Netizine/OpenAI)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Netizine/OpenAI)
 ![GitHub](https://img.shields.io/github/license/Netizine/OpenAI)
 ![Nuget](https://img.shields.io/nuget/dt/Netizine.OpenAI)

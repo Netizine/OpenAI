@@ -13,19 +13,19 @@
 Using the [.NET Core command-line interface (CLI) tools][dotnet-core-cli-tools]:
 
 ```sh
-dotnet add package OpenAI
+dotnet add package Netizine.OpenAI
 ```
 
 Using the [NuGet Command Line Interface (CLI)][nuget-cli]:
 
 ```sh
-nuget install OpenAI
+nuget install Netizine.OpenAI
 ```
 
 Using the [Package Manager Console][package-manager-console]:
 
 ```powershell
-Install-Package OpenAI
+Install-Package Netizine.OpenAI
 ```
 
 From within Visual Studio:
